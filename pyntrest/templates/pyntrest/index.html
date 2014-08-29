@@ -1,0 +1,159 @@
+{% load url from future %} 
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	{% if page_title == album_title %}
+	<title>{{ page_title}}</title>
+	{% else %}
+	<title>{{page_title}}&#160;&#8226;&#160;{{ album_title }}</title>	
+	{% endif %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
+	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
+	<!-- Icon -->
+	{% with 'pyntrest/res/'|add:favicon_name as favicon_static %}
+	   <link rel="icon" href="{% static favicon_static %}" type="image/png" />
+	{% endwith %}
+	<!-- Javascript -->
+	<script src="{% static 'pyntrest/js/jquery-1.11.1.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/masonry-3.1.5.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/jquery.lazy-0.1.18.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/jquery.fancybox-2.min.js' %}"></script>
+    <script src="{% static 'pyntrest/js/jquery.fancybox-media-2.js' %}"></script>
+</head>
+<body>
+
+	<div class="breadcrumb">
+		<div class="breadcrumbtext">
+			{% if breadcrumbs %} 
+			{% for breadcrumb in breadcrumbs %} 
+                <a href="{{ breadcrumb.path }}">{{breadcrumb.title}}&#160;&#8226;</a>
+			{% endfor %} 
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="header">
+		<div class="headertext">
+			<h1>{{ album_title }}</h1>
+			<p>{% if album_description %} {{ album_description }} {% endif %}</p>
+		</div>
+	</div>
+
+	<div class="content">
+
+		{% if subalbums %}
+        
+            <h2>{{ lang_albums }}</h2>
+		
+			<div class="tiles">
+			
+				{% for album in subalbums %}
+				<div class="tile" style="width={{ col_width }}; height={{ col_height }};">
+				
+				    <a href="{{ request.path }}{{ album.path }}"> 
+					{% if album.cover %}
+						{% with 'pyntrest/images/album_thumbs/'|add:album.cover as album_thumb %}
+						<img class="lazyload" src="" data-src="{% static album_thumb %}" width="{{ col_width }}" height="{{ col_height }}" alt="">
+						{% endwith %}
+					{% else %}
+						<div class="tile-placeholder" style="width: {{ col_width }}px; height: {{ col_height }}px;"></div>
+					{% endif %}
+					</a>
+					<div class='tile-description'>{{album.title}}</div>
+					
+				</div>
+				{% endfor %}
+				
+			</div>
+		
+		{% endif %}
+		
+		{% if images %}
+            
+            <h2>{{ lang_images }}</h2>
+            
+			<div class="tiles">
+			
+				{% for image in images %}
+				
+				    {% if image.youtubeid %}
+		
+	   	                <div class="tile" style="width={{ image.width }}; height={{ image.height }};">	 
+                        <a class="fancybox" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+                        <img class="lazyload" src="" 
+                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
+                        width="{{ image.width }}" height="{{ image.height }}" alt="">
+                        {% endwith %}
+                        <div class='tile-description'>&#9654;&#160;Video</div>
+					    </a>
+					    
+	                {% else %}
+	                    
+        				<div class="tile" style="width={{ image.width }}; height={{ image.height }};">
+	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
+                        <a href="{% static image_full %}" class="fancybox" rel="group">
+                        {% endwith %}
+                            
+                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+                        <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
+                        {% endwith %}
+                        </a>
+                     
+	                {% endif %}
+	                        
+					</a>
+				</div>
+				{% endfor %}
+            </div>
+            
+		{% endif %}
+
+	</div>
+
+	<div class="footer">
+		<a target="_blank" href="https://github.com/BastiTee/pyntrest">Powered by Pyntrest</a>
+	</div>
+	
+    <script type="text/javascript">
+        (function($) {
+            $('.tiles').masonry({
+                columnWidth : {{ col_width }},
+                itemSelector : '.tile',
+                gutter: 2,
+                'isFitWidth': true
+            });
+            $("img.lazyload").lazy({
+                effect : "fadeIn",
+                effectTime : 750,
+                visibleOnly : true
+            });
+            $(".fancybox").fancybox({
+            	 margin      : 40,
+            	 fitToView   : true,
+                 autoSize    : true,
+                 closeClick  : false,
+                 openEffect  : 'none',
+                 closeEffect : 'none',
+                 nextEffect  : 'fade',
+                 prevEffect  : 'fade',
+                 padding     : 3,
+                 helpers     : {
+                	media : {},
+                    overlay : {
+                        css : {
+                            'background' : 'rgba(0, 0, 0, 0.8)'
+                        }
+                    }
+                }
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>

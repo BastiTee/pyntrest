@@ -1,0 +1,40 @@
+"""Pyntrest's main user configuration file"""
+
+from os import path
+
+YOUR_IMAGE_FOLDER = path.abspath('sample_images')
+"""Set this absolute path to your local image folder. This folder will be scanned by Pyntrest."""
+
+STATIC_PATH = path.join(path.abspath(path.dirname(__file__)), 'static', 'pyntrest')
+"""Set this to the absolute path from where you want to server static files. 
+On a production server, make sure that this folder is writable to Pyntrest 
+and that you also copy the current data from 
+<pyntrest>/pyntrest/static/pyntrest, i.e., the subfolders 'css', 'js' and 
+'res' to that folder.
+
+Pyntrest will create a subfolder 'images' in that folder and will copy all 
+full-size images as well as thumbnail versions of the content to it. 
+Make sure disk space is sufficient. 
+"""
+
+WORDING_ALBUM = 'Sub albums'
+"""Heading for available sub albums in the web album"""
+WORDING_IMAGES = 'Images'
+"""Heading for available images in the web album"""
+WORDING_HOME = 'Home'
+"""Bread crumb title for root web album"""
+
+ALLOWED_IMAGE_PATTERN = '^.*\\.(png|jpg|gif)$'
+"""Filter settings for allowed images"""
+INFO_FILE_NAME = 'info.ini'
+"""Name of the optional album information files"""
+IMAGE_THUMB_WIDTH = 300
+"""Maximum width of album and image thumbnails. Attention: If you change 
+this later, make sure to delete the content of <STATIC_PATH>/images/ so that 
+the thumbnails will be newly created with your new thumb size."""
+IMAGE_THUMB_HEIGHT = 150
+"""Maximum height of album thumbnails. Attention: If you change this later, 
+make sure to delete the content of <STATIC_PATH>/images/ so that the 
+thumbnails will be newly created with your new thumb size."""
+IMAGE_FAVICON = 'favicon.png'
+"""Name of favicon to use"""

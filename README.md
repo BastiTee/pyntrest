@@ -59,3 +59,4 @@ Below you find the latest screenshots of Pyntrest
 ![Overview](doc/images/latest-screenshot-1.jpg)
 ![Image overlay](doc/images/latest-screenshot-2.jpg)
 ![Video overlay](doc/images/latest-screenshot-3.jpg)
+

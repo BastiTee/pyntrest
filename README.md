@@ -26,10 +26,11 @@ For folder or file management, i.e., the actual content management, you can use 
 
 Basic instructions are as follows:
 
-* Install Python 2.7.x
-* Install Django 1.6.x or newer
-* Install Python Image Library 1.1.x or newer
-* Clone or download the project
+* Install Python 2.7
+* Clone or download Pyntrest
+* Go to the downloaded folder do one of the following
+** run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed)
+** manually install [Django web framework](https://pypi.python.org/pypi/Django) and [Pillow](https://pypi.python.org/pypi/Pillow) (please refer to `requirements.txt` for correct versions)
 * Run `python manage.py runserver` (on image folders with lots of images this will take a while since Pyntrest performs a startup scan of your folder and creates all the necessary thumbnails)
 * Open `http://localhost:8000` in a browser and enjoy
 
@@ -40,8 +41,8 @@ What you should see is a web photo album that is automatically generated from th
 Pyntrest relies on a number of awesome open source projects:
 
 * [Python](https://www.python.org/)
-* [Django web framework](https://www.djangoproject.com/)
-* [Python Image Library (PIL)](http://www.pythonware.com/products/pil/)
+* [Django web framework](https://pypi.python.org/pypi/Django)
+* [Pillow - Python Image Library (PIL) fork](https://pypi.python.org/pypi/Pillow)
 * [jQuery](http://jquery.com/)
 * [Masonry - Cascading grid layout library](http://masonry.desandro.com/)
 * [fancyBox - Fancy jQuery Lightbox Alternative](http://fancyapps.com/fancybox/)

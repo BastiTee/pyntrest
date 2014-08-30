@@ -14,10 +14,10 @@ thumbnail to be 400x100px the full image will be rescaled to 600x200"""
 GIF_PATTERN = compile('^.*\\.gif$')
 """Pattern for GIF files"""
 
-def upscale_value ( base_value):
+def upscale_value (base_value):
     """Wrapper for recurring value casting for upscaling"""
     
-    return int(float(base_value)*UPSCALE_FACTOR)
+    return int(float(base_value) * UPSCALE_FACTOR)
 
 def resize_and_crop_image (source_file, target_file):
     """If the target file does not exist, reads the source file and resizes 
@@ -43,19 +43,40 @@ def resize_and_crop_image (source_file, target_file):
             im.save(target_file, 'GIF')
         else:
             im.save(target_file, 'JPEG')
-            
+
+def rescale_image_dimensions_to_desired_width (width, height, des_width,
+                                                upscale_factor):
+    """Calculates new image dimensions based on the given image's width 
+    and height and the provided desired image width multiplied by the
+    upscale factor"""
+    
+    new_width = des_width
+    new_height = int(height * (float(des_width) / float(width)))
+    new_width = int(float(new_width) * upscale_factor)
+    new_height = int(float(new_height) * upscale_factor)
+    return new_width, new_height
+    
 def resize_image (source_file, target_file):
     """Reads the image width and height from the given image and, if it does 
     not exist, resizes the file to the given target file keeping the original 
     aspect ratio"""
     
+    if not source_file:
+        raise TypeError ('source_file not set')
+    if not target_file:
+        raise TypeError ('target_file not set')
+    if not path.exists(source_file):
+        raise TypeError ('source_file does not exist')
+    if not path.exists(path.dirname(target_file)):
+        raise TypeError ('Folder for target_file does not exist')
+    
     image = Image.open(source_file)
     width, height = image.size
-    height = int(height * (IMAGE_THUMB_WIDTH / float(width)))
-    width = IMAGE_THUMB_WIDTH
+    width, height = rescale_image_dimensions_to_desired_width(
+                                    width, height, IMAGE_THUMB_WIDTH, UPSCALE_FACTOR )
+    
     if not path.exists(target_file):
-        im = image.resize((upscale_value(width), upscale_value(height)), 
-                     Image.ANTIALIAS) 
+        im = image.resize((width, height), Image.ANTIALIAS) 
         if GIF_PATTERN.match(target_file.lower()):
             im.save(target_file, 'GIF')
         else:

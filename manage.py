@@ -22,20 +22,16 @@ def import_modules_with_check (module_names):
 if __name__ == "__main__":
     
     environ.setdefault("DJANGO_SETTINGS_MODULE", "pyntrest_project.settings")
-    
-    is_test = False
-    if len(sys.argv) == 2 and sys.argv[1] == 'test':
-        is_test = True
 
-    # Check for depending packages if this is not a unit test run        
-    if not is_test:
-        import_success, failed_modules = import_modules_with_check(
+    import_success, failed_modules = import_modules_with_check(
                                                  [ 'PIL', 'django.http' ])
-        if not import_success:
-            print ('Sorry, but there are some packages missing: '
-                   + '{0}\nPlease refer to README.md to find out what ' + 
-                   'you\'ve missed.').format(failed_modules)
-            exit(1)
+    if not import_success:
+        print ('Sorry, but there are some packages missing: '
+               + '{0}\nPlease refer to README.md to find out what ' 
+               + 'you\'ve missed or, assuming you have \'pip\' installed,\n'
+               + 'run \'pip install -r requirements.txt\''
+               ).format(failed_modules)
+        exit(1)
 
     # this needs to be done here because why want to check for missing 
     # packages first     

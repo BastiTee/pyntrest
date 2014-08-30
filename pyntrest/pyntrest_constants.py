@@ -19,3 +19,5 @@ STATIC_ALBUM_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'album_thumbs')
 """Path from where static album thumbnails are served"""
 STATIC_IMAGE_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'image_thumbs')
 """Path from where static image thumbnails are served"""
+GIF_PATTERN = re.compile('^.*\\.gif$')
+"""Pattern for GIF files"""

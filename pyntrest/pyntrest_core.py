@@ -12,7 +12,8 @@ from pyntrest_io import (read_optional_metadata, mkdirs, read_youtube_ini_file,
 from pyntrest_constants import (IMAGE_FILE_PATTERN, MAIN_IMAGES_PATH,
     STATIC_ALBUM_THUMBS_PATH, STATIC_FULLSIZE_IMAGES_PATH,
     STATIC_IMAGE_THUMBS_PATH, STATIC_IMAGES_PATH, YOUTUBE_INI_FILE_PATTERN)
-from pyntrest_pil import create_album_thumbnail_if_not_present, create_image_thumbnail_if_not_present
+from pyntrest_pil import (create_album_thumbnail_if_not_present, 
+                          create_image_thumbnail_if_not_present)
 
 from models import AlbumImage, Album, WebPath
 

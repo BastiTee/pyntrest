@@ -23,6 +23,8 @@ WORDING_IMAGES = 'Images'
 """Heading for available images in the web album"""
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
+IMAGE_FAVICON = 'favicon.png'
+"""Name of favicon to use"""
 
 ALLOWED_IMAGE_PATTERN = '^.*\\.(png|jpg|gif)$'
 """Filter settings for allowed images"""
@@ -36,5 +38,10 @@ IMAGE_THUMB_HEIGHT = 150
 """Maximum height of album thumbnails. Attention: If you change this later, 
 make sure to delete the content of <STATIC_PATH>/images/ so that the 
 thumbnails will be newly created with your new thumb size."""
-IMAGE_FAVICON = 'favicon.png'
-"""Name of favicon to use"""
+UPSCALE_FACTOR = 1.75
+"""If set to 1.0, image thumbs will be rescaled to the exact size as used
+in the web photo album. Depending on the source images this might not look
+that neat. Increase the upscale factor to make sure images are left a bit
+bigger. An upscale factor of 1.5 would mean that if you want your album
+thumbnail to be 400x100px the full image will be rescaled to 600x200"""
+

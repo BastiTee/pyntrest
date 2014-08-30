@@ -2,17 +2,8 @@
 
 from PIL import Image
 from os import path
-from re import compile 
-from pyntrest_config import IMAGE_THUMB_WIDTH, IMAGE_THUMB_HEIGHT
-
-UPSCALE_FACTOR = 1.75
-"""If set to 1.0, image thumbs will be rescaled to the exact size as used
-in the web photo album. Depending on the source images this might not look
-that neat. Increase the upscale factor to make sure images are left a bit
-bigger. An upscale factor of 1.5 would mean that if you want your album
-thumbnail to be 400x100px the full image will be rescaled to 600x200"""
-GIF_PATTERN = compile('^.*\\.gif$')
-"""Pattern for GIF files"""
+from pyntrest_config import IMAGE_THUMB_WIDTH, IMAGE_THUMB_HEIGHT, UPSCALE_FACTOR
+from pyntrest_constants import GIF_PATTERN
 
 def rescale_image_dimensions_to_desired_width (width, height, des_width,
                                                 upscale_factor):

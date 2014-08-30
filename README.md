@@ -26,7 +26,7 @@ For folder or file management, i.e., the actual content management, you can use 
 
 Basic instructions are as follows:
 
-* Install Python 2.7
+* Install Python 2.7.x
 * Clone or download Pyntrest
 * Go to the downloaded folder do one of the following
  * run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed)

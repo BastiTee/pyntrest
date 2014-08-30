@@ -79,6 +79,7 @@ class PyntrestHandler ():
         
         local_albumpath_abs = convert_url_path_to_local_filesystem_path(
                   self.main_images_path, request_path)
+        print local_albumpath_abs
         if (path.exists(local_albumpath_abs) and 
             path.isdir(local_albumpath_abs)):
             return True

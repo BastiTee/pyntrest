@@ -18,22 +18,31 @@ class ViewsTestSuite(unittest.TestCase):
         views_h = ViewHandler ( pyntrest_h )
         
         self.assertRaises(TypeError, views_h.get)
+        
         request = HttpRequest()
         request.path = '///'
         self.assertIs(HttpResponseRedirect, type(views_h.get(request)))
+        
+        request = HttpRequest()
         request.path = '/index.html'
         self.assertIs(HttpResponseRedirect, type(views_h.get(request)))
+        
+        request = HttpRequest()
         request.path = ''
         redirect = views_h.get(request)
         self.assertIs(HttpResponseRedirect, type(redirect))
         self.assertEquals('/', redirect.url)
+        
+        request = HttpRequest()
         request.path = '/notexistingalbum'
         try:
             views_h.get(request)
             self.fail()
         except Http404:
             pass
-        request.path = redirect.url
+        
+        request = HttpRequest()
+        request.path = '/'
         response = type(views_h.get(request))
         self.assertIs(HttpResponse, response)
         self.assertEquals(200, response.status_code)        

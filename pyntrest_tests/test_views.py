@@ -14,7 +14,8 @@ class ViewsTestSuite(unittest.TestCase):
     def test_get (self):
         
         pyntrest_h = PyntrestHandler ()
-        pyntrest_h.set_main_images_path(path.abspath('testdata'))
+        mip = path.join(path.abspath(path.dirname(__file__)), 'testdata')
+        pyntrest_h.set_main_images_path(mip)
         views_h = ViewHandler ( pyntrest_h )
         
         self.assertRaises(TypeError, views_h.get)

@@ -26,10 +26,11 @@ class ViewHandler ():
         if not request.path == clean_path:
             return redirect(clean_path)
     
-        if not self.pyntrest_handler.check_if_album_exists(clean_path):
+        if not request.path.endswith('/'):
+            request.path = request.path + '/'
+    
+        if not self.pyntrest_handler.check_if_album_exists(request.path):
             raise Http404
         else:
-            if not request.path.endswith('/'):
-                request.path = request.path + '/'
             view_context = self.pyntrest_handler.generate_view_context(request.path)
             return render(request, 'pyntrest/index.html', view_context)

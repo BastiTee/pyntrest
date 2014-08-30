@@ -29,8 +29,8 @@ Basic instructions are as follows:
 * Install Python 2.7
 * Clone or download Pyntrest
 * Go to the downloaded folder do one of the following
-** run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed)
-** manually install [Django web framework](https://pypi.python.org/pypi/Django) and [Pillow](https://pypi.python.org/pypi/Pillow) (please refer to `requirements.txt` for correct versions)
+ * run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed)
+ * manually install [Django web framework](https://pypi.python.org/pypi/Django) and [Pillow](https://pypi.python.org/pypi/Pillow) (please refer to `requirements.txt` for correct versions, you can also use PIL instead of Pillow if you prefer)
 * Run `python manage.py runserver` (on image folders with lots of images this will take a while since Pyntrest performs a startup scan of your folder and creates all the necessary thumbnails)
 * Open `http://localhost:8000` in a browser and enjoy
 

@@ -12,10 +12,11 @@ from pyntrest_io import (read_optional_metadata, mkdirs, read_youtube_ini_file,
 from pyntrest_constants import (IMAGE_FILE_PATTERN, MAIN_IMAGES_PATH,
     STATIC_ALBUM_THUMBS_PATH, STATIC_FULLSIZE_IMAGES_PATH,
     STATIC_IMAGE_THUMBS_PATH, STATIC_IMAGES_PATH, YOUTUBE_INI_FILE_PATTERN)
-from pyntrest_pil import (create_album_thumbnail_if_not_present, 
-                          create_image_thumbnail_if_not_present)
-
+from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
+
+pil_handler = PILHandler ( pyntrest_config.IMAGE_THUMB_WIDTH, 
+            pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
 
 def on_startup():
     """Called once on startup to invoke the creation of all necessary 
@@ -159,7 +160,8 @@ def process_subalbum (subalbums, subalbum_name, local_albumpath_rel, local_album
                                        image_basename)
         target_file = path.join(local_thumbnail_folder_abs, image_basename)
         mkdirs(local_thumbnail_folder_abs)
-        create_album_thumbnail_if_not_present(local_subalbumcover_abs, target_file)
+        pil_handler.create_album_thumbnail_if_not_present(
+                                        local_subalbumcover_abs, target_file)
         
         # setup template context
         subalbum = Album(title=meta_title, description=meta_description,
@@ -190,7 +192,8 @@ def process_subimage (images, image_name, local_albumpath_rel, local_albumpath_a
             copyfile(local_imagepath_abs, static_fullsize_path_abs)
         
         # calculate image size for masonry and copy to static folder
-        width, height = create_image_thumbnail_if_not_present(local_imagepath_abs, static_thumb_path_abs)
+        width, height = pil_handler.create_image_thumbnail_if_not_present(
+                                  local_imagepath_abs, static_thumb_path_abs)
 
         # add image to template context
         albumimage = AlbumImage(location=path.join(local_albumpath_rel,

@@ -132,6 +132,3 @@ class IoTestSuite(unittest.TestCase):
         dirname = self.create_temp_file_with_content(content, ini_file)
         filepath = path.join(dirname, ini_file)
         self.assertEqual('rPmGtZAUxNs', pyntrest_io.read_youtube_ini_file(filepath))
-        
-if __name__ == '__main__':
-    unittest.main()

@@ -3,20 +3,11 @@
 from pyntrest import pyntrest_pil
 from PIL import Image        
 from os import path, remove
-import hashlib
 import unittest
 
 class PilTestSuite(unittest.TestCase):
 
     base_path = path.abspath(path.dirname(__file__))
-    
-    def md5sum (self, filename):
-        md5 = hashlib.md5()
-        with open(filename, 'rb') as input_file_handle: 
-            for chunk in iter(lambda: input_file_handle.read(
-                            128 * md5.block_size), b''): 
-                md5.update(chunk)
-        return md5.hexdigest()
     
     def test_rescale_image_dimensions_to_desired_width (self):
         self.assertRaises(TypeError, pyntrest_pil.rescale_image_dimensions_to_desired_width)
@@ -51,10 +42,6 @@ class PilTestSuite(unittest.TestCase):
         self.assertEqual(199, height)
         im = Image.open(target_file)
         self.assertEqual((525, 348), im.size)
-        md5 = self.md5sum(target_file)
-        md5_ref =self.md5sum(path.join ( self.base_path, 
-                                         'testdata', 'ref_image-trg.jpg'))
-        self.assertEqual(md5_ref, md5)
         
     def test_create_album_thumbnail_if_not_present ( self ):
 
@@ -72,10 +59,3 @@ class PilTestSuite(unittest.TestCase):
         self.assertEqual(150, height)
         im = Image.open(target_file)
         self.assertEqual((525, 262), im.size)
-        md5 = self.md5sum(target_file)
-        md5_ref =self.md5sum(path.join ( self.base_path, 
-                                         'testdata', 'ref_album-trg.jpg'))
-        self.assertEqual(md5_ref, md5)
-         
-if __name__ == '__main__':
-    unittest.main()

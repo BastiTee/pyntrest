@@ -7,7 +7,7 @@ from os import environ
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
 
 from django.core.wsgi import get_wsgi_application
-from pyntrest.pyntrest_processor import on_startup
+from pyntrest.pyntrest_core import on_startup
 
 # run Pyntrest's system initialization procedure
 on_startup()

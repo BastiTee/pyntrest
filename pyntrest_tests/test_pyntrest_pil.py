@@ -11,18 +11,18 @@ class PilTestSuite(unittest.TestCase):
     
     def test_resize_image ( self ):
 
-        self.assertRaises(TypeError, pyntrest_pil.resize_image)
-        self.assertRaises(TypeError, pyntrest_pil.resize_image, None)
-        self.assertRaises(TypeError, pyntrest_pil.resize_image, None, None)
-        self.assertRaises(TypeError, pyntrest_pil.resize_image, 
+        self.assertRaises(TypeError, pyntrest_pil.create_image_thumbnail_if_not_present)
+        self.assertRaises(TypeError, pyntrest_pil.create_image_thumbnail_if_not_present, None)
+        self.assertRaises(TypeError, pyntrest_pil.create_image_thumbnail_if_not_present, None, None)
+        self.assertRaises(TypeError, pyntrest_pil.create_image_thumbnail_if_not_present, 
                           '/somewhere/foo.jpg', '/somewhere/foo2.jpg')
         source_file = path.join ( self.base_path, 'testdata', 'image.jpg')
         target_file = path.join ( self.base_path, 'testdata', 'image-trg.jpg')
         self.addCleanup(remove, target_file)
-        width, height = pyntrest_pil.resize_image(source_file, target_file)
+        width, height = pyntrest_pil.create_image_thumbnail_if_not_present(source_file, target_file)
         self.assertTrue(path.exists(target_file))
-        self.assertEqual(525, width)
-        self.assertEqual(348, height)
+        self.assertEqual(300, width)
+        self.assertEqual(199, height)
         im = Image.open(target_file)
         self.assertEqual((525, 348), im.size)
          

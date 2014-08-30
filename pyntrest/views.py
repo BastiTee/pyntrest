@@ -3,7 +3,7 @@
 from django.shortcuts import redirect, render
 from django.http import Http404 
 from os import path
-from pyntrest_processor import generate_view_context
+from pyntrest.pyntrest_core import generate_view_context
 from pyntrest_io import (cleanup_url_path,
     convert_url_path_to_local_filesystem_path)
 from pyntrest_constants import (MAIN_IMAGES_PATH)

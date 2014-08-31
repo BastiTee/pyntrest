@@ -18,18 +18,6 @@ META_INI_FILE_PATTERN = 'info.ini'
 YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube\\.ini$')
 """Regex pattern to test if a local file is a Youtube hook"""
 
-MAIN_IMAGES_PATH = path.abspath(pyntrest_config.YOUR_IMAGE_FOLDER)
-"""Path of the user's image folder"""
-STATIC_IMAGES_PATH = path.abspath(
-                            path.join(pyntrest_config.STATIC_PATH, 'images'))
-"""Path from where static images are served"""
-STATIC_FULLSIZE_IMAGES_PATH = path.join (STATIC_IMAGES_PATH, 'full_size')
-"""Path from where static full size images are served"""
-STATIC_ALBUM_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'album_thumbs')
-"""Path from where static album thumbnails are served"""
-STATIC_IMAGE_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'image_thumbs')
-"""Path from where static image thumbnails are served"""
-
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
     and images in Pyntrest"""
@@ -37,14 +25,17 @@ class PyntrestHandler ():
     pil_handler = None
     main_images_path = None
     static_images_path = None
+    static_fullsize_path = None
+    static_athumbs_path = None
+    static_ithumbs_path = None 
     
     def __init__(self, main_images_path, static_images_path):
         """Constructor"""
         
         if main_images_path is None:
-            raise TypeError ( 'main_images_path not set.')
+            raise TypeError ('main_images_path not set.')
         if static_images_path is None:
-            raise TypeError ( 'static_images_path not set.')
+            raise TypeError ('static_images_path not set.')
         
         main_images_path = path.abspath(main_images_path)
         static_images_path = path.abspath(static_images_path)
@@ -54,7 +45,10 @@ class PyntrestHandler ():
             pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
         self.main_images_path = main_images_path
         self.static_images_path = static_images_path
-    
+        self.static_fullsize_path = path.join (self.static_images_path, 'full_size')
+        self.static_athumbs_path = path.join (self.static_images_path, 'album_thumbs')
+        self.static_ithumbs_path = path.join (self.static_images_path, 'image_thumbs')
+            
     def set_main_images_path (self, main_images_path):
         """Reset main images path to another location. Used from within
         unit tests."""
@@ -71,10 +65,10 @@ class PyntrestHandler ():
         global current_subdir  # declare global counter
         current_subdir = 1
         
-        mkdirs (STATIC_IMAGES_PATH)
-        mkdirs (STATIC_FULLSIZE_IMAGES_PATH)
-        mkdirs (STATIC_ALBUM_THUMBS_PATH)
-        mkdirs (STATIC_IMAGE_THUMBS_PATH)
+        mkdirs (self.static_images_path)
+        mkdirs (self.static_athumbs_path)
+        mkdirs (self.static_ithumbs_path)
+        mkdirs (self.static_fullsize_path)
     
         # Obtain number of sub directories
         number_of_subdirs = 0
@@ -122,8 +116,8 @@ class PyntrestHandler ():
                   self.main_images_path, request_path)
         local_albumpath_rel = convert_url_path_to_local_filesystem_path(
                                                      '', request_path) 
-        mkdirs(path.join (STATIC_FULLSIZE_IMAGES_PATH, local_albumpath_rel))
-        mkdirs(path.join (STATIC_IMAGE_THUMBS_PATH, local_albumpath_rel))
+        mkdirs(path.join (self.static_fullsize_path, local_albumpath_rel))
+        mkdirs(path.join (self.static_ithumbs_path, local_albumpath_rel))
         
         album_title, album_description, _ = read_optional_metadata (
                                                             local_albumpath_abs,
@@ -214,7 +208,7 @@ class PyntrestHandler ():
         else:
             # otherwise prepare it for static serving 
             image_basename = path.basename(local_subalbumcover_abs)
-            local_thumbnail_folder_abs = path.join (STATIC_ALBUM_THUMBS_PATH,
+            local_thumbnail_folder_abs = path.join (self.static_athumbs_path,
                                                 local_albumpath_rel, subalbum_name)
             thumbnail_webpath = path.join (local_albumpath_rel, subalbum_name,
                                            image_basename)
@@ -243,9 +237,9 @@ class PyntrestHandler ():
         if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
             
             static_fullsize_path_abs = path.join (
-                    STATIC_FULLSIZE_IMAGES_PATH, local_albumpath_rel, image_name)
+                    self.static_fullsize_path, local_albumpath_rel, image_name)
             static_thumb_path_abs = path.join (
-                    STATIC_IMAGE_THUMBS_PATH, local_albumpath_rel, image_name)
+                    self.static_ithumbs_path, local_albumpath_rel, image_name)
             
             # copy full size image to static folder 
             if not path.exists(static_fullsize_path_abs):

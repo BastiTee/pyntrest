@@ -1,8 +1,10 @@
 """Test suite for module pyntrest_io"""
 
+from os import environ, path
+environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
+
 from tempfile import mkdtemp
-from pyntrest import pyntrest_io, pyntrest_config
-from os import path
+from pyntrest import pyntrest_io, pyntrest_core
 from shutil import rmtree
 import unittest
 
@@ -81,37 +83,38 @@ class IoTestSuite(unittest.TestCase):
     def test_read_optional_metadata (self):
         self.assertRaises(TypeError, pyntrest_io.read_optional_metadata)
         self.assertRaises(TypeError, pyntrest_io.read_optional_metadata, 'asdasd_:asd')
-        a, b, c = pyntrest_io.read_optional_metadata('')
+        self.assertRaises(TypeError, pyntrest_io.read_optional_metadata, 'asdasd_:asd', '')
+        a, b, c = pyntrest_io.read_optional_metadata('', pyntrest_core.META_INI_FILE_PATTERN)
         self.assertEqual(path.basename(path.abspath('')), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content = []
-        dirname = self.create_temp_file_with_content(content, pyntrest_config.INFO_FILE_NAME )
-        a, b, c = pyntrest_io.read_optional_metadata(dirname)
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual(path.basename(dirname), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('[AlbumInfo]')
-        dirname = self.create_temp_file_with_content(content, pyntrest_config.INFO_FILE_NAME)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname)
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual(path.basename(dirname), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('Title=Pyntrest')
-        dirname = self.create_temp_file_with_content(content, pyntrest_config.INFO_FILE_NAME)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname)
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('Description=Automated web photo albums for convenience lovers')
-        dirname = self.create_temp_file_with_content(content, pyntrest_config.INFO_FILE_NAME)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname)
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('Automated web photo albums for convenience lovers', b)
         self.assertEqual(None, c)
         content.append('CoverImage=im-001.jpg')
-        dirname = self.create_temp_file_with_content(content, pyntrest_config.INFO_FILE_NAME)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname)
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('Automated web photo albums for convenience lovers', b)
         self.assertEqual('im-001.jpg', c)      

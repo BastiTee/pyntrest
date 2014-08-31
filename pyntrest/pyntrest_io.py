@@ -4,7 +4,6 @@ of album requests."""
 from ConfigParser import ConfigParser
 from re import sub
 from os import path, makedirs, listdir
-from pyntrest_config import INFO_FILE_NAME
 
 def mkdirs (directory):
     """Create directory structure if it does not exist"""
@@ -75,7 +74,7 @@ def get_absolute_breadcrumb_filesystem_paths (url_path):
     else:
         return [''] + subpaths
     
-def read_optional_metadata (album_path):
+def read_optional_metadata (album_path, filename ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain 
     optional album information"""
     
@@ -84,8 +83,10 @@ def read_optional_metadata (album_path):
     album_path = path.abspath(album_path)
     if not path.exists(album_path):
         raise TypeError('album_path does not exist!')
+    if not filename:
+        raise TypeError('filename not provided!')
     
-    info_ini_file = path.join(album_path, INFO_FILE_NAME)
+    info_ini_file = path.join(album_path, filename)
     
     # set default values
     album_title = path.basename(album_path)

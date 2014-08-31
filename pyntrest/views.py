@@ -3,6 +3,8 @@
 from django.shortcuts import redirect, render
 from django.http import Http404 
 from pyntrest_io import cleanup_url_path
+from pyntrest.pyntrest_core import PyntrestHandler
+from pyntrest.pyntrest_config import YOUR_IMAGE_FOLDER, STATIC_PATH
 
 class ViewHandler ():
     """Instances of this class handle incoming GET requests and serve
@@ -11,8 +13,11 @@ class ViewHandler ():
     pyntrest_handler = None
     """Handler to create the webpage context for incoming GET requests"""
 
-    def __init__(self, pyntrest_handler):
+    def __init__(self):
         """Constructor"""
+        self.pyntrest_handler = PyntrestHandler(YOUR_IMAGE_FOLDER, STATIC_PATH)
+        
+    def set_pyntrest_handler(self, pyntrest_handler):    
         self.pyntrest_handler = pyntrest_handler
 
     def get(self, request):
@@ -32,5 +37,6 @@ class ViewHandler ():
         if not self.pyntrest_handler.check_if_album_exists(request.path):
             raise Http404
         else:
-            view_context = self.pyntrest_handler.generate_view_context(request.path)
+            if self.pyntrest_handler:
+                view_context = self.pyntrest_handler.generate_view_context(request.path)
             return render(request, 'pyntrest/index.html', view_context)

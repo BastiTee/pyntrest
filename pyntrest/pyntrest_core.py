@@ -3,16 +3,32 @@ a local folder or file"""
 
 from os import listdir, path, walk
 from shutil import copyfile
-from re import sub
+from re import sub, compile
 import pyntrest_config
 from pyntrest_io import (read_optional_metadata, mkdirs, read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths)
-from pyntrest_constants import (IMAGE_FILE_PATTERN,
-    STATIC_ALBUM_THUMBS_PATH, MAIN_IMAGES_PATH, STATIC_FULLSIZE_IMAGES_PATH,
-    STATIC_IMAGE_THUMBS_PATH, STATIC_IMAGES_PATH, YOUTUBE_INI_FILE_PATTERN)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
+
+IMAGE_FILE_PATTERN = compile('^.*\\.(png|jpg|gif)$')
+"""Regex pattern to test whether local files are images""" 
+META_INI_FILE_PATTERN = 'info.ini'
+"""Name of the optional album information files"""
+YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube\\.ini$')
+"""Regex pattern to test if a local file is a Youtube hook"""
+
+MAIN_IMAGES_PATH = path.abspath(pyntrest_config.YOUR_IMAGE_FOLDER)
+"""Path of the user's image folder"""
+STATIC_IMAGES_PATH = path.abspath(
+                            path.join(pyntrest_config.STATIC_PATH, 'images'))
+"""Path from where static images are served"""
+STATIC_FULLSIZE_IMAGES_PATH = path.join (STATIC_IMAGES_PATH, 'full_size')
+"""Path from where static full size images are served"""
+STATIC_ALBUM_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'album_thumbs')
+"""Path from where static album thumbnails are served"""
+STATIC_IMAGE_THUMBS_PATH = path.join (STATIC_IMAGES_PATH, 'image_thumbs')
+"""Path from where static image thumbnails are served"""
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
@@ -20,12 +36,24 @@ class PyntrestHandler ():
     
     pil_handler = None
     main_images_path = None
+    static_images_path = None
     
-    def __init__(self):
+    def __init__(self, main_images_path, static_images_path):
         """Constructor"""
+        
+        if main_images_path is None:
+            raise TypeError ( 'main_images_path not set.')
+        if static_images_path is None:
+            raise TypeError ( 'static_images_path not set.')
+        
+        main_images_path = path.abspath(main_images_path)
+        static_images_path = path.abspath(static_images_path)
+        static_images_path = path.join(static_images_path, 'images')
+        
         self.pil_handler = PILHandler (pyntrest_config.IMAGE_THUMB_WIDTH,
             pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
-        self.main_images_path = MAIN_IMAGES_PATH
+        self.main_images_path = main_images_path
+        self.static_images_path = static_images_path
     
     def set_main_images_path (self, main_images_path):
         """Reset main images path to another location. Used from within
@@ -98,7 +126,8 @@ class PyntrestHandler ():
         mkdirs(path.join (STATIC_IMAGE_THUMBS_PATH, local_albumpath_rel))
         
         album_title, album_description, _ = read_optional_metadata (
-                                                            local_albumpath_abs)    
+                                                            local_albumpath_abs,
+                                                            META_INI_FILE_PATTERN)    
     
         # setup sub albums
         subalbums = [] 
@@ -127,7 +156,8 @@ class PyntrestHandler ():
             local_albumpath_abs = path.join(local_albumpath_abs, breadcrumb_path)
             path_string = path_string + '/' + breadcrumb_path
             path_string = sub ('[/]+' , '/', path_string)
-            album_title, album_description, _ = read_optional_metadata (local_albumpath_abs)        
+            album_title, album_description, _ = read_optional_metadata (local_albumpath_abs,
+                                                                        META_INI_FILE_PATTERN)        
             web_path = WebPath(title=album_title, path=path_string)
             breadcrumbs.append(web_path)
         page_title = breadcrumbs[0].title
@@ -149,7 +179,8 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
-        meta_title, meta_description, meta_cover = read_optional_metadata (local_subalbumpath_abs)    
+        meta_title, meta_description, meta_cover = read_optional_metadata (local_subalbumpath_abs,
+                                                                           META_INI_FILE_PATTERN)    
         
         local_subalbumcover_abs = None
         

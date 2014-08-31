@@ -2,10 +2,10 @@
 
 from os import path
 
-YOUR_IMAGE_FOLDER = path.abspath('sample_images')
+YOUR_IMAGE_FOLDER = 'sample_images'
 """Set this absolute path to your local image folder. This folder will be scanned by Pyntrest."""
 
-STATIC_PATH = path.join(path.abspath(path.dirname(__file__)), 'static', 'pyntrest')
+STATIC_PATH = path.join(path.dirname(__file__), 'static', 'pyntrest')
 """Set this to the absolute path from where you want to server static files. 
 On a production server, make sure that this folder is writable to Pyntrest 
 and that you also copy the current data from 
@@ -26,10 +26,6 @@ WORDING_HOME = 'Home'
 IMAGE_FAVICON = 'favicon.png'
 """Name of favicon to use"""
 
-ALLOWED_IMAGE_PATTERN = '^.*\\.(png|jpg|gif)$'
-"""Filter settings for allowed images"""
-INFO_FILE_NAME = 'info.ini'
-"""Name of the optional album information files"""
 IMAGE_THUMB_WIDTH = 300
 """Maximum width of album and image thumbnails. Attention: If you change 
 this later, make sure to delete the content of <STATIC_PATH>/images/ so that 
@@ -44,4 +40,3 @@ in the web photo album. Depending on the source images this might not look
 that neat. Increase the upscale factor to make sure images are left a bit
 bigger. An upscale factor of 1.5 would mean that if you want your album
 thumbnail to be 400x100px the full image will be rescaled to 600x200"""
-

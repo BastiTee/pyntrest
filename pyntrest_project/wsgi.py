@@ -8,7 +8,10 @@ environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
 
 from django.core.wsgi import get_wsgi_application
 from pyntrest.pyntrest_core import PyntrestHandler
+from pyntrest.pyntrest_config import YOUR_IMAGE_FOLDER, STATIC_PATH
 
 # run Pyntrest's system initialization procedure
-PyntrestHandler().on_startup()
+pyntrest_handler = PyntrestHandler(YOUR_IMAGE_FOLDER, STATIC_PATH)
+pyntrest_handler.on_startup()
+
 application = get_wsgi_application()

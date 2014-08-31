@@ -2,7 +2,10 @@
 
 from PIL import Image
 from os import path
-from pyntrest_constants import GIF_PATTERN
+from re import compile
+
+GIF_PATTERN = compile('^.*\\.gif$')
+"""Pattern for GIF files"""
 
 class PILHandler ():
     """Instances of this class handle and wrap Pyntrest-specific operations

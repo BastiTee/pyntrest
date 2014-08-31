@@ -3,20 +3,22 @@
 from os import environ, path
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
 
-from django.http.response import HttpResponseRedirect, HttpResponse, Http404
 from pyntrest.pyntrest_core import PyntrestHandler
+from django.http.response import HttpResponseRedirect, HttpResponse, Http404
 from pyntrest.views import ViewHandler
 from django.http import HttpRequest
 import unittest
 
 class ViewsTestSuite(unittest.TestCase):
     
+    mip = path.join(path.abspath(path.dirname(__file__)), 'testdata')
+    sip = path.abspath(path.dirname(__file__))
+    
     def test_get (self):
         
-        pyntrest_h = PyntrestHandler ()
-        mip = path.join(path.abspath(path.dirname(__file__)), 'testdata')
-        pyntrest_h.set_main_images_path(mip)
-        views_h = ViewHandler ( pyntrest_h )
+        views_h = ViewHandler ()
+        pyntrest_handler = PyntrestHandler(self.mip, self.sip)
+        views_h.set_pyntrest_handler(pyntrest_handler)
         
         self.assertRaises(TypeError, views_h.get)
         

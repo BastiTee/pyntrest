@@ -1,12 +1,11 @@
 """Test suite for module views"""
 
-from os import environ, path
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
-
+from os import path
 from pyntrest.pyntrest_core import PyntrestHandler
 from django.http.response import HttpResponseRedirect, HttpResponse, Http404
 from pyntrest.views import ViewHandler
 from django.http import HttpRequest
+from shutil import rmtree
 import unittest
 
 class ViewsTestSuite(unittest.TestCase):
@@ -18,6 +17,7 @@ class ViewsTestSuite(unittest.TestCase):
         
         views_h = ViewHandler ()
         pyntrest_handler = PyntrestHandler(self.mip, self.sip)
+        self.addCleanup(rmtree, path.join(self.sip, 'images'), True)
         views_h.set_pyntrest_handler(pyntrest_handler)
         
         self.assertRaises(TypeError, views_h.get)

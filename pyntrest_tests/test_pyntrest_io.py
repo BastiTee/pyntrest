@@ -1,8 +1,6 @@
 """Test suite for module pyntrest_io"""
 
-from os import environ, path
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyntrest_project.settings')
-
+from os import path
 from tempfile import mkdtemp
 from pyntrest import pyntrest_io, pyntrest_core
 from shutil import rmtree

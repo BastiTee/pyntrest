@@ -20,7 +20,7 @@ Pyntrest is a Python/Django-based application that automatically generates a ful
 * It supports embedding YouTube videos by providing the youtube id of the video in a text file
 * Anything that Pyntrest relies on will be generated but if you decide to you can create thumbnails etc. yourself
 
-For folder or file management, i.e., the actual content management, you can use whatever you want to use (Dropbox, Drive, FTP, etc.) I, for example, use Dropbox to synchronize a folder on me webspace with my mobile device. If the image arrives at the webspace's folder, Pyntrest automatically detects the picture and it's instantly available on the corresponding web photo album. The same applies to new subalbums, optional album info files or youtube hooks.
+For folder or file management, i.e., the actual content management, you can use whatever you want to use (Dropbox, Drive, FTP, etc.) I, for example, use Dropbox to synchronize a folder on my webspace with my mobile device. If the image arrives at the webspace's folder, Pyntrest automatically detects the picture and it's instantly available on the corresponding web photo album. The same applies to new subalbums, optional album info files or youtube hooks.
 
 ## How to start
 
@@ -55,7 +55,7 @@ Pyntrest is licensed under [Apache Licence v2](http://www.apache.org/licenses/LI
 
 ## Screenshots
 
-Below you find the latest screenshots of Pyntrest
+Below you find the latest screenshots of Pyntrest. Temporarily you'll also find a fully functional demo deployed [here](http://pyntrest.nunki.uberspace.de/).
 
 ![Overview](doc/images/latest-screenshot-1.jpg)
 ![Image overlay](doc/images/latest-screenshot-2.jpg)

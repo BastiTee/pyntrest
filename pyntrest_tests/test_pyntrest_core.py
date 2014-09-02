@@ -31,7 +31,7 @@ class CoreTestSuite(unittest.TestCase):
         self.assertEquals(pyntrest_config.IMAGE_THUMB_HEIGHT, context['col_height'])
         self.assertEquals(pyntrest_config.WORDING_ALBUM, context['lang_albums'])
         self.assertEquals(pyntrest_config.WORDING_IMAGES, context['lang_images'])
-        self.assertEquals(pyntrest_config.IMAGE_FAVICON, context['favicon_name'])
+    
         self.assertEquals('title', context['page_title'])
         self.assertEquals('desc', context['album_description'])
         

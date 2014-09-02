@@ -162,7 +162,7 @@ class PyntrestHandler ():
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,
-                   'breadcrumbs' : breadcrumbs, 'favicon_name' : pyntrest_config.IMAGE_FAVICON}
+                   'breadcrumbs' : breadcrumbs}
         
         return context
     

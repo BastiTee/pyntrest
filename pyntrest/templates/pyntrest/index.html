@@ -16,9 +16,11 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
 	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
 	<!-- Icon -->
-	{% with 'pyntrest/res/'|add:favicon_name as favicon_static %}
-	   <link rel="icon" href="{% static favicon_static %}" type="image/png" />
-	{% endwith %}
+    <link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}" type="image/png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'pyntrest/res/favicon-apple.png' %}">
 	<!-- Javascript -->
 	<script src="{% static 'pyntrest/js/jquery-1.11.1.min.js' %}"></script>
 	<script src="{% static 'pyntrest/js/masonry-3.1.5.min.js' %}"></script>

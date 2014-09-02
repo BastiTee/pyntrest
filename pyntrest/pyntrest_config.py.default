@@ -23,8 +23,6 @@ WORDING_IMAGES = 'Images'
 """Heading for available images in the web album"""
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
-IMAGE_FAVICON = 'favicon.png'
-"""Name of favicon to use"""
 
 IMAGE_THUMB_WIDTH = 300
 """Maximum width of album and image thumbnails. Attention: If you change 

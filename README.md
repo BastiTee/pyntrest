@@ -55,7 +55,7 @@ Pyntrest is licensed under [Apache Licence v2](http://www.apache.org/licenses/LI
 
 ## Screenshots
 
-Below you find the latest screenshots of Pyntrest. Temporarily you'll also find a fully functional demo deployed [here](http://pyntrest.nunki.uberspace.de/).
+Below you find the latest screenshots of Pyntrest.
 
 ![Overview](doc/images/latest-screenshot-1.jpg)
 ![Image overlay](doc/images/latest-screenshot-2.jpg)

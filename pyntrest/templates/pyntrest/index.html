@@ -104,8 +104,8 @@
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
-                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}">Download</a></div>
                         </a>
+                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}">Download</a></div>
                         {% endwith %}
                      
 	                {% endif %}

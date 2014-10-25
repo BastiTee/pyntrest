@@ -10,6 +10,7 @@ class AlbumImage(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
     youtubeid = models.CharField(max_length=20)
+    description = models.CharField(max_length=5000)
 
 class Album(models.Model):
     """A web photo album"""

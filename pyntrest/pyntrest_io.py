@@ -74,9 +74,9 @@ def get_absolute_breadcrumb_filesystem_paths (url_path):
     else:
         return [''] + subpaths
     
-def read_optional_metadata (album_path, filename ):
+def read_optional_album_metadata (album_path, filename ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain 
-    optional album information"""
+    optional album information from a section named 'AlbumInfo'"""
     
     if not album_path:
         album_path = ''
@@ -105,6 +105,35 @@ def read_optional_metadata (album_path, filename ):
             album_cover = config.get('AlbumInfo', 'CoverImage')
         
     return album_title, album_description, album_cover
+
+def read_optional_image_metadata (album_path, filename ):
+    """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain 
+    optional image information from a section named 'ImageInfo'"""
+    
+    if not album_path:
+        album_path = ''
+    album_path = path.abspath(album_path)
+    if not path.exists(album_path):
+        raise TypeError('album_path does not exist!')
+    if not filename:
+        raise TypeError('filename not provided!')
+    
+    info_ini_file = path.join(album_path, filename)
+    
+    # set default values
+    image_infos = {}
+    
+    # try to read file
+    if path.exists(info_ini_file):
+        config = ConfigParser()
+        config.read(info_ini_file)
+        if config.has_section('ImageInfo'):
+            options = config.options('ImageInfo')
+            for option in options:
+                image_infos[option] = config.get('ImageInfo', option).strip()
+            
+    return image_infos
+
 
 def read_youtube_ini_file ( youtube_file_path ):
     """Checks for a YouTube video information file"""

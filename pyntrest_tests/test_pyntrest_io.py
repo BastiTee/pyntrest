@@ -78,44 +78,86 @@ class IoTestSuite(unittest.TestCase):
         self.assertEqual(['', 'test'], pyntrest_io.get_absolute_breadcrumb_filesystem_paths('//test/'))
         self.assertEqual(['', 'test', 'test2'], pyntrest_io.get_absolute_breadcrumb_filesystem_paths('//test/test2/index.html'))
         
-    def test_read_optional_metadata (self):
-        self.assertRaises(TypeError, pyntrest_io.read_optional_metadata)
-        self.assertRaises(TypeError, pyntrest_io.read_optional_metadata, 'asdasd_:asd')
-        self.assertRaises(TypeError, pyntrest_io.read_optional_metadata, 'asdasd_:asd', '')
-        a, b, c = pyntrest_io.read_optional_metadata('', pyntrest_core.META_INI_FILE_PATTERN)
+    def test_read_optional_album_metadata (self):
+        self.assertRaises(TypeError, pyntrest_io.read_optional_album_metadata)
+        self.assertRaises(TypeError, pyntrest_io.read_optional_album_metadata, 'asdasd_:asd')
+        self.assertRaises(TypeError, pyntrest_io.read_optional_album_metadata, 'asdasd_:asd', '')
+        a, b, c = pyntrest_io.read_optional_album_metadata('', pyntrest_core.META_INI_FILE_PATTERN)
         self.assertEqual(path.basename(path.abspath('')), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content = []
         dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN )
-        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_album_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual(path.basename(dirname), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('[AlbumInfo]')
         dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_album_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual(path.basename(dirname), a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('Title=Pyntrest')
         dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_album_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('', b)
         self.assertEqual(None, c)
         content.append('Description=Automated web photo albums for convenience lovers')
         dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_album_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('Automated web photo albums for convenience lovers', b)
         self.assertEqual(None, c)
         content.append('CoverImage=im-001.jpg')
         dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
-        a, b, c = pyntrest_io.read_optional_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        a, b, c = pyntrest_io.read_optional_album_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
         self.assertEqual('Pyntrest', a)
         self.assertEqual('Automated web photo albums for convenience lovers', b)
         self.assertEqual('im-001.jpg', c)      
+    
+    def test_read_optional_image_metadata (self):
+        self.assertRaises(TypeError, pyntrest_io.read_optional_image_metadata)
+        self.assertRaises(TypeError, pyntrest_io.read_optional_image_metadata, 'asdasd_:asd')
+        self.assertRaises(TypeError, pyntrest_io.read_optional_image_metadata, 'asdasd_:asd', '')
+        image_infos = pyntrest_io.read_optional_image_metadata('', pyntrest_core.META_INI_FILE_PATTERN)
+        self.assertEqual({}, image_infos)
+        
+        content = []
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN )
+        image_infos = pyntrest_io.read_optional_image_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        self.assertEqual({}, image_infos)
+        
+        content.append('[AlbumInfo]')
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        image_infos = pyntrest_io.read_optional_image_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        self.assertEqual({}, image_infos)
+        
+        content.append('[ImageInfo]')
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        image_infos = pyntrest_io.read_optional_image_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        self.assertEqual({}, image_infos)
+        try:
+            image_infos['sdoasdma'];
+            self.fail()
+        except KeyError:
+            pass # Expected
+        
+        content.append('im-001.jpg=test-message')
+        content.append('im-001.youtube.ini=test-message-2')
+        content.append('im-002.jpg=       test-message-3    ')
+        dirname = self.create_temp_file_with_content(content, pyntrest_core.META_INI_FILE_PATTERN)
+        image_infos = pyntrest_io.read_optional_image_metadata(dirname, pyntrest_core.META_INI_FILE_PATTERN )
+        self.assertNotEqual({}, image_infos)
+        try:
+            image_infos['sdoasdma'];
+            self.fail()
+        except KeyError:
+            pass # Expected
+        self.assertEqual('test-message', image_infos['im-001.jpg']);
+        self.assertEqual('test-message-2', image_infos['im-001.youtube.ini']);   
+        self.assertEqual('test-message-3', image_infos['im-002.jpg']);   
        
     def test_read_youtube_ini_file (self):
         ini_file = 'my-test.ini'

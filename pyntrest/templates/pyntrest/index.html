@@ -67,7 +67,7 @@
 						<div class="tile-placeholder" style="width: {{ col_width }}px; height: {{ col_height }}px;"></div>
 					{% endif %}
 					</a>
-					<div class='tile-description'>{{album.title}}</div>
+					<div class='tile-overlay'>{{album.title}}</div>
 					
 				</div>
 				{% endfor %}
@@ -88,24 +88,28 @@
 				    {% if image.youtubeid %}
 		
 	   	                
-                        <a class="fancybox" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+                        <a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" 
                         data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
                         width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
-                        <div class='tile-description'>Video</div>
-					    </a>
+   					    </a>
+                        <div class='tile-overlay'>Video</div>
 					    
 	                {% else %}
 	                    
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
-                        <a href="{% static image_full %}" class="fancybox" rel="group">
+                        <a href="{% static image_full %}" title="{{ image.description }}" class="fancybox" rel="group" >
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
                         </a>
                         <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}">Download</a></div>
+                        {% if image.description %}
+                            <div class='tile-info'>&#9998;</div>
+                        {% endif %}
+                        
                         {% endwith %}
                      
 	                {% endif %}
@@ -144,12 +148,18 @@
                  nextEffect  : 'fade',
                  prevEffect  : 'fade',
                  padding     : 3,
+                 afterLoad: function() {
+                	   this.title = '<div class="tile-details">' + this.title + '</div>';
+                 },
                  helpers     : {
                 	media : {},
                     overlay : {
                         css : {
                             'background' : 'rgba(0, 0, 0, 0.8)'
                         }
+                    },
+                	title: {
+                        type: 'outside'
                     }
                 }
             });

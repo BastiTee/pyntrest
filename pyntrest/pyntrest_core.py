@@ -139,10 +139,6 @@ class PyntrestHandler ():
             
         # update image descriptions
         image_descriptions = read_optional_image_metadata(local_albumpath_abs, META_INI_FILE_PATTERN)
-                                
-        # sort images by path
-        images = sorted(images, key=lambda albumimage: albumimage.location,
-                        reverse=False)
         for image in images:
             basename = path.basename(image.location)
             try:
@@ -151,6 +147,10 @@ class PyntrestHandler ():
                 image.description = image_description
             except KeyError:
                 pass # Ignore
+                                
+        # sort images by path
+        images = sorted(images, key=lambda albumimage: albumimage.location,
+                        reverse=False)
         
         # setup breadcrumb
         breadcrumbs = []

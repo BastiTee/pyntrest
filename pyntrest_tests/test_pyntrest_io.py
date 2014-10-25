@@ -156,6 +156,7 @@ class IoTestSuite(unittest.TestCase):
         except KeyError:
             pass # Expected
         self.assertEqual('test-message', image_infos['im-001.jpg']);
+        self.assertEqual('test-message', image_infos['IM-001.JPG'.lower()]);
         self.assertEqual('test-message-2', image_infos['im-001.youtube.ini']);   
         self.assertEqual('test-message-3', image_infos['im-002.jpg']);   
        

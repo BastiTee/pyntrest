@@ -143,7 +143,7 @@ class PyntrestHandler ():
             basename = path.basename(image.location)
             try:
                 image_description = image_descriptions[basename]
-                print basename
+                #print basename
                 image.description = image_description
             except KeyError:
                 pass # Ignore

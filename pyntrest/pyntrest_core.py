@@ -140,9 +140,7 @@ class PyntrestHandler ():
         # update image descriptions
         image_descriptions = read_optional_image_metadata(local_albumpath_abs, META_INI_FILE_PATTERN)
         for image in images:
-            basename = path.basename(image.location)
-            if not image_descriptions is {}:
-                print basename
+            basename = path.basename(image.location).lower()
             try:
                 image_description = image_descriptions[basename]
                 #print basename

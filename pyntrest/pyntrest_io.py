@@ -131,8 +131,10 @@ def read_optional_image_metadata (album_path, filename ):
             options = config.options('ImageInfo')
             for option in options:
                 #print 'Adding detailed info for file {0}'.format(option)
-                image_infos[option.lower()] = config.get('ImageInfo', option).strip()
-            
+                info = config.get('ImageInfo', option).strip()
+                image_infos[option.lower()] = info
+        
+    print image_infos
     return image_infos
 
 

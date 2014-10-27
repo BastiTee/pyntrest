@@ -16,7 +16,7 @@ Pyntrest is a Python/Django-based application that automatically generates a ful
 
 ### The optional stuff
 
-* An info.ini file can be created per web photo album to provide more information such as title, description or a cover image
+* An info.ini file can be created per web photo album to provide more information such as title, description, a cover image and details for individual photos or videos
 * It supports embedding YouTube videos by providing the youtube id of the video in a text file
 * Anything that Pyntrest relies on will be generated but if you decide to you can create thumbnails etc. yourself
 

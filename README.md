@@ -47,8 +47,10 @@ Pyntrest relies on a number of awesome open source projects:
 * [Masonry - Cascading grid layout library](http://masonry.desandro.com/)
 * [fancyBox - Fancy jQuery Lightbox Alternative](http://fancyapps.com/fancybox/)
 * [jQuery Lazy - Delayed image loading plugin for jQuery](http://jquery.eisbehr.de/lazy/)
+* [jQuery Lazy - Delayed image loading plugin for jQuery](http://jquery.eisbehr.de/lazy/)
+* [FontAwesome - The iconic font and CSS toolkit](http://fontawesome.io)
 * [html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
-
+    
 Furthermore I've incorporated numerous images for testing purposes. All those images are licensed under [CC0 1.0 Universal (CC0 1.0) ](http://creativecommons.org/publicdomain/zero/1.0/) and were fetched at http://unsplash.com/
 
 Pyntrest is licensed under [Apache Licence v2](http://www.apache.org/licenses/LICENSE-2.0.html). 

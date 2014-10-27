@@ -15,7 +15,8 @@
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
 	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
-	<!-- Icon -->
+	<link href="{% static 'pyntrest/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icon -->
     <link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}" type="image/png" />
     <link rel="apple-touch-icon" sizes="57x57" href="{% static 'pyntrest/res/favicon-apple.png' %}">
     <link rel="apple-touch-icon" sizes="114x114" href="{% static 'pyntrest/res/favicon-apple.png' %}">
@@ -87,7 +88,6 @@
 					<div class="tile" style="width={{ image.width }}; height={{ image.height }};">	 
 				    {% if image.youtubeid %}
 		
-	   	                
                         <a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" 
@@ -95,8 +95,15 @@
                         width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
    					    </a>
-                        <div class='tile-overlay'>Video</div>
-					    
+   					    {% if image.description %}
+                            <div class='tile-info'>
+                                <i class="fa fa-youtube-play" ></i>
+                                <i class="fa fa-quote-left" ></i>
+                            </div>
+                        {% else %}
+                            <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
+                        {% endif %}
+                        
 	                {% else %}
 	                    
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
@@ -105,10 +112,12 @@
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
                         </a>
-                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}">Download</a></div>
                         {% if image.description %}
-                            <div class='tile-info'>&#9998;</div>
+                            <div class='tile-info'>
+                                <i class="fa fa-quote-left" ></i>
+                            </div>
                         {% endif %}
+                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
                         
                         {% endwith %}
                      

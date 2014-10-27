@@ -139,8 +139,8 @@ a {
     position: absolute;
     bottom: 0px;
     color: #fff;    
-    font-size: 130%;
     width: 100%;
+    font-size: 90%;
     padding-left: 5px;
 }
 
@@ -155,7 +155,7 @@ a {
     position: absolute;
     bottom: 0px;
     left: 0px;
-    padding-left: 5px;
+    padding-left: 0px;
     background-color: #F9F9F9;
     opacity: 0.0;
     filter: alpha(opacity = 0);

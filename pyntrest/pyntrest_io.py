@@ -92,6 +92,7 @@ def read_optional_album_metadata (album_path, filename ):
     album_title = path.basename(album_path)
     album_description = ''
     album_cover = None
+    album_sorted_rev = False
     
     # try to read file
     if path.exists(info_ini_file):
@@ -103,8 +104,12 @@ def read_optional_album_metadata (album_path, filename ):
             album_description = config.get('AlbumInfo', 'Description')
         if config.has_option('AlbumInfo', 'CoverImage'):
             album_cover = config.get('AlbumInfo', 'CoverImage')
+        if config.has_option('AlbumInfo', 'Reverse'):
+            reverse = config.get('AlbumInfo', 'Reverse')
+            if reverse == 'True':
+                album_sorted_rev = True
         
-    return album_title, album_description, album_cover
+    return album_title, album_description, album_cover, album_sorted_rev
 
 def read_optional_image_metadata (album_path, filename ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain 

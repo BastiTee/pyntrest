@@ -21,6 +21,7 @@ class Album(models.Model):
     cover = models.FilePathField()
     width = models.IntegerField()
     height = models.IntegerField()
+    reversed = models.BooleanField()
 
 class WebPath(models.Model):
     """A relative, described web path"""

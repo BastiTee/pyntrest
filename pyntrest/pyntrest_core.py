@@ -119,7 +119,7 @@ class PyntrestHandler ():
         mkdirs(path.join (self.static_fullsize_path, local_albumpath_rel))
         mkdirs(path.join (self.static_ithumbs_path, local_albumpath_rel))
         
-        album_title, album_description, _, reversed_sorting = read_optional_album_metadata (
+        album_title, album_description, album_cover, reversed_sorting, hide_cover = read_optional_album_metadata (
                                                             local_albumpath_abs,
                                                             META_INI_FILE_PATTERN)    
     
@@ -135,7 +135,13 @@ class PyntrestHandler ():
         # setup images
         images = []
         for image_name in listdir(local_albumpath_abs):
-            self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
+            if (album_cover is None or hide_cover is False):
+                self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
+            else:
+                if album_cover == image_name:
+                    print 'Album cover \'{0}\' set for hiding!'.format(album_cover)
+                else:
+                    self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
             
         # update image descriptions
         image_descriptions = read_optional_image_metadata(local_albumpath_abs, META_INI_FILE_PATTERN)
@@ -151,7 +157,7 @@ class PyntrestHandler ():
         # sort images by path
         images = sorted(images, key=lambda albumimage: albumimage.location,
                         reverse=reversed_sorting)
-        
+                
         # setup breadcrumb
         breadcrumbs = []
         breadcrumb_paths = get_absolute_breadcrumb_filesystem_paths (request_path)  
@@ -161,7 +167,7 @@ class PyntrestHandler ():
             local_albumpath_abs = path.join(local_albumpath_abs, breadcrumb_path)
             path_string = path_string + '/' + breadcrumb_path
             path_string = sub ('[/]+' , '/', path_string)
-            album_title, album_description, _, _ = read_optional_album_metadata (local_albumpath_abs,
+            album_title, album_description, _, _, _ = read_optional_album_metadata (local_albumpath_abs,
                                                                         META_INI_FILE_PATTERN)        
             web_path = WebPath(title=album_title, path=path_string)
             breadcrumbs.append(web_path)
@@ -184,7 +190,7 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
-        meta_title, meta_description, meta_cover, _ = read_optional_album_metadata (local_subalbumpath_abs,
+        meta_title, meta_description, meta_cover, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
                                                                            META_INI_FILE_PATTERN)    
         
         local_subalbumcover_abs = None

@@ -28,12 +28,30 @@ Basic instructions are as follows:
 
 * Install Python 2.7.x
 * Clone or download Pyntrest
-* Go to the downloaded folder and run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed. Attention: On unix you also need to have `gcc` and `python-devel` packages installed in order to compile `pillow`)
+* Go to the downloaded folder and run `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed, Attention: On unix you also need to have `gcc` and `python-devel` packages installed in order to compile `pillow`)
 * If that does not work, then manually install [Django web framework](https://pypi.python.org/pypi/Django) and [Pillow](https://pypi.python.org/pypi/Pillow) (please refer to `requirements.txt` for correct versions, you can also use PIL instead of Pillow if you prefer)
+* _Recommended_: Run `python manage.py test` to test the installation (see next chapter for possible solutions on errors)
 * Run `python manage.py runserver` (on image folders with lots of images this will take a while since Pyntrest performs a startup scan of your folder and creates all the necessary thumbnails)
 * Open `http://localhost:8000` in a browser and enjoy
 
 What you should see is a web photo album that is automatically generated from the local folder `<pyntrest>/sample_images`. Of course you can also use your own images and brandings. For that please refer to `<pyntrest>/pyntrest/pyntrest_config.py` and change the settings as you desire. Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_wsgi. Hence it is possible to use it in combination with production servers. 
+
+## Common problems on startup
+
+ * If tests fail with an error like the one below, then you need to install `libjpeg-devel` for your platform and rerun the Pillow installation 
+
+```
+E.........EEEE.E
+======================================================================
+ERROR: test (pyntrest_tests.test_pyntrest_core.CoreTestSuite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  ...
+IOError: decoder jpeg not available
+```
+	
+	
+
 
 ## Project info
 

@@ -38,11 +38,9 @@ class ViewsTestSuite(unittest.TestCase):
         
         request = HttpRequest()
         request.path = '/notexistingalbum'
-        try:
-            views_h.get(request)
-            self.fail()
-        except Http404:
-            pass
+        response = type(views_h.get(request))
+        self.assertIs(HttpResponseRedirect, response)
+        self.assertEquals(302, response.status_code)        
         
         request = HttpRequest()
         request.path = '/'

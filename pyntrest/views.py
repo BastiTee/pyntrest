@@ -35,7 +35,8 @@ class ViewHandler ():
             request.path = request.path + '/'
     
         if not self.pyntrest_handler.check_if_album_exists(request.path):
-            raise Http404
+            # If path does not exist, redirect to root album 
+            return redirect('/')
         else:
             if self.pyntrest_handler:
                 view_context = self.pyntrest_handler.generate_view_context(request.path)

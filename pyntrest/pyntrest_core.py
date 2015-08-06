@@ -139,7 +139,8 @@ class PyntrestHandler ():
                 self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
             else:
                 if album_cover == image_name:
-                    print 'Album cover \'{0}\' set for hiding!'.format(album_cover)
+                    #print 'Album cover \'{0}\' set for hiding!'.format(album_cover)
+                    pass # ignore
                 else:
                     self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
             

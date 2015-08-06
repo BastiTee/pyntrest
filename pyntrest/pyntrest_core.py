@@ -11,7 +11,7 @@ from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 
-IMAGE_FILE_PATTERN = compile('^.*\\.(png|jpg|gif)$')
+IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
 META_INI_FILE_PATTERN = 'info.ini'
 """Name of the optional album information files"""

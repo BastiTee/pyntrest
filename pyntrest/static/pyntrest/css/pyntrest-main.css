@@ -123,6 +123,15 @@ a {
         255, .5) 5px, rgba(255, 255, 255, .5) 10px);
 }
 
+.tile-modified {
+    position: absolute;
+    text-align: right;
+    bottom: 2px;
+    color: #09c;
+    width: 100%;
+    font-size: 65%;
+}
+
 .tile-overlay {
     text-align: center;
     position: absolute;

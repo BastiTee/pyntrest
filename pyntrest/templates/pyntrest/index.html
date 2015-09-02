@@ -59,6 +59,7 @@
 				{% for album in subalbums %}
 				<div class="tile" style="width={{ col_width }}; height={{ col_height }};">
 				
+
 				    <a href="{{ request.path }}{{ album.path }}"> 
 					{% if album.cover %}
 						{% with 'pyntrest/images/album_thumbs/'|add:album.cover as album_thumb %}
@@ -69,6 +70,15 @@
 					{% endif %}
 					</a>
 					<div class='tile-overlay'>{{album.title}}</div>
+					{% if album.modified %}
+						<div class='tile-modified'>
+							<span class="fa-stack">
+            	           		<i class="fa fa-circle fa-stack-2x "></i>
+  								<i class="fa fa-plus-circle fa-stack-2x  fa-inverse"></i>
+            	           	</span>
+ 			         	</div>
+					{% endif %}
+					
 					
 				</div>
 				{% endfor %}
@@ -122,6 +132,14 @@
                         {% endwith %}
                      
 	                {% endif %}
+	                {% if image.modified %}
+						<div class='tile-modified'>
+							<span class="fa-stack">
+            	           		<i class="fa fa-circle fa-stack-2x "></i>
+  								<i class="fa fa-plus-circle fa-stack-2x  fa-inverse"></i>
+            	           	</span>
+ 			         	</div>
+					{% endif %}
 					</div>
 				{% endfor %}
             </div>

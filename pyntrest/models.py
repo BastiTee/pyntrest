@@ -11,6 +11,7 @@ class AlbumImage(models.Model):
     height = models.IntegerField()
     youtubeid = models.CharField(max_length=20)
     description = models.CharField(max_length=5000)
+    modified = models.BooleanField()
 
 class Album(models.Model):
     """A web photo album"""
@@ -22,6 +23,7 @@ class Album(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
     reversed = models.BooleanField()
+    modified = models.BooleanField()
 
 class WebPath(models.Model):
     """A relative, described web path"""

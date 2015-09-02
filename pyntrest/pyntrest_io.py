@@ -4,6 +4,7 @@ of album requests."""
 from ConfigParser import ConfigParser
 from re import sub
 from os import path, makedirs, listdir
+from time import time
 
 def mkdirs (directory):
     """Create directory structure if it does not exist"""
@@ -164,3 +165,18 @@ def read_youtube_ini_file ( youtube_file_path ):
         youtube_id = config.get('VideoInfo', 'YoutubeId')
         return youtube_id
     return ''
+
+def is_modified ( abs_path, max_age=48, feature_enabled=False ):
+    """Check if a file was created between now and now minus the given
+    max age in hours. Return false if this feature is not configured."""
+    
+    if not feature_enabled:
+        return False
+    
+    oldest_epoch = time() - ( max_age * 60.0 * 60.0 )
+    is_modified = False
+    if path.getctime(abs_path) >= oldest_epoch or path.getmtime(abs_path) >= oldest_epoch:
+        is_modified = True
+
+    return is_modified
+    

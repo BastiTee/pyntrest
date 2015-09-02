@@ -7,7 +7,8 @@ from re import sub, compile
 import pyntrest_config
 from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
-    get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata)
+    get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
+    is_modified)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 
@@ -191,6 +192,8 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
+        modified = is_modified( local_subalbumpath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+                                              , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
         meta_title, meta_description, meta_cover, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
                                                                            META_INI_FILE_PATTERN)    
         
@@ -221,7 +224,8 @@ class PyntrestHandler ():
             # setup template context
             subalbum = Album(title=meta_title, description=meta_description,
                       path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
-                      height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None)    
+                      height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None,
+                      modified=modified)    
             
         else:
             # otherwise prepare it for static serving 
@@ -239,7 +243,7 @@ class PyntrestHandler ():
             subalbum = Album(title=meta_title, description=meta_description,
                       path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT,
-                      cover=thumbnail_webpath)
+                      cover=thumbnail_webpath, modified=modified)
     
         # append subalbum to context
         subalbums.append(subalbum)
@@ -251,7 +255,8 @@ class PyntrestHandler ():
         to the provided image list."""
         
         local_imagepath_abs = path.join(local_albumpath_abs, image_name)
-    
+        modified = is_modified( local_imagepath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+                                              , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
         if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
             
             static_fullsize_path_abs = path.join (
@@ -269,7 +274,8 @@ class PyntrestHandler ():
     
             # add image to template context
             albumimage = AlbumImage(location=path.join(local_albumpath_rel,
-                        image_name), title=image_name, width=width, height=height)
+                        image_name), title=image_name, width=width, height=height,
+                        modified=modified)
             images.append(albumimage)  
               
         elif YOUTUBE_INI_FILE_PATTERN.match(local_imagepath_abs):
@@ -280,5 +286,6 @@ class PyntrestHandler ():
             albumimage = AlbumImage(location=path.join(
                         local_albumpath_rel, image_name), title=image_name,
                         width=pyntrest_config.IMAGE_THUMB_WIDTH,
-                        height=thumb_height, youtubeid=youtube_id)
+                        height=thumb_height, youtubeid=youtube_id,
+                        modified=modified)
             images.append(albumimage)

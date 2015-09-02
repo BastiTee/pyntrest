@@ -42,3 +42,8 @@ in the web photo album. Depending on the source images this might not look
 that neat. Increase the upscale factor to make sure images are left a bit
 bigger. An upscale factor of 1.5 would mean that if you want your album
 thumbnail to be 400x100px the full image will be rescaled to 600x200"""
+HIGHLIGHT_NEW_IMAGES = True
+"""If true, new images will be highlighted in Pyntrest"""
+MAX_AGE_OF_NEW_IMAGES_H = 48
+"""Images with a time stamp newer or equal to the current time minus the given 
+number of hours will be considered as new and therefore highlighted"""

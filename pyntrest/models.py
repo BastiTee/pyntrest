@@ -24,6 +24,7 @@ class Album(models.Model):
     height = models.IntegerField()
     reversed = models.BooleanField()
     modified = models.BooleanField()
+    last_modified = models.IntegerField()
 
 class WebPath(models.Model):
     """A relative, described web path"""

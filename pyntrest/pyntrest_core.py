@@ -120,9 +120,8 @@ class PyntrestHandler ():
         mkdirs(path.join (self.static_fullsize_path, local_albumpath_rel))
         mkdirs(path.join (self.static_ithumbs_path, local_albumpath_rel))
         
-        album_title, album_description, album_cover, reversed_sorting, hide_cover = read_optional_album_metadata (
-                                                            local_albumpath_abs,
-                                                            META_INI_FILE_PATTERN)    
+        (album_title, album_description, album_cover, reversed_sorting, 
+         hide_cover, mods_on_top) = read_optional_album_metadata ( local_albumpath_abs, META_INI_FILE_PATTERN)    
     
         # setup sub albums
         subalbums = [] 
@@ -130,8 +129,10 @@ class PyntrestHandler ():
             self.process_subalbum (subalbums, subalbum_name, local_albumpath_rel, local_albumpath_abs)
         
         # sort subalbums by path 
-        subalbums = sorted(subalbums, key=lambda subalbum: subalbum.path,
-                           reverse=False)
+        if (mods_on_top):
+            subalbums = sorted(subalbums, key=lambda subalbum: subalbum.last_modified, reverse=True)
+        else:
+            subalbums = sorted(subalbums, key=lambda subalbum: subalbum.path, reverse=False)
         
         # setup images
         images = []
@@ -169,7 +170,7 @@ class PyntrestHandler ():
             local_albumpath_abs = path.join(local_albumpath_abs, breadcrumb_path)
             path_string = path_string + '/' + breadcrumb_path
             path_string = sub ('[/]+' , '/', path_string)
-            album_title, album_description, _, _, _ = read_optional_album_metadata (local_albumpath_abs,
+            album_title, album_description, _, _, _, _ = read_optional_album_metadata (local_albumpath_abs,
                                                                         META_INI_FILE_PATTERN)        
             web_path = WebPath(title=album_title, path=path_string)
             breadcrumbs.append(web_path)
@@ -192,9 +193,9 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
-        modified = is_modified( local_subalbumpath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+        modified, lastmodified = is_modified( local_subalbumpath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
                                               , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
-        meta_title, meta_description, meta_cover, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
+        meta_title, meta_description, meta_cover, _, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
                                                                            META_INI_FILE_PATTERN)    
         
         local_subalbumcover_abs = None
@@ -225,7 +226,7 @@ class PyntrestHandler ():
             subalbum = Album(title=meta_title, description=meta_description,
                       path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None,
-                      modified=modified)    
+                      modified=modified, last_modified=lastmodified)    
             
         else:
             # otherwise prepare it for static serving 
@@ -243,7 +244,7 @@ class PyntrestHandler ():
             subalbum = Album(title=meta_title, description=meta_description,
                       path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT,
-                      cover=thumbnail_webpath, modified=modified)
+                      cover=thumbnail_webpath, modified=modified, last_modified=lastmodified)
     
         # append subalbum to context
         subalbums.append(subalbum)
@@ -255,7 +256,7 @@ class PyntrestHandler ():
         to the provided image list."""
         
         local_imagepath_abs = path.join(local_albumpath_abs, image_name)
-        modified = is_modified( local_imagepath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+        modified, _ = is_modified( local_imagepath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
                                               , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
         if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
             

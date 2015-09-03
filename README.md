@@ -36,6 +36,38 @@ Basic instructions are as follows:
 
 What you should see is a web photo album that is automatically generated from the local folder `<pyntrest>/sample_images`. Of course you can also use your own images and brandings. For that please refer to `<pyntrest>/pyntrest/pyntrest_config.py` and change the settings as you desire. Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_wsgi. Hence it is possible to use it in combination with production servers. 
 
+## Options for folders 
+
+Subfolders and/or the root of your local image folder can be enriched and configured by providing an `info.ini` file (see  `<pyntrest>/sample_images` for some examples. The following options can be set. 
+
+### AlbumInfo Section 
+
+In the album info section you can provide detailed information about your image. The section is labeled `[AlbumInfo]`. After the section label you can provide various options in the form `<Key>=<Value>` to configure the album. Valid options are:
+
+* `Title` - Title of the album. Will appear in the album header. 
+* `Description` - Short description of the album. Will appear in the album header. 
+* `CoverImage` - Image to be used as album cover. If not set, the first image will be used. If no image is available, then a placeholder will be created. 
+* `HideCover` - Allowed values are `True` or `False`. If set to true, the cover image will not appear within the sub album. If not set or set to false, the default (cover not hidden) will be used.  
+* `ReverseImages` - Allowed values are `True` or `False`. If set to true, the album images will be sorted in descending order. If not set or set to false, the default (ascending order) will be used. This has no effect on the folders within the album.
+* `ModifiedAlbumsOnTop` - Allowed values are `True` or `False`. If set to true, the sub album folders will be sorted so that the album is on top that was modified or created last. If not set or set to false, the default order (ascending by name) will be used. This has no effect on the images within the album.
+
+	[AlbumInfo]
+	Title=Pyntrest
+	Description=Automated web photo albums for convenience lovers
+	CoverImage=im-001.jpg
+	HideCover=False
+	ReverseImages=True
+	ModifiedAlbumsOnTop=False
+
+### ImageInfo Section 
+
+In the image info section you can provide details for individual photos. The section is labeled `[ImageInfo]`. After the section label you can simply provide `<Image-Filename>=<Your-Description>` to add an image description. 
+
+	[ImageInfo]
+	image-01.jpg=My favourite image! 
+	im-0041.youtube.ini=This funny video was made in 2009. 
+	image-02.jpeg=Oh! Look at Johnnys face :) 
+
 ## Common problems on startup
 
  * If tests fail with an error like the one below, then you need to install `libjpeg-devel` for your platform and rerun the Pillow installation 
@@ -49,9 +81,6 @@ Traceback (most recent call last):
   ...
 IOError: decoder jpeg not available
 ```
-	
-	
-
 
 ## Project info
 

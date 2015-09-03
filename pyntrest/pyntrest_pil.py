@@ -23,7 +23,7 @@ class PILHandler ():
         
         self.default_width = default_width
         self.default_height = default_height
-        self.upscale_factor = upscale_factor        
+        self.upscale_factor = upscale_factor
 
     def rescale_image_dimensions_to_desired_width (self, width, height, 
                                                    des_width, upscale_factor):

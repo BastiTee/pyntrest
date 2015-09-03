@@ -95,6 +95,7 @@ def read_optional_album_metadata (album_path, filename ):
     album_cover = None
     album_sorted_rev = False
     album_hide_cover = False
+    modified_albums_on_top = False
     
     # try to read file
     if path.exists(info_ini_file):
@@ -106,17 +107,21 @@ def read_optional_album_metadata (album_path, filename ):
             album_description = config.get('AlbumInfo', 'Description')
         if config.has_option('AlbumInfo', 'CoverImage'):
             album_cover = config.get('AlbumInfo', 'CoverImage')
-        if config.has_option('AlbumInfo', 'Reverse'):
-            reverse = config.get('AlbumInfo', 'Reverse')
+        if config.has_option('AlbumInfo', 'ReverseImages'):
+            reverse = config.get('AlbumInfo', 'ReverseImages')
             if reverse == 'True':
                 album_sorted_rev = True
         if config.has_option('AlbumInfo', 'HideCover'):
             hidecover = config.get('AlbumInfo', 'HideCover')
             if hidecover == 'True':
                 album_hide_cover = True
+        if config.has_option('AlbumInfo', 'ModifiedAlbumsOnTop'):
+            modtop = config.get('AlbumInfo', 'ModifiedAlbumsOnTop')
+            if modtop == 'True':
+                modified_albums_on_top = True
         
     return (album_title, album_description, album_cover, album_sorted_rev,
-            album_hide_cover)
+            album_hide_cover, modified_albums_on_top)
 
 def read_optional_image_metadata (album_path, filename ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain 
@@ -178,5 +183,7 @@ def is_modified ( abs_path, max_age=48, feature_enabled=False ):
     if path.getctime(abs_path) >= oldest_epoch or path.getmtime(abs_path) >= oldest_epoch:
         is_modified = True
 
-    return is_modified
+    # remind last change 
+    last_change = max(path.getctime(abs_path), path.getmtime(abs_path))
+    return is_modified, last_change
     

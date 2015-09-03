@@ -2,8 +2,8 @@
 of album requests."""
 
 from ConfigParser import ConfigParser
-from re import sub
-from os import path, makedirs, listdir
+from re import sub, compile, match
+from os import path, makedirs, listdir, walk 
 from time import time
 
 def mkdirs (directory):
@@ -15,7 +15,26 @@ def mkdirs (directory):
     directory_abs = path.abspath(directory)
     if not path.exists(directory_abs):
         makedirs(directory_abs)
+
+def findfiles (absolute_path, filter_regex=None, doprint=False):
+    """Lists all files in given directory path recursively."""
         
+    filelist = []
+    for dirname, _, filenames in walk(absolute_path):
+        for filename in filenames:
+            absolute_path = path.join(dirname, filename)
+            if filter_regex != None:
+                matching = match(filter_regex, absolute_path.lower())
+                if matching != None:
+                    filelist.append(absolute_path)
+                    if (doprint): 
+                        print absolute_path
+            else:
+                filelist.append(absolute_path)
+                if (doprint): 
+                    print absolute_path
+    return filelist
+     
 def get_immediate_subdirectories(file_path):
     """Return the sub-directories of a given file path, but 
     only the first level."""
@@ -154,7 +173,6 @@ def read_optional_image_metadata (album_path, filename ):
     #print image_infos
     return image_infos
 
-
 def read_youtube_ini_file ( youtube_file_path ):
     """Checks for a YouTube video information file"""
 
@@ -171,7 +189,7 @@ def read_youtube_ini_file ( youtube_file_path ):
         return youtube_id
     return ''
 
-def is_modified ( abs_path, max_age=48, feature_enabled=False ):
+def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_file_pattern=compile('^.*$') ):
     """Check if a file was created between now and now minus the given
     max age in hours. Return false if this feature is not configured."""
     
@@ -180,10 +198,20 @@ def is_modified ( abs_path, max_age=48, feature_enabled=False ):
     
     oldest_epoch = time() - ( max_age * 60.0 * 60.0 )
     is_modified = False
-    if path.getctime(abs_path) >= oldest_epoch or path.getmtime(abs_path) >= oldest_epoch:
-        is_modified = True
-
-    # remind last change 
-    last_change = max(path.getctime(abs_path), path.getmtime(abs_path))
-    return is_modified, last_change
+    last_change = 0
     
+    # on files just check the file .. 
+    if is_file:
+        if path.getctime(abs_path) >= oldest_epoch or path.getmtime(abs_path) >= oldest_epoch:
+            is_modified = True
+        last_change = max(path.getctime(abs_path), path.getmtime(abs_path))
+    # on folders find all images file and check those for changes ( if we would just inspect
+    # the folder we'll get updates, e.g., simply because the folder was touched. 
+    else:
+        files = findfiles( abs_path, image_file_pattern, doprint=False)
+        for subfile in files:
+            if path.getctime(subfile) >= oldest_epoch or path.getmtime(subfile) >= oldest_epoch:
+                is_modified = True
+            last_change = max(last_change, path.getctime(abs_path), path.getmtime(abs_path))
+    
+    return is_modified, last_change

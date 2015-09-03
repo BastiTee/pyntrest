@@ -193,8 +193,8 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
-        modified, lastmodified = is_modified( local_subalbumpath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
-                                              , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
+        modified, lastmodified = is_modified( local_subalbumpath_abs, False, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+                                              , pyntrest_config.HIGHLIGHT_NEW_IMAGES, IMAGE_FILE_PATTERN)
         meta_title, meta_description, meta_cover, _, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
                                                                            META_INI_FILE_PATTERN)    
         
@@ -256,7 +256,7 @@ class PyntrestHandler ():
         to the provided image list."""
         
         local_imagepath_abs = path.join(local_albumpath_abs, image_name)
-        modified, _ = is_modified( local_imagepath_abs, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
+        modified, _ = is_modified( local_imagepath_abs, True, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
                                               , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
         if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
             

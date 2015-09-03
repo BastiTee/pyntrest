@@ -51,22 +51,26 @@ In the album info section you can provide detailed information about your image.
 * `ReverseImages` - Allowed values are `True` or `False`. If set to true, the album images will be sorted in descending order. If not set or set to false, the default (ascending order) will be used. This has no effect on the folders within the album.
 * `ModifiedAlbumsOnTop` - Allowed values are `True` or `False`. If set to true, the sub album folders will be sorted so that the album is on top that was modified or created last. If not set or set to false, the default order (ascending by name) will be used. This has no effect on the images within the album.
 
-	[AlbumInfo]
-	Title=Pyntrest
-	Description=Automated web photo albums for convenience lovers
-	CoverImage=im-001.jpg
-	HideCover=False
-	ReverseImages=True
-	ModifiedAlbumsOnTop=False
+```
+[AlbumInfo]
+Title=Pyntrest
+Description=Automated web photo albums for convenience lovers
+CoverImage=im-001.jpg
+HideCover=False
+ReverseImages=True
+ModifiedAlbumsOnTop=False
+```
 
 ### ImageInfo Section 
 
 In the image info section you can provide details for individual photos. The section is labeled `[ImageInfo]`. After the section label you can simply provide `<Image-Filename>=<Your-Description>` to add an image description. 
 
-	[ImageInfo]
-	image-01.jpg=My favourite image! 
-	im-0041.youtube.ini=This funny video was made in 2009. 
-	image-02.jpeg=Oh! Look at Johnnys face :) 
+```
+[ImageInfo]
+image-01.jpg=My favourite image! 
+im-0041.youtube.ini=This funny video was made in 2009. 
+image-02.jpeg=Oh! Look at Johnnys face :) 
+```
 
 ## Common problems on startup
 

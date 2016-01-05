@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="content">
-
+    
 		{% if subalbums %}
         
             <h2>{{ lang_albums }}</h2>
@@ -96,7 +96,25 @@
 				{% for image in images %}
 				
 					<div class="tile" style="width={{ image.width }}; height={{ image.height }};">	 
-				    {% if image.youtubeid %}
+					
+	                {% if image.type == 'IMG' %}
+	                    
+	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
+                        <a href="{% static image_full %}" title="{{ image.description }}" class="fancybox" rel="group" >
+                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+                        <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
+                        {% endwith %}
+                        </a>
+                        {% if image.description %}
+                            <div class='tile-info'>
+                                <i class="fa fa-quote-left" ></i>
+                            </div>
+                        {% endif %}
+                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
+                        
+                        {% endwith %}
+                        
+				    {% elif image.type == 'YOU' %}
 		
                         <a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
@@ -114,24 +132,30 @@
                             <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
                         {% endif %}
                         
-	                {% else %}
-	                    
-	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
-                        <a href="{% static image_full %}" title="{{ image.description }}" class="fancybox" rel="group" >
-                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+                    {% else %}
+                  		{% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
+                        <a class="fancybox" href="#inline"  rel="group" title="{{ image.description }}">
+                        {% with 'pyntrest/images/image_thumbs/'|add:image.thumbnail as image_thumb %}
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
-                        </a>
-                        {% if image.description %}
+		                </a>
+		                <div style="display: none;">
+		                    <div id="inline" style="overflow:auto;">
+		                       <video src="{% static image_full %}" controls>Your browser does not support this video format.</video> 
+		                    </div> 
+		                </div>
+		                {% endwith %}
+           				{% if image.description %}
                             <div class='tile-info'>
+                                <i class="fa fa-youtube-play" ></i>
                                 <i class="fa fa-quote-left" ></i>
                             </div>
+                        {% else %}
+                            <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
                         {% endif %}
-                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
                         
-                        {% endwith %}
-                     
 	                {% endif %}
+	                
 	                {% if image.modified %}
 						<div class='tile-modified'>
 							<span class="fa-stack">

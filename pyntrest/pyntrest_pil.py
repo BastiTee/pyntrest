@@ -1,8 +1,9 @@
 """Pyntrest wrapper for operations using Python image library (PIL)""" 
 
 from PIL import Image
-from os import path
+from os import path, remove
 from re import compile
+import tempfile
 
 GIF_PATTERN = compile('^.*\\.gif$')
 """Pattern for GIF files"""
@@ -103,4 +104,45 @@ class PILHandler ():
             else:
                 im.save (thumb_image, 'JPEG')
             
+        return new_w, new_h
+
+    def create_video_thumbnail_if_not_present (self, source_image, thumb_image, ffmpeg_handler=None):
+        """Reads the image width and height from the given video and, if it does 
+        not exist, resizes the file to the given target file keeping the 
+        original aspect ratio"""
+        
+        if ffmpeg_handler is None:
+            return 0,0
+        if not source_image:
+            raise TypeError ('source_image not set')
+        if not thumb_image:
+            raise TypeError ('thumb_image not set')
+        if not path.exists(source_image):
+            raise TypeError ('source_image does not exist')
+        if not path.exists(path.dirname(thumb_image)):
+            raise TypeError ('Folder for thumb_image does not exist')
+        
+        print "source_image {0}".format(source_image)
+        
+        _, duration = ffmpeg_handler.get_file_duration( source_image )
+        thumbtime = duration / 2000.0
+        print "duration={0} thumbtime={1}".format(duration, thumbtime, thumbtime)
+        
+        temp = "C:/download/test.jpg"
+        ffmpeg_handler.extract_thumbnail( source_image, temp, thumbtime)
+        
+        # create real thumbnail 
+        image = Image.open(temp)
+        width, height = image.size
+        (new_w, new_h, 
+         res_w, res_h) = self.rescale_image_dimensions_to_desired_width(
+                        width, height, self.default_width, self.upscale_factor)
+         
+        if not path.exists(thumb_image):
+            im = image.resize((res_w, res_h), Image.ANTIALIAS) 
+            if GIF_PATTERN.match(thumb_image.lower()):
+                im.save(thumb_image, 'GIF')
+            else:
+                im.save (thumb_image, 'JPEG')
+             
         return new_w, new_h

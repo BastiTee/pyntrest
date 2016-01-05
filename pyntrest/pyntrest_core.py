@@ -11,19 +11,22 @@ from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_
     is_modified)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
+from pyntrest.pyntrest_ffmpeg import FFMPEG_Handler
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
 META_INI_FILE_PATTERN = 'info.ini'
 """Name of the optional album information files"""
 YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube\\.ini$')
-"""Regex pattern to test if a local file is a Youtube hook"""
+"""Regex pattern to test if a local file is a video file"""
+VIDEO_FILE_PATTERN = compile('^.*\\.mp4$')
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
     and images in Pyntrest"""
     
     pil_handler = None
+    ffmpeg_handler = None
     main_images_path = None
     static_images_path = None
     static_fullsize_path = None
@@ -44,6 +47,11 @@ class PyntrestHandler ():
         
         self.pil_handler = PILHandler (pyntrest_config.IMAGE_THUMB_WIDTH,
             pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
+        try:
+            self.ffmpeg_handler = FFMPEG_Handler( pyntrest_config.PATH_TO_FFMPEG )
+        except IOError:
+            self.ffmpeg_handler = None
+            print 'No ffmpeg configured. Will not display video.'
         self.main_images_path = main_images_path
         self.static_images_path = static_images_path
         self.static_fullsize_path = path.join (self.static_images_path, 'full_size')
@@ -274,7 +282,7 @@ class PyntrestHandler ():
                                       local_imagepath_abs, static_thumb_path_abs)
     
             # add image to template context
-            albumimage = AlbumImage(location=path.join(local_albumpath_rel,
+            albumimage = AlbumImage(type='IMG', location=path.join(local_albumpath_rel,
                         image_name), title=image_name, width=width, height=height,
                         modified=modified)
             images.append(albumimage)  
@@ -284,9 +292,31 @@ class PyntrestHandler ():
             youtube_id = read_youtube_ini_file (local_imagepath_abs)
             # .75 is the fixed Youtube thumbnail width to height ratio
             thumb_height = int(float (pyntrest_config.IMAGE_THUMB_WIDTH) * 0.75) 
-            albumimage = AlbumImage(location=path.join(
+            albumimage = AlbumImage(type='YOU',location=path.join(
                         local_albumpath_rel, image_name), title=image_name,
                         width=pyntrest_config.IMAGE_THUMB_WIDTH,
                         height=thumb_height, youtubeid=youtube_id,
                         modified=modified)
+            images.append(albumimage)
+            
+        elif VIDEO_FILE_PATTERN.match(local_imagepath_abs) and self.ffmpeg_handler is not None:
+                      
+            static_fullsize_path_abs = path.join (
+                    self.static_fullsize_path, local_albumpath_rel, image_name)
+            static_thumb_path_abs = path.join (
+                    self.static_ithumbs_path, local_albumpath_rel, sub('\\.mp4', '.jpg', image_name))
+
+            # copy full size image to static folder 
+            if not path.exists(static_fullsize_path_abs):
+                copyfile(local_imagepath_abs, static_fullsize_path_abs)
+
+            # calculate image size for masonry and copy to static folder
+            width, height = self.pil_handler.create_video_thumbnail_if_not_present(
+                                      local_imagepath_abs, static_thumb_path_abs,
+                                      self.ffmpeg_handler)
+            
+            albumimage = AlbumImage(type='MP4',location=path.join(
+                        local_albumpath_rel, image_name), title=image_name,
+                        width=width, height=height,modified=modified,
+                        thumbnail=sub('\\.mp4', '.jpg', image_name))
             images.append(albumimage)

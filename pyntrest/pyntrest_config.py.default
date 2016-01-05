@@ -47,3 +47,5 @@ HIGHLIGHT_NEW_IMAGES = True
 MAX_AGE_OF_NEW_IMAGES_H = 48
 """Images with a time stamp newer or equal to the current time minus the given 
 number of hours will be considered as new and therefore highlighted"""
+PATH_TO_FFMPEG = ''
+"""Path to binary of ffmpeg for extracting video thumbnails"""

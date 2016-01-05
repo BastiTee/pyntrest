@@ -1,7 +1,7 @@
 """Pyntrest wrapper for operations using Python image library (PIL)""" 
 
 from PIL import Image
-from os import path, remove
+from os import path, unlink
 from re import compile
 import tempfile
 
@@ -122,27 +122,38 @@ class PILHandler ():
         if not path.exists(path.dirname(thumb_image)):
             raise TypeError ('Folder for thumb_image does not exist')
         
-        print "source_image {0}".format(source_image)
-        
-        _, duration = ffmpeg_handler.get_file_duration( source_image )
-        thumbtime = duration / 2000.0
-        print "duration={0} thumbtime={1}".format(duration, thumbtime, thumbtime)
-        
-        temp = "C:/download/test.jpg"
-        ffmpeg_handler.extract_thumbnail( source_image, temp, thumbtime)
-        
-        # create real thumbnail 
-        image = Image.open(temp)
-        width, height = image.size
-        (new_w, new_h, 
-         res_w, res_h) = self.rescale_image_dimensions_to_desired_width(
-                        width, height, self.default_width, self.upscale_factor)
-         
-        if not path.exists(thumb_image):
-            im = image.resize((res_w, res_h), Image.ANTIALIAS) 
-            if GIF_PATTERN.match(thumb_image.lower()):
-                im.save(thumb_image, 'GIF')
-            else:
-                im.save (thumb_image, 'JPEG')
+        if not path.exists(thumb_image):        
+            _, duration = ffmpeg_handler.get_file_duration( source_image )
+            thumbtime = duration / 2000.0
+            
+            temp = tempfile.NamedTemporaryFile(delete=False)
+            ffmpeg_handler.extract_thumbnail( source_image, temp.name, thumbtime)
+            
+            # create real thumbnail 
+            image = Image.open(temp.name)
+            width, height = image.size
+            (new_w, new_h, 
+             res_w, res_h) = self.rescale_image_dimensions_to_desired_width(
+                            width, height, self.default_width, self.upscale_factor)
              
+            if not path.exists(thumb_image):
+                im = image.resize((res_w, res_h), Image.ANTIALIAS) 
+                if GIF_PATTERN.match(thumb_image.lower()):
+                    im.save(thumb_image, 'GIF')
+                else:
+                    im.save (thumb_image, 'JPEG')
+            
+            # clean up
+            image.close()
+            temp.close()
+            unlink(temp.name)
+        else:
+            image = Image.open(thumb_image)
+            width, height = image.size
+            image.close()
+            (new_w, new_h, 
+             res_w, res_h) = self.rescale_image_dimensions_to_desired_width(
+                            width, height, self.default_width, self.upscale_factor)
+            
         return new_w, new_h
+            

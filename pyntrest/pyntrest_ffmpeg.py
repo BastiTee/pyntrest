@@ -9,7 +9,8 @@ class FFMPEG_Handler:
     def __init__(self, ffmpeg_executable_path='ffmpeg'):
         self.ffmpeg_path = ffmpeg_executable_path
         initcommand = self.ffmpeg_path + ' -version'
-        code, _, _ = self.__runcommand(initcommand, True, True)
+        print 'command: {0}'.format(initcommand)
+        code, _, _ = self.__runcommand(initcommand)
         if code is not 0:
             raise IOError('FFMPEG not available at location \'{0}\''.format(
                                                ffmpeg_executable_path)) 
@@ -56,7 +57,7 @@ class FFMPEG_Handler:
             
         while handle.poll() is None:
             line = handle.stdout.readline().strip()
-            if not line == None:
+            if line is not None and line != "":
                 log_stdout.append(line)
                 if suppress_stdout == False:
                     print line

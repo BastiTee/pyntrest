@@ -133,17 +133,18 @@
                         {% endif %}
                         
                     {% else %}
-                  		{% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
-                        <a class="fancybox" href="#inline"  rel="group" title="{{ image.description }}">
+
+						{% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
+                        <a class="fancybox" href="#{{ image.divid }}"  rel="group" title="{{ image.description }}">
                         {% with 'pyntrest/images/image_thumbs/'|add:image.thumbnail as image_thumb %}
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
 		                </a>
 		                <div style="display: none;">
-		                    <div id="inline" style="overflow:auto;">
-		                       <video src="{% static image_full %}" controls>Your browser does not support this video format.</video> 
-		                    </div> 
-		                </div>
+		                    <div id="{{ image.divid }}" style="overflow:auto;">
+		                       <video src="{% static image_full %}" controls preload="metadata">Your browser does not support this video format.</video> 
+		                    </div>
+						</div>
 		                {% endwith %}
            				{% if image.description %}
                             <div class='tile-info'>
@@ -212,7 +213,18 @@
                 	title: {
                         type: 'outside'
                     }
-                }
+                },
+				keys : {
+					next : {
+						39 : 'left', // right arrow
+					},
+					prev : {
+						37 : 'right',  // left arrow
+					},
+					close  : [27], // escape key
+					play   : 'none',
+					toggle : 'none'
+				}
             });
         })(jQuery);
     </script>

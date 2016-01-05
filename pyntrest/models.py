@@ -14,6 +14,7 @@ class AlbumImage(models.Model):
     modified = models.BooleanField()
     youtubeid = models.CharField(max_length=20)
     thumbnail = models.CharField(max_length=1000)
+    divid = models.CharField(max_length=1000)
 
 class Album(models.Model):
     """A web photo album"""

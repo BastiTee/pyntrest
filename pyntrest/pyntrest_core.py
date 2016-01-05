@@ -12,6 +12,8 @@ from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 from pyntrest.pyntrest_ffmpeg import FFMPEG_Handler
+from random import choice
+from string import lowercase
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -315,8 +317,11 @@ class PyntrestHandler ():
                                       local_imagepath_abs, static_thumb_path_abs,
                                       self.ffmpeg_handler)
             
+            divid="".join(choice(lowercase) for _ in range(16))
+            
             albumimage = AlbumImage(type='MP4',location=path.join(
                         local_albumpath_rel, image_name), title=image_name,
                         width=width, height=height,modified=modified,
-                        thumbnail=sub('\\.mp4', '.jpg', image_name))
+                        thumbnail=sub('\\.mp4', '.jpg', image_name),
+                        divid=divid)
             images.append(albumimage)

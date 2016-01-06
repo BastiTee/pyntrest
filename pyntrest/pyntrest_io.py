@@ -2,7 +2,7 @@
 of album requests."""
 
 from ConfigParser import ConfigParser
-from re import sub, compile, match
+from re import sub, compile, match, search
 from os import path, makedirs, listdir, walk 
 from time import time
 
@@ -173,20 +173,32 @@ def read_optional_image_metadata (album_path, filename ):
     #print image_infos
     return image_infos
 
-def read_youtube_ini_file ( youtube_file_path ):
+def read_youtube_ini_file ( youtube_file_name ):
     """Checks for a YouTube video information file"""
 
-    if not youtube_file_path:
+    if not youtube_file_name:
         raise TypeError('youtube_file_path not provided.')
-    youtube_file_path = path.abspath(youtube_file_path)
+    youtube_file_path = path.abspath(youtube_file_name)
     if not path.exists(youtube_file_path):
         raise TypeError('youtube_file_path does not exist!') 
 
+    print youtube_file_name
+    # first try: extract the YouTube id directly from filename 
+    # in this case it must be enclosed by % %
+    match_obj = search('%([^%]+)%', youtube_file_name)
+    if match_obj is not None:
+        youtube_id = match_obj.group(1)
+        if compile(".+").match(youtube_id) is not None:
+            return youtube_id
+
+    # second try: check file for config section with youtube id     
     config = ConfigParser()
     config.read(youtube_file_path)
     if config.has_option('VideoInfo', 'YoutubeId'):
         youtube_id = config.get('VideoInfo', 'YoutubeId')
         return youtube_id
+    
+    # if not just return empty handed
     return ''
 
 def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_file_pattern=compile('^.*$') ):

@@ -182,7 +182,6 @@ def read_youtube_ini_file ( youtube_file_name ):
     if not path.exists(youtube_file_path):
         raise TypeError('youtube_file_path does not exist!') 
 
-    print youtube_file_name
     # first try: extract the YouTube id directly from filename 
     # in this case it must be enclosed by % %
     match_obj = search('%([^%]+)%', youtube_file_name)

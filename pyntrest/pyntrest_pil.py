@@ -141,6 +141,8 @@ class PILHandler ():
             info = image._getexif()
         except AttributeError:
             return exif_data
+        except IndexError:
+            return exif_data
         if info:
             for tag, value in info.items():
                 decoded = TAGS.get(tag, tag)

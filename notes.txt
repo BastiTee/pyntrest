@@ -11,3 +11,8 @@ GPS Longitude                   : 7 deg 9' 7.21" E
 
 exiftool -GPSLatitude="52 deg 30' 58''" -GPSLongitude="13 deg 22' 30''" -GPSLatitudeRef="N" -GPSLongitudeRef="E" im-003.jpg
 
+="http://maps.google.com/?output=embed&f=q&source=s_q&hl=en&geocode=&radius=15000&t=h&z=17">Google maps (iframe)</a>
+	</li>
+    
+    
+    http://maps.google.com/?output=embed&f=q&source=s_q&hl=en&geocode=&radius=15000&t=h&z=17

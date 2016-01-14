@@ -281,7 +281,7 @@ class PyntrestHandler ():
             latitude, longitude = self.pil_handler.get_geo_coordinates( local_imagepath_abs )
             geocoord = None
             if latitude and longitude:
-                print '{0}: {1}, {2}'.format(image_name, latitude, longitude)
+                #print '{0}: {1}, {2}'.format(image_name, latitude, longitude)
                 geocoord = '{0}, {1}'.format(latitude, longitude)
     
             # add image to template context

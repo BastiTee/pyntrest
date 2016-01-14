@@ -69,13 +69,10 @@
 						<div class="tile-placeholder" style="width: {{ col_width }}px; height: {{ col_height }}px;"></div>
 					{% endif %}
 					</a>
-					<div class='tile-overlay'>{{album.title}}</div>
+					<div class='tile-album-overlay'>{{album.title}}</div>
 					{% if album.modified %}
-						<div class='tile-modified'>
-							<span class="fa-stack">
-            	           		<i class="fa fa-circle fa-stack-2x "></i>
-  								<i class="fa fa-plus-circle fa-stack-2x  fa-inverse"></i>
-            	           	</span>
+						<div class='tile-info'>
+           	           		<i class="fa fa-star"></i>
  			         	</div>
 					{% endif %}
 					
@@ -99,48 +96,23 @@
 				    {% if image.type == 'img' %}
 		
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
-                        <a href="{% static image_full %}" class="fancybox" rel="group" >
-                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
-                        <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
-                        {% endwith %}
-                        </a>
-                        {% if image.description and image.geocoord %}
-                            <div class='tile-info'>
-                                <i class="fa fa-quote-left" ></i>
-                                <i class="fa fa-globe" ></i>
-                            </div>
-                        {% elif image.description %}
-                     	   <div class='tile-info'>
-                                <i class="fa fa-quote-left" ></i>
-                            </div>
-                        {% elif image.geocoord %}
-                        	<div class='tile-info'>
-                                <i class="fa fa-globe" ></i>
-                            </div>
-                        {% endif %}
-                        
-                        <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
-                        
-                        {% endwith %}
+		                    <a href="{% static image_full %}" title="{{ image.description}}" class="fancybox" rel="group" >
+		                    {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+		                    <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
+		                    {% endwith %}
+		                    </a>
+	                    {% endwith %}
 		                
 	                {% elif image.type == 'you' %}
 	                    
- 						<a class="fancybox" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
-                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
-                        <img class="lazyload" src="" 
-                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
-                        width="{{ image.width }}" height="{{ image.height }}" alt="">
-                        {% endwith %}
+ 						<a class="fancybox" title="{{ image.description}}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+	                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+	                        <img class="lazyload" src="" 
+	                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
+	                        width="{{ image.width }}" height="{{ image.height }}" alt="">
+	                        {% endwith %}
    					    </a>
-   					    {% if image.description %}
-                            <div class='tile-info'>
-                                <i class="fa fa-youtube-play" ></i>
-                                <i class="fa fa-quote-left" ></i>
-                            </div>
-                        {% else %}
-                            <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
-                        {% endif %}
-                     
+   			         
                     {% elif image.type == 'txt' %}
                    	 
                    	 	<div class="tile-text-box-wrap">
@@ -161,15 +133,35 @@
 						</div>           		
                      
 	                {% endif %}
-	                
-	                {% if image.modified %}
-						<div class='tile-modified'>
-							<span class="fa-stack">
-            	           		<i class="fa fa-circle fa-stack-2x "></i>
-  								<i class="fa fa-plus-circle fa-stack-2x  fa-inverse"></i>
-            	           	</span>
- 			         	</div>
-					{% endif %}
+         			
+         			<!-- additional information -->
+					<div class='tile-info'>
+ 			         	<div class="tile-overlay" >
+	 			         	{% if image.modified %}
+	           	           		<i class="fa fa-star"></i>
+	 			         	{% endif %}
+ 			         		{% if image.description %} 
+ 			         			<i class="fa fa-quote-left" ></i>
+ 			         		{% endif %}
+ 			         		{% if image.geocoord %} 
+ 			         			<a  data-fancybox-type="iframe" class="fancybox" 
+ 			         			href="https://maps.google.com/maps?hl=en&q={{ image.geocoord }}&ie=UTF8&t=roadmap&z=16&iwloc=B&output=embed">
+  			         			<i class="fa fa-globe" ></i>
+ 			         			</a>
+ 			         		{% endif %}
+ 			         		{% if image.type == 'img' %}
+ 			         			 {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
+ 			         			<a href="{% static image_full %}" download="{{ image.title }}">
+ 			         			<i class="fa fa-cloud-download" ></i>
+ 			         			</a>
+ 			         			{% endwith %}
+ 			         		{% endif %}
+ 			         		{% if image.type == 'you' %}
+ 			         		 	<i class="fa fa-youtube-play" ></i> 			         		
+ 			         		{% endif %}
+	               	 	</div>
+					</div>
+	                   
 					</div>
 				{% endfor %}
             </div>

@@ -92,7 +92,7 @@
 			
 				{% for image in images %}
 				
-					<div class="tile" style="width={{ image.width }}; height={{ image.height }};">	 
+					<div class="tile" onclick="" style="width={{ image.width }}; height={{ image.height }};">	 
 				    {% if image.type == 'img' %}
 		
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}

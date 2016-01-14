@@ -93,6 +93,7 @@ Pyntrest relies on a number of awesome open source projects:
 * [Python](https://www.python.org/)
 * [Django web framework](https://pypi.python.org/pypi/Django)
 * [Pillow - Python Image Library (PIL) fork](https://pypi.python.org/pypi/Pillow)
+* [markdown2 - Markdown in Python](https://github.com/trentm/python-markdown2)
 * [jQuery](http://jquery.com/)
 * [Masonry - Cascading grid layout library](http://masonry.desandro.com/)
 * [fancyBox - Fancy jQuery Lightbox Alternative](http://fancyapps.com/fancybox/)

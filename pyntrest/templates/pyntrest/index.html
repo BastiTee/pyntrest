@@ -96,26 +96,8 @@
 				{% for image in images %}
 				
 					<div class="tile" style="width={{ image.width }}; height={{ image.height }};">	 
-				    {% if image.youtubeid %}
+				    {% if image.type == 'img' %}
 		
-                        <a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
-                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
-                        <img class="lazyload" src="" 
-                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
-                        width="{{ image.width }}" height="{{ image.height }}" alt="">
-                        {% endwith %}
-   					    </a>
-   					    {% if image.description %}
-                            <div class='tile-info'>
-                                <i class="fa fa-youtube-play" ></i>
-                                <i class="fa fa-quote-left" ></i>
-                            </div>
-                        {% else %}
-                            <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
-                        {% endif %}
-                        
-	                {% else %}
-	                    
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
                         <a href="{% static image_full %}" title="{{ image.description }}" class="fancybox" rel="group" >
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
@@ -130,8 +112,46 @@
                         <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
                         
                         {% endwith %}
+		                
+	                {% elif image.type == 'you' %}
+	                    
+ 						<a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
+                        <img class="lazyload" src="" 
+                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
+                        width="{{ image.width }}" height="{{ image.height }}" alt="">
+                        {% endwith %}
+   					    </a>
+   					    {% if image.description %}
+                            <div class='tile-info'>
+                                <i class="fa fa-youtube-play" ></i>
+                                <i class="fa fa-quote-left" ></i>
+                            </div>
+                        {% else %}
+                            <div class='tile-info'><i class="fa fa-youtube-play" ></i></div>
+                        {% endif %}
+                     
+                    {% elif image.type == 'txt' %}
+                   	 
+                   	 	<div class="tile-text-box-wrap">
+	                   	 	<a class="fancybox" href="#{{ image.divid }}"  rel="group" >
+		                    	<div class="tile-text-box" style="display: table-cell; vertical-align: middle; width: {{image.width}}px; height: {{image.height}}px;">
+				                    	<span>{{ image.title }}</span>
+				                </div>
+			                </a>
+		              	</div>
+		                <div style="display: none;">
+		                    <div id="{{ image.divid }}" style="overflow:auto;">
+			                    <div class="tile-text">
+			                    {% autoescape off %}
+			                       {{ image.text_content }}
+		                        {% endautoescape %}
+		                        </div>
+		                    </div>
+						</div>           		
                      
 	                {% endif %}
+	                
 	                {% if image.modified %}
 						<div class='tile-modified'>
 							<span class="fa-stack">

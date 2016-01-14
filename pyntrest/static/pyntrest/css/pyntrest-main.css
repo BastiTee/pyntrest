@@ -177,6 +177,33 @@ a {
     width: 100%;
 }
 
+.tile .tile-text-box-wrap {
+	margin-bottom: 2px;
+}
+
+.tile-text-box {
+    font-size: 110%;
+    background-color: #7DB3C4;
+    color: #fff;
+   
+}
+
+.tile-text {
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
+	text-align: justify;
+}
+
+.tile-text a {
+	text-decoration: underline;
+	background-color: #eee;	
+}
+
+.tile-text blockquote {
+	background-color: #F9F9F9;	
+}
+
 .header {
 	/* Header displaying album information */	
     background-color: #F9F9F9;

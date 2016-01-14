@@ -11,6 +11,9 @@ from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_
     is_modified)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
+from random import choice
+from string import lowercase
+from markdown2 import Markdown
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -18,6 +21,8 @@ META_INI_FILE_PATTERN = 'info.ini'
 """Name of the optional album information files"""
 YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube(\\.ini)?$')
 """Regex pattern to test if a local file is a Youtube hook"""
+TEXT_MD_FILE_PATTERN = compile('^.*\\.md$')
+"""Regex pattern to test if a local file is a text file"""
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
@@ -274,7 +279,7 @@ class PyntrestHandler ():
                                       local_imagepath_abs, static_thumb_path_abs)
     
             # add image to template context
-            albumimage = AlbumImage(location=path.join(local_albumpath_rel,
+            albumimage = AlbumImage(type='img', location=path.join(local_albumpath_rel,
                         image_name), title=image_name, width=width, height=height,
                         modified=modified)
             images.append(albumimage)  
@@ -284,9 +289,31 @@ class PyntrestHandler ():
             youtube_id = read_youtube_ini_file (local_imagepath_abs)
             # .75 is the fixed Youtube thumbnail width to height ratio
             thumb_height = int(float (pyntrest_config.IMAGE_THUMB_WIDTH) * 0.75) 
-            albumimage = AlbumImage(location=path.join(
+            albumimage = AlbumImage(type='you', location=path.join(
                         local_albumpath_rel, image_name), title=image_name,
                         width=pyntrest_config.IMAGE_THUMB_WIDTH,
                         height=thumb_height, youtubeid=youtube_id,
                         modified=modified)
+            images.append(albumimage)
+
+        elif TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()):
+            
+            with open(local_imagepath_abs, 'r') as markdown_file:
+                file_content=markdown_file.read()
+            markdown_file.close()
+            markdowner = Markdown()
+            
+            # first textual line is considered as title 
+            title = file_content.strip().split('\n')[0]
+            # the full thing will be converted to HTML 
+            file_content = markdowner.convert(file_content)
+
+            divid="".join(choice(lowercase) for _ in range(16))
+            
+            albumimage = AlbumImage(type='txt', location=path.join(
+                        local_albumpath_rel, image_name), title=title,
+                        width=pyntrest_config.IMAGE_THUMB_WIDTH,
+                        height=pyntrest_config.IMAGE_THUMB_HEIGHT/2, 
+                        modified=modified, text_content=file_content,
+                        divid=divid)
             images.append(albumimage)

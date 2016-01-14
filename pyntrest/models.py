@@ -5,13 +5,17 @@ from django.db import models
 class AlbumImage(models.Model):
     """A single image inside an album"""
     
-    location =  models.FilePathField()
-    title = models.CharField(max_length=200)
-    width = models.IntegerField()
-    height = models.IntegerField()
-    youtubeid = models.CharField(max_length=20)
-    description = models.CharField(max_length=5000)
-    modified = models.BooleanField()
+    type = models.CharField(max_length=10) 
+    """Image type. Either img (Images), you (YouTube hooks) or txt (Text)""" 
+    location =  models.FilePathField() # local path 
+    modified = models.BooleanField() # last modification timestamp 
+    title = models.CharField(max_length=200) # title of the image 
+    description = models.CharField(max_length=5000) # short description 
+    width = models.IntegerField() # thumb width
+    height = models.IntegerField() # thumb height 
+    youtubeid = models.CharField(max_length=20) # YouTube id (only for type 'you')
+    text_content =  models.CharField(max_length=999999)
+    divid = models.CharField(max_length=1000)
 
 class Album(models.Model):
     """A web photo album"""

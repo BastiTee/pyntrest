@@ -277,11 +277,17 @@ class PyntrestHandler ():
             # calculate image size for masonry and copy to static folder
             width, height = self.pil_handler.create_image_thumbnail_if_not_present(
                                       local_imagepath_abs, static_thumb_path_abs)
+            
+            latitude, longitude = self.pil_handler.get_geo_coordinates( local_imagepath_abs )
+            geocoord = None
+            if latitude and longitude:
+                print '{0}: {1}, {2}'.format(image_name, latitude, longitude)
+                geocoord = '{0}, {1}'.format(latitude, longitude)
     
             # add image to template context
             albumimage = AlbumImage(type='img', location=path.join(local_albumpath_rel,
                         image_name), title=image_name, width=width, height=height,
-                        modified=modified)
+                        modified=modified, geocoord=geocoord)
             images.append(albumimage)  
               
         elif YOUTUBE_INI_FILE_PATTERN.match(local_imagepath_abs):

@@ -16,6 +16,7 @@ class AlbumImage(models.Model):
     youtubeid = models.CharField(max_length=20) # YouTube id (only for type 'you')
     text_content =  models.CharField(max_length=999999)
     divid = models.CharField(max_length=1000)
+    geocoord = models.CharField(max_length=100)
 
 class Album(models.Model):
     """A web photo album"""

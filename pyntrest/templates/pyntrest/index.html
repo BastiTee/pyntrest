@@ -99,23 +99,33 @@
 				    {% if image.type == 'img' %}
 		
 	                    {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
-                        <a href="{% static image_full %}" title="{{ image.description }}" class="fancybox" rel="group" >
+                        <a href="{% static image_full %}" class="fancybox" rel="group" >
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" data-src="{% static image_thumb %}" width="{{ image.width }}" height="{{ image.height }}" alt="">
                         {% endwith %}
                         </a>
-                        {% if image.description %}
+                        {% if image.description and image.geocoord %}
                             <div class='tile-info'>
                                 <i class="fa fa-quote-left" ></i>
+                                <i class="fa fa-globe" ></i>
+                            </div>
+                        {% elif image.description %}
+                     	   <div class='tile-info'>
+                                <i class="fa fa-quote-left" ></i>
+                            </div>
+                        {% elif image.geocoord %}
+                        	<div class='tile-info'>
+                                <i class="fa fa-globe" ></i>
                             </div>
                         {% endif %}
+                        
                         <div class='tile-download'><a href="{% static image_full %}" download="{{ image.title }}"><i class="fa fa-cloud-download" ></i></a></div>
                         
                         {% endwith %}
 		                
 	                {% elif image.type == 'you' %}
 	                    
- 						<a class="fancybox" title="{{ image.description }}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+ 						<a class="fancybox" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
                         {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
                         <img class="lazyload" src="" 
                         data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 

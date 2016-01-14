@@ -21,7 +21,7 @@ META_INI_FILE_PATTERN = 'info.ini'
 """Name of the optional album information files"""
 YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube(\\.ini)?$')
 """Regex pattern to test if a local file is a Youtube hook"""
-TEXT_MD_FILE_PATTERN = compile('^.*\\.md$')
+TEXT_MD_FILE_PATTERN = compile('^.*\\.md(\\.txt)?$')
 """Regex pattern to test if a local file is a text file"""
 
 class PyntrestHandler ():

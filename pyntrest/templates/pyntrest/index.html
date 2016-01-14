@@ -138,26 +138,26 @@
 					<div class='tile-info'>
  			         	<div class="tile-overlay" >
 	 			         	{% if image.modified %}
-	           	           		<i class="fa fa-star"></i>
+	           	           		<i class="fa fa-star"></i><br />
 	 			         	{% endif %}
  			         		{% if image.description %} 
- 			         			<i class="fa fa-quote-left" ></i>
+ 			         			<i class="fa fa-quote-left" ></i><br />
  			         		{% endif %}
  			         		{% if image.geocoord %} 
  			         			<a  data-fancybox-type="iframe" class="fancybox" 
  			         			href="https://maps.google.com/maps?hl=en&q={{ image.geocoord }}&ie=UTF8&t=roadmap&z=16&iwloc=B&output=embed">
-  			         			<i class="fa fa-globe" ></i>
+  			         			<i class="fa fa-globe" ></i><br />
  			         			</a>
  			         		{% endif %}
  			         		{% if image.type == 'img' %}
  			         			 {% with 'pyntrest/images/full_size/'|add:image.location as image_full %}
  			         			<a href="{% static image_full %}" download="{{ image.title }}">
- 			         			<i class="fa fa-cloud-download" ></i>
+ 			         			<i class="fa fa-cloud-download" ></i><br />
  			         			</a>
  			         			{% endwith %}
  			         		{% endif %}
  			         		{% if image.type == 'you' %}
- 			         		 	<i class="fa fa-youtube-play" ></i> 			         		
+ 			         		 	<i class="fa fa-youtube-play" ></i><br />
  			         		{% endif %}
 	               	 	</div>
 					</div>
@@ -182,7 +182,7 @@
                 gutter: 2,
                 'isFitWidth': true
             });
-            $("img.lazyload").lazy({
+            $(".lazyload").lazy({
                 effect : "fadeIn",
                 effectTime : 750,
                 visibleOnly : true
@@ -209,8 +209,19 @@
                     },
                 	title: {
                         type: 'outside'
-                    }
-                }
+                    },	
+                }, 
+				keys : {
+					next : {
+						39 : 'left', // right arrow
+					},
+					prev : {
+						37 : 'right',  // left arrow
+					},
+					close  : [27], // escape key
+					play   : 'none',
+					toggle : 'none'
+				}
             });
         })(jQuery);
     </script>

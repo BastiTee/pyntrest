@@ -107,13 +107,17 @@ class PILHandler ():
         return new_w, new_h
 
     def get_if_exist(self, data, key):
+        """Safely check for key within array""" 
+        
         if key in data:
             return data[key]
             
         return None
         
     def convert_to_degress(self, value):
-        """Helper function to convert the GPS coordinates stored in the EXIF to degress in float format"""
+        """Helper function to convert the GPS coordinates stored in the 
+        EXIF to degrees in float format"""
+       
         d0 = value[0][0]
         d1 = value[0][1]
         d = float(d0) / float(d1)
@@ -153,7 +157,8 @@ class PILHandler ():
         return exif_data
 
     def get_geo_coordinates (self, source_image):
-        """Returns the latitude and longitude, if available, from the provided exif_data (obtained through get_exif_data above)"""
+        """Returns the latitude and longitude, if available, from the provided 
+        exif_data (obtained through get_exif_data above)"""
         
         if not source_image:
             raise TypeError ('source_image not set')
@@ -174,7 +179,8 @@ class PILHandler ():
             gps_longitude = self.get_if_exist(gps_info, 'GPSLongitude')
             gps_longitude_ref = self.get_if_exist(gps_info, 'GPSLongitudeRef')
     
-            if gps_latitude and gps_latitude_ref and gps_longitude and gps_longitude_ref:
+            if (gps_latitude and gps_latitude_ref and gps_longitude 
+                and gps_longitude_ref):
                 lat = self.convert_to_degress(gps_latitude)
                 if gps_latitude_ref != "N":                     
                     lat = 0 - lat
@@ -185,4 +191,3 @@ class PILHandler ():
     
         return lat, lon
     
-        

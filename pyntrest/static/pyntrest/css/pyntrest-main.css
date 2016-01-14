@@ -118,7 +118,8 @@ a {
 
 .tile-overlay{ 
 	display: none;
-	
+	line-height: 80%;
+	padding-top: 3px; 
 }
 
 .tile img {
@@ -144,12 +145,13 @@ a {
 }
 
 .tile-info {
+	cursor: pointer;
     text-align: left;
     position: absolute;
     top: 0px;
     color: #fff;    
     width: 100%;
-    font-size: 100%;
+    font-size: 125%;
     padding-left: 5px;
 }
 
@@ -160,25 +162,7 @@ a {
 .tile-details {
     font-family: "Open Sans Condensed", "Avant Garde", Avantgarde, "Century Gothic",
         CenturyGothic, "AppleGothic", sans-serif;
-    font-size: 110%;   
-}
-
-.tile-download  {
-    text-align: center;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    padding-left: 0px;
-    background-color: #F9F9F9;
-    opacity: 0.0;
-    filter: alpha(opacity = 0);
-    width: 100%;
-}
-
-.tile-download:hover {
-    opacity: 0.8;
-    filter: alpha(opacity = 80);
-    width: 100%;
+    font-size: 125%;   
 }
 
 .tile .tile-text-box-wrap {
@@ -188,15 +172,14 @@ a {
 .tile-text-box {
     font-size: 110%;
     background-color: #7DB3C4;
-    color: #fff;
-   
+    color: #fff;   
 }
 
 .tile-text {
 	width: 70%;
 	margin-left: 15%;
 	margin-right: 15%;
-	text-align: justify;
+	text-align: left;
 }
 
 .tile-text a {
@@ -345,8 +328,7 @@ a {
     /* Style adjustments for viewports that meet the condition */
     .content {
         width: 100%;
-    }
-    
+    }    
 }
 
 @media print , ( -o-min-device-pixel-ratio : 5/4) , ( -webkit-min-device-pixel-ratio :
@@ -355,6 +337,14 @@ a {
     .content {
         width: 100%;
     }
+}
+
+@media screen and (min-width: 0px) and (max-width: 720px) {
+	.tile-overlay { 
+		display: block; 
+		opacity: 0.6;
+		filter: alpha(opacity = 60);
+	}
 }
 
 /* ==========================================================================

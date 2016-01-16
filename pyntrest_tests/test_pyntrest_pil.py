@@ -67,5 +67,18 @@ class PilTestSuite(unittest.TestCase):
         im = Image.open(target_file)
         self.assertEqual((525, 262), im.size)
 
+    def test_get_geo_coordinates (self ):
+    
+        pil = PILHandler ( 300, 150, 1.75 )
+        
+        self.assertRaises(TypeError, pil.get_geo_coordinates)
+        self.assertRaises(TypeError, pil.get_geo_coordinates, None)
+        self.assertRaises(TypeError, pil.get_geo_coordinates, 
+                          '/somewhere/foo.jpg')
+        source_file = path.join ( self.base_path, 'testdata', 'im-geo.jpg')
+        lat, lon = pil.get_geo_coordinates(source_file)
+        self.assertEqual(52.51611111111111, lat)
+        self.assertEqual(13.375, lon)
+        
 if __name__ == '__main__':
     unittest.main()

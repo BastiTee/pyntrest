@@ -264,6 +264,9 @@ class PyntrestHandler ():
         local_imagepath_abs = path.join(local_albumpath_abs, image_name)
         modified, _ = is_modified( local_imagepath_abs, True, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
                                               , pyntrest_config.HIGHLIGHT_NEW_IMAGES)
+        
+        #######################################################################
+        
         if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
             
             static_fullsize_path_abs = path.join (
@@ -290,6 +293,8 @@ class PyntrestHandler ():
                         image_name), title=image_name, width=width, height=height,
                         modified=modified, geocoord=geocoord)
             images.append(albumimage)  
+        
+        #######################################################################
               
         elif YOUTUBE_INI_FILE_PATTERN.match(local_imagepath_abs):
             
@@ -303,6 +308,8 @@ class PyntrestHandler ():
                         modified=modified)
             images.append(albumimage)
 
+        #######################################################################
+        
         elif TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()):
             
             with open(local_imagepath_abs, 'r') as markdown_file:

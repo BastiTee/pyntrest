@@ -40,6 +40,6 @@ class CoreTestSuite(unittest.TestCase):
         subalbums = context['subalbums']
         
         self.assertEqual(1, len(breadcrumbs))
-        self.assertEqual(3, len(images))
+        self.assertEqual(4, len(images))
         self.assertEqual(1, len(subalbums))
         

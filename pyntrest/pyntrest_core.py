@@ -21,7 +21,7 @@ META_INI_FILE_PATTERN = 'info.ini'
 """Name of the optional album information files"""
 YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube(\\.ini)?$')
 """Regex pattern to test if a local file is a Youtube hook"""
-TEXT_MD_FILE_PATTERN = compile('^.*\\.md(\\.txt)?$')
+TEXT_MD_FILE_PATTERN = compile('^.*\\.(md|txt)$')
 """Regex pattern to test if a local file is a text file"""
 
 class PyntrestHandler ():
@@ -187,7 +187,8 @@ class PyntrestHandler ():
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,
-                   'breadcrumbs' : breadcrumbs}
+                   'breadcrumbs' : breadcrumbs,
+                   'show_headings' : pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS}
         
         return context
     
@@ -307,8 +308,12 @@ class PyntrestHandler ():
             with open(local_imagepath_abs, 'r') as markdown_file:
                 file_content=markdown_file.read()
             markdown_file.close()
-            markdowner = Markdown()
+            try:
+                file_content.decode('UTF-8')
+            except UnicodeDecodeError:
+                file_content = unicode(file_content, 'iso-8859-1') 
             
+            markdowner = Markdown()
             # first textual line is considered as title 
             title = file_content.strip().split('\n')[0]
             # the full thing will be converted to HTML 

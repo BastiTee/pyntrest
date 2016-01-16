@@ -51,9 +51,13 @@
 	<div class="content">
 
 		{% if subalbums %}
-        
+
+			{% if show_headings %}        
             <h2>{{ lang_albums }}</h2>
-		
+			{% else %}
+            <h2></h2>
+			{% endif %}
+			
 			<div class="tiles">
 			
 				{% for album in subalbums %}
@@ -86,7 +90,11 @@
 		
 		{% if images %}
             
+            {% if show_headings %}        
             <h2>{{ lang_images }}</h2>
+            {% else %}
+            <h2></h2>
+            {% endif %}        
             
 			<div class="tiles">
 			

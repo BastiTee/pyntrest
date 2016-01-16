@@ -25,8 +25,11 @@ WORDING_ALBUM = 'Sub albums'
 """Heading for available sub albums in the web album"""
 WORDING_IMAGES = 'Images'
 """Heading for available images in the web album"""
+SHOW_ALBUM_IMAGES_WORDINGS = True
+"""Show headings for available images and sub albums at all?"""
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
+
 
 IMAGE_THUMB_WIDTH = 300
 """Maximum width of album and image thumbnails. Attention: If you change 

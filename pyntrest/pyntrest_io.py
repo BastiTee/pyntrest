@@ -233,10 +233,11 @@ def get_html_content (local_file_path):
     with open(local_file_path, 'r') as markdown_file:
         file_content=markdown_file.read()
         markdown_file.close()
-    try:
-        file_content.decode('UTF-8')
-    except UnicodeDecodeError:
-        file_content = unicode(file_content, 'iso-8859-1') 
+    
+    #try:
+    #    file_content.decode('UTF-8')
+    #except UnicodeDecodeError:
+    #    file_content = unicode(file_content, 'iso-8859-1')
     
     markdowner = Markdown()
     # first textual line is considered as title 

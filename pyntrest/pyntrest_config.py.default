@@ -2,9 +2,9 @@
 
 from os import path
 
-YOUR_HOME_PAGE = 'http://localhost:8000/'
-"""Set this to the root web path of your Pyntrest album. This is necessary for redirects
-despite of WSGI-routes etc."""
+EXTERNAL_BASE_URL = None
+"""Set this to the root web path of your Pyntrest album as seen from the 
+caller. This is optional when using WSGI-routes or Rewrites etc."""
 
 YOUR_IMAGE_FOLDER = 'sample_images'
 """Set this absolute path to your local image folder. This folder will be scanned by Pyntrest."""

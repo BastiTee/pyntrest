@@ -64,7 +64,7 @@
 				<div class="tile" style="width={{ col_width }}; height={{ col_height }};">
 				
 
-				    <a href="{{ request.path }}{{ album.path }}"> 
+				    <a href="{{ album.path }}"> 
 					{% if album.cover %}
 						{% with 'pyntrest/images/album_thumbs/'|add:album.cover as album_thumb %}
 						<img class="lazyload" src="" data-src="{% static album_thumb %}" width="{{ col_width }}" height="{{ col_height }}" alt="">

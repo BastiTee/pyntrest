@@ -14,6 +14,7 @@ from models import AlbumImage, Album, WebPath
 from random import choice
 from string import lowercase
 from markdown2 import Markdown
+from pyntrest.pyntrest_config import EXTERNAL_BASE_URL
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -177,7 +178,11 @@ class PyntrestHandler ():
             path_string = sub ('[/]+' , '/', path_string)
             album_title, album_description, _, _, _, _ = read_optional_album_metadata (local_albumpath_abs,
                                                                         META_INI_FILE_PATTERN)        
-            web_path = WebPath(title=album_title, path=path_string)
+            url_path = path_string
+            if pyntrest_config.EXTERNAL_BASE_URL is not None:
+                url_path  = pyntrest_config.EXTERNAL_BASE_URL + url_path 
+                
+            web_path = WebPath(title=album_title, path=url_path)
             breadcrumbs.append(web_path)
         page_title = breadcrumbs[0].title
         breadcrumbs[0].title = pyntrest_config.WORDING_HOME
@@ -230,7 +235,8 @@ class PyntrestHandler ():
             
             # setup template context
             subalbum = Album(title=meta_title, description=meta_description,
-                      path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
+                      path=path.join(local_albumpath_rel,
+                                     subalbum_name), width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None,
                       modified=modified, last_modified=lastmodified)    
             
@@ -248,7 +254,8 @@ class PyntrestHandler ():
             
             # setup template context
             subalbum = Album(title=meta_title, description=meta_description,
-                      path=subalbum_name, width=pyntrest_config.IMAGE_THUMB_WIDTH,
+                      path=path.join(local_albumpath_rel,
+                      subalbum_name), width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT,
                       cover=thumbnail_webpath, modified=modified, last_modified=lastmodified)
     

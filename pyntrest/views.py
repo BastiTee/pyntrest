@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from pyntrest_io import cleanup_url_path
 from pyntrest.pyntrest_core import PyntrestHandler
 from pyntrest.pyntrest_config import YOUR_IMAGE_FOLDER, STATIC_PATH,\
-    YOUR_HOME_PAGE
+    EXTERNAL_BASE_URL
 
 class ViewHandler ():
     """Instances of this class handle incoming GET requests and serve
@@ -36,7 +36,10 @@ class ViewHandler ():
     
         if not self.pyntrest_handler.check_if_album_exists(request.path):
             # If path does not exist, redirect to root album 
-            return redirect(YOUR_HOME_PAGE)
+            if EXTERNAL_BASE_URL is not None:
+                return redirect(EXTERNAL_BASE_URL)
+            else:
+                return redirect('/')
         else:
             if self.pyntrest_handler:
                 view_context = self.pyntrest_handler.generate_view_context(request.path)

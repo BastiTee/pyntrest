@@ -8,13 +8,11 @@ import pyntrest_config
 from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
-    is_modified)
+    is_modified, get_html_content)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 from random import choice
 from string import lowercase
-from markdown2 import Markdown
-from pyntrest.pyntrest_config import EXTERNAL_BASE_URL
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -24,6 +22,9 @@ YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube(\\.ini)?$')
 """Regex pattern to test if a local file is a Youtube hook"""
 TEXT_MD_FILE_PATTERN = compile('^.*\\.(md|txt)$')
 """Regex pattern to test if a local file is a text file"""
+INTRO_MD_FILE_PATTERN = compile('^.*__intro__\\.txt$')
+"""Regex pattern to test if a local file is a reserverd intro text file"""
+
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
@@ -187,13 +188,20 @@ class PyntrestHandler ():
         page_title = breadcrumbs[0].title
         breadcrumbs[0].title = pyntrest_config.WORDING_HOME
     
+        # check for intro text 
+        intro_file = path.join(local_albumpath_abs, '__intro__.txt')
+        intro_content = None
+        if path.isfile(intro_file):
+            intro_content, _ = get_html_content(intro_file)
+            
         context = { 'page_title': page_title, 'col_width': pyntrest_config.IMAGE_THUMB_WIDTH, 'col_height' : 
                    pyntrest_config.IMAGE_THUMB_HEIGHT, 'images': images,
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,
                    'breadcrumbs' : breadcrumbs,
-                   'show_headings' : pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS}
+                   'show_headings' : pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS,
+                   'intro_content' : intro_content}
         
         return context
     
@@ -317,28 +325,17 @@ class PyntrestHandler ():
 
         #######################################################################
         
-        elif TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()):
+        elif (TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()) and 
+              not INTRO_MD_FILE_PATTERN.match(local_imagepath_abs.lower())):
             
-            with open(local_imagepath_abs, 'r') as markdown_file:
-                file_content=markdown_file.read()
-            markdown_file.close()
-            try:
-                file_content.decode('UTF-8')
-            except UnicodeDecodeError:
-                file_content = unicode(file_content, 'iso-8859-1') 
+            html_content, title = get_html_content(local_imagepath_abs)
             
-            markdowner = Markdown()
-            # first textual line is considered as title 
-            title = file_content.strip().split('\n')[0]
-            # the full thing will be converted to HTML 
-            file_content = markdowner.convert(file_content)
-
             divid="".join(choice(lowercase) for _ in range(16))
             
             albumimage = AlbumImage(type='txt', location=path.join(
                         local_albumpath_rel, image_name), title=title,
                         width=pyntrest_config.IMAGE_THUMB_WIDTH,
                         height=pyntrest_config.IMAGE_THUMB_HEIGHT/2, 
-                        modified=modified, text_content=file_content,
+                        modified=modified, text_content=html_content,
                         divid=divid)
             images.append(albumimage)

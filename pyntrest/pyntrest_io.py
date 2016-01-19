@@ -5,6 +5,7 @@ from ConfigParser import ConfigParser
 from re import sub, compile, match, search
 from os import path, makedirs, listdir, walk 
 from time import time
+from markdown2 import Markdown
 
 def mkdirs (directory):
     """Create directory structure if it does not exist"""
@@ -226,3 +227,21 @@ def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_fi
             last_change = max(last_change, path.getctime(abs_path), path.getmtime(abs_path))
     
     return is_modified, last_change
+
+def get_html_content (local_file_path):
+    
+    with open(local_file_path, 'r') as markdown_file:
+        file_content=markdown_file.read()
+        markdown_file.close()
+    try:
+        file_content.decode('UTF-8')
+    except UnicodeDecodeError:
+        file_content = unicode(file_content, 'iso-8859-1') 
+    
+    markdowner = Markdown()
+    # first textual line is considered as title 
+    title = file_content.strip().split('\n')[0]
+    # the full thing will be converted to HTML 
+    file_content = markdowner.convert(file_content)
+
+    return file_content, title

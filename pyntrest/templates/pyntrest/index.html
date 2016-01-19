@@ -47,6 +47,15 @@
 			<p>{% if album_description %} {{ album_description }} {% endif %}</p>
 		</div>
 	</div>
+	
+	{% if intro_content %}
+		<br />
+		<div class="tile-text">
+		{% autoescape off %}
+		{{ intro_content }}
+		 {% endautoescape %}
+		</div>
+	{% endif %}
 
 	<div class="content">
 

@@ -119,26 +119,8 @@ class PILHandler ():
         lon = None
     
         image = Image.open(source_image)
-        exif_data = {}
-        try:
-            info = image._getexif()
-        except AttributeError:
-            return exif_data
-        except IndexError:
-            return exif_data
-        if info:
-            for tag, value in info.items():
-                decoded = TAGS.get(tag, tag)
-                if decoded == "GPSInfo":
-                    gps_data = {}
-                    for t in value:
-                        sub_decoded = GPSTAGS.get(t, t)
-                        gps_data[sub_decoded] = value[t]
+        exif_data = self._get_exif_data(image)
     
-                    exif_data[decoded] = gps_data
-                else:
-                    exif_data[decoded] = value
-        
         if "GPSInfo" in exif_data:        
             gps_info = exif_data["GPSInfo"]
     
@@ -158,12 +140,14 @@ class PILHandler ():
                     lon = 0 - lon
     
         return lat, lon
+    
 
     def _get_if_exist(self, data, key):
         """Safely check for key within array""" 
         
         if key in data:
-            return data[key]            
+            return data[key]
+            
         return None
         
     def _convert_to_degress(self, value):
@@ -183,3 +167,29 @@ class PILHandler ():
         s = float(s0) / float(s1)
     
         return d + (m / 60.0) + (s / 3600.0)
+
+    def _get_exif_data(self, image):
+        """Returns a dictionary from the exif data of an PIL Image item. 
+        Also converts the GPS Tags"""
+        
+        exif_data = {}
+        try:
+            info = image._getexif()
+        except AttributeError:
+            return exif_data
+        except IndexError:
+            return exif_data
+        if info:
+            for tag, value in info.items():
+                decoded = TAGS.get(tag, tag)
+                if decoded == "GPSInfo":
+                    gps_data = {}
+                    for t in value:
+                        sub_decoded = GPSTAGS.get(t, t)
+                        gps_data[sub_decoded] = value[t]
+    
+                    exif_data[decoded] = gps_data
+                else:
+                    exif_data[decoded] = value
+    
+        return exif_data

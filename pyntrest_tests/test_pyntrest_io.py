@@ -8,6 +8,8 @@ import unittest
 
 class IoTestSuite(unittest.TestCase):
 
+    base_path = path.abspath(path.dirname(__file__))
+
     def create_temp_file_with_content ( self, content, filename ):
         temp_dir = mkdtemp()
         self.addCleanup(rmtree, temp_dir, True)
@@ -232,7 +234,12 @@ class IoTestSuite(unittest.TestCase):
         pass # TODO
     
     def test_get_html_content(self):
-        pass # TODO
+        
+        self.assertRaises(TypeError, pyntrest_io.get_html_content)
+        self.assertRaises(TypeError, pyntrest_io.get_html_content, '')
+        self.assertRaises(TypeError, pyntrest_io.get_html_content, 'nirvana.txt')
+        
+        # TODO 
 
 if __name__ == '__main__':
     unittest.main()

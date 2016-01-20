@@ -230,6 +230,11 @@ def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_fi
 
 def get_html_content (local_file_path):
     
+    if not local_file_path:
+        raise TypeError('local_file_path not provided.')
+    if not path.exists(local_file_path):
+        raise TypeError('local_file_path does not exist!') 
+    
     with open(local_file_path, 'r') as markdown_file:
         file_content=markdown_file.read()
         markdown_file.close()

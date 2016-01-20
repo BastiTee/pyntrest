@@ -34,6 +34,9 @@ class IoTestSuite(unittest.TestCase):
         pyntrest_io.mkdirs(temp_subsubsubdir)
         self.assertTrue(path.exists(temp_subsubsubdir))
         
+    def test_findfiles(self):
+        pass # TODO 
+        
     def test_get_immediate_subdirectories(self):
         self.assertRaises(TypeError, pyntrest_io.get_immediate_subdirectories)
         self.assertRaises(TypeError, pyntrest_io.get_immediate_subdirectories, None)
@@ -224,6 +227,12 @@ class IoTestSuite(unittest.TestCase):
         dirname = self.create_temp_file_with_content(content, ini_file)
         filepath = path.join(dirname, ini_file)
         self.assertEqual('rPmGtZAUxNs', pyntrest_io.read_youtube_ini_file(filepath))
+    
+    def test_is_modified(self):
+        pass # TODO
+    
+    def test_get_html_content(self):
+        pass # TODO
 
 if __name__ == '__main__':
     unittest.main()

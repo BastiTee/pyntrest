@@ -106,36 +106,19 @@ class PILHandler ():
             
         return new_w, new_h
 
-    def get_if_exist(self, data, key):
-        """Safely check for key within array""" 
+    def get_geo_coordinates (self, source_image):
+        """Returns the latitude and longitude, if available, from the provided 
+        exif_data (obtained through get_exif_data above)"""
         
-        if key in data:
-            return data[key]
-            
-        return None
+        if not source_image:
+            raise TypeError ('source_image not set')
+        if not path.exists(source_image):
+            raise TypeError ('source_image does not exist')
         
-    def convert_to_degress(self, value):
-        """Helper function to convert the GPS coordinates stored in the 
-        EXIF to degrees in float format"""
-       
-        d0 = value[0][0]
-        d1 = value[0][1]
-        d = float(d0) / float(d1)
+        lat = None
+        lon = None
     
-        m0 = value[1][0]
-        m1 = value[1][1]
-        m = float(m0) / float(m1)
-    
-        s0 = value[2][0]
-        s1 = value[2][1]
-        s = float(s0) / float(s1)
-    
-        return d + (m / 60.0) + (s / 3600.0)
-
-    def get_exif_data(self, image):
-        """Returns a dictionary from the exif data of an PIL Image item. 
-        Also converts the GPS Tags"""
-        
+        image = Image.open(source_image)
         exif_data = {}
         try:
             info = image._getexif()
@@ -155,41 +138,48 @@ class PILHandler ():
                     exif_data[decoded] = gps_data
                 else:
                     exif_data[decoded] = value
-    
-        return exif_data
-
-    def get_geo_coordinates (self, source_image):
-        """Returns the latitude and longitude, if available, from the provided 
-        exif_data (obtained through get_exif_data above)"""
         
-        if not source_image:
-            raise TypeError ('source_image not set')
-        if not path.exists(source_image):
-            raise TypeError ('source_image does not exist')
-        
-        lat = None
-        lon = None
-    
-        image = Image.open(source_image)
-        exif_data = self.get_exif_data(image)
-    
         if "GPSInfo" in exif_data:        
             gps_info = exif_data["GPSInfo"]
     
-            gps_latitude = self.get_if_exist(gps_info, "GPSLatitude")
-            gps_latitude_ref = self.get_if_exist(gps_info, 'GPSLatitudeRef')
-            gps_longitude = self.get_if_exist(gps_info, 'GPSLongitude')
-            gps_longitude_ref = self.get_if_exist(gps_info, 'GPSLongitudeRef')
+            gps_latitude = self._get_if_exist(gps_info, "GPSLatitude")
+            gps_latitude_ref = self._get_if_exist(gps_info, 'GPSLatitudeRef')
+            gps_longitude = self._get_if_exist(gps_info, 'GPSLongitude')
+            gps_longitude_ref = self._get_if_exist(gps_info, 'GPSLongitudeRef')
     
             if (gps_latitude and gps_latitude_ref and gps_longitude 
                 and gps_longitude_ref):
-                lat = self.convert_to_degress(gps_latitude)
+                lat = self._convert_to_degress(gps_latitude)
                 if gps_latitude_ref != "N":                     
                     lat = 0 - lat
     
-                lon = self.convert_to_degress(gps_longitude)
+                lon = self._convert_to_degress(gps_longitude)
                 if gps_longitude_ref != "E":
                     lon = 0 - lon
     
         return lat, lon
+
+    def _get_if_exist(self, data, key):
+        """Safely check for key within array""" 
+        
+        if key in data:
+            return data[key]            
+        return None
+        
+    def _convert_to_degress(self, value):
+        """Helper function to convert the GPS coordinates stored in the 
+        EXIF to degrees in float format"""
+       
+        d0 = value[0][0]
+        d1 = value[0][1]
+        d = float(d0) / float(d1)
     
+        m0 = value[1][0]
+        m1 = value[1][1]
+        m = float(m0) / float(m1)
+    
+        s0 = value[2][0]
+        s1 = value[2][1]
+        s = float(s0) / float(s1)
+    
+        return d + (m / 60.0) + (s / 3600.0)

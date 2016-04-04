@@ -225,11 +225,10 @@ a {
 
 .breadcrumb {
 	/* Navigation breadcrumb */
-    background: #09c;
+    background: #aa7243;
     position: fixed;
     z-index: 9999;
     width: 100%;
-    background: #09c;
     -webkit-box-shadow: 0 1px 4px -6px #777;
     -moz-box-shadow: 0 6px 6px -6px #777;
     box-shadow: 0 6px 6px -6px #777;

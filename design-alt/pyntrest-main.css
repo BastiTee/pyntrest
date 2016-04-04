@@ -79,8 +79,7 @@ textarea {
    
 html {
 	/* Basic font settings */ 
-    font-family: "Open Sans Condensed", "Avant Garde", Avantgarde, "Century Gothic",
-        CenturyGothic, "AppleGothic", sans-serif;
+    font-family: 'Playfair Display', serif;
     color: #000;
     text-align: center;
 }
@@ -155,6 +154,12 @@ a {
     padding-left: 5px;
 }
 
+.pagelogo {
+	width: 100%;
+	margin-top: -95px;
+	padding: 0px;
+}
+
 .tile-info a {
 	color: #fff;    
 }
@@ -171,7 +176,7 @@ a {
 
 .tile-text-box {
     font-size: 110%;
-    background-color: #7DB3C4;
+    background-color: #A0A0A0;
     color: #fff;   
 }
 
@@ -191,9 +196,19 @@ a {
 	background-color: #F9F9F9;	
 }
 
+.tile-text img {
+	box-shadow: 0 10px 6px -6px #777;
+	width: 100%
+}
+
+.tile-text iframe {
+	box-shadow: 0 10px 6px -6px #777;
+	width: 100%
+}
+
 .header {
 	/* Header displaying album information */	
-    background-color: #F9F9F9;
+    background-color: #F2F2F2;
     padding-top: 25px;
     padding-bottom: 10px;
     -webkit-box-shadow: 0 1px 4px -6px #777;
@@ -215,6 +230,7 @@ a {
 
 .footer {
 	/* Footer with information about project*/
+    font-size: 80%;
     margin-top: 20px;
     padding-right: 10px;
     padding-top: 10px;
@@ -226,7 +242,7 @@ a {
 
 .breadcrumb {
 	/* Navigation breadcrumb */
-    background: #09c;
+    background: #A0A0A0;
     position: fixed;
     z-index: 9999;
     width: 100%;

@@ -20,7 +20,9 @@ Pyntrest will create a subfolder 'images' in that folder and will copy all
 full-size images as well as thumbnail versions of the content to it. 
 Make sure disk space is sufficient. 
 """
-
+MAIN_CSS_FILE = 'pyntrest-main.css'
+"""Default main pyntrest CSS file to manipulate look and feel. This file 
+must be located at <STATIC_PATH>/css/."""
 WORDING_ALBUM = 'Sub albums'
 """Heading for available sub albums in the web album"""
 WORDING_IMAGES = 'Images'

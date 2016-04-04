@@ -13,7 +13,9 @@
 	<!-- Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
+	{% with 'pyntrest/css/'|add:main_css as css_file %}
+	<link rel="stylesheet" type="text/css" href="{% static css_file %}" />
+	{% endwith %}
 	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
 	<link href="{% static 'pyntrest/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- Icon -->

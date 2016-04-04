@@ -34,7 +34,8 @@ SHOW_ALBUM_IMAGES_WORDINGS = True
 """Show headings for available images and sub albums at all?"""
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
-
+SUPPRESS_BREADCRUMB_ON_HOME = True
+"""If yes, the breadcrumb header will not be displayed on the home page."""
 
 IMAGE_THUMB_WIDTH = 300
 """Maximum width of album and image thumbnails. Attention: If you change 

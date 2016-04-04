@@ -187,7 +187,7 @@ class PyntrestHandler ():
             breadcrumbs.append(web_path)
         page_title = breadcrumbs[0].title
         breadcrumbs[0].title = pyntrest_config.WORDING_HOME
-    
+
         # check for intro text 
         intro_file = path.join(local_albumpath_abs, '__intro__.txt')
         intro_content = None
@@ -208,14 +208,25 @@ class PyntrestHandler ():
         except AttributeError:
             pyntrest_config.FAVICON_FILE = 'favicon.png'
              
+        # show header?
+        show_breadcrumb = True
+        try:
+            if ( len(breadcrumbs) == 1 and 
+                 pyntrest_config.SUPPRESS_BREADCRUMB_ON_HOME):
+                show_breadcrumb = False
+        except AttributeError:
+            pass # just show it.
+        
         context = { 'page_title': page_title, 'col_width': pyntrest_config.IMAGE_THUMB_WIDTH, 'col_height' : 
                    pyntrest_config.IMAGE_THUMB_HEIGHT, 'images': images,
                    'main_css': pyntrest_config.MAIN_CSS_FILE,
                    'main_favicon': pyntrest_config.FAVICON_FILE,
+                   'show_breadcrum': False,
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,
                    'breadcrumbs' : breadcrumbs,
+                   'show_breadcrumb': show_breadcrumb,
                    'show_headings' : pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS,
                    'intro_content' : intro_content}
         

@@ -36,6 +36,7 @@
 </head>
 <body>
 
+	{% if show_breadcrumb %}
 	<div class="breadcrumb">
 		<div class="breadcrumbtext">
 			{% if breadcrumbs %} 
@@ -45,6 +46,7 @@
 			{% endif %}
 		</div>
 	</div>
+	{% endif %}
 
 	<div class="header">
 		<div class="headertext">

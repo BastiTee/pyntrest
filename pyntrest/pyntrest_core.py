@@ -200,11 +200,18 @@ class PyntrestHandler ():
                 pyntrest_config.MAIN_CSS_FILE = 'pyntrest-main.css'
         except AttributeError:
             pyntrest_config.MAIN_CSS_FILE = 'pyntrest-main.css'
-            
-        
+                   
+        # set favicon
+        try:
+            if not pyntrest_config.FAVICON_FILE:
+                pyntrest_config.FAVICON_FILE = 'favicon.png'
+        except AttributeError:
+            pyntrest_config.FAVICON_FILE = 'favicon.png'
+             
         context = { 'page_title': page_title, 'col_width': pyntrest_config.IMAGE_THUMB_WIDTH, 'col_height' : 
                    pyntrest_config.IMAGE_THUMB_HEIGHT, 'images': images,
                    'main_css': pyntrest_config.MAIN_CSS_FILE,
+                   'main_favicon': pyntrest_config.FAVICON_FILE,
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,

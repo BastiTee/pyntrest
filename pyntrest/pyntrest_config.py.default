@@ -23,6 +23,9 @@ Make sure disk space is sufficient.
 MAIN_CSS_FILE = 'pyntrest-main.css'
 """Default main pyntrest CSS file to manipulate look and feel. This file 
 must be located at <STATIC_PATH>/css/."""
+FAVICON_FILE = 'favicon.png'
+"""Default main pyntrest favicon. This file must be located at 
+<STATIC_PATH>/res/."""
 WORDING_ALBUM = 'Sub albums'
 """Heading for available sub albums in the web album"""
 WORDING_IMAGES = 'Images'

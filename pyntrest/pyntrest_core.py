@@ -8,12 +8,14 @@ import pyntrest_config
 from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
-    is_modified, get_html_content)
+    is_modified, get_html_content, file_exists)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 from random import choice
 from string import lowercase
 from os.path import basename
+from pyntrest_project.settings import TEMPLATE_DIRS
+from pyntrest.pyntrest_config import STATIC_PATH
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -33,30 +35,35 @@ class PyntrestHandler ():
     
     pil_handler = None
     main_images_path = None
+    static_path = None
     static_images_path = None
     static_fullsize_path = None
     static_athumbs_path = None
     static_ithumbs_path = None 
     
-    def __init__(self, main_images_path, static_images_path):
+    def __init__(self, main_images_path, static_path):
         """Constructor"""
+        
+        print 'TEMPLATE_DIRS={}'.format(TEMPLATE_DIRS)
+        print 'STATIC_PATH={}'.format(STATIC_PATH)
         
         if main_images_path is None:
             raise TypeError ('main_images_path not set.')
-        if static_images_path is None:
-            raise TypeError ('static_images_path not set.')
+        if static_path is None:
+            raise TypeError ('static_path not set.')
         
         main_images_path = path.abspath(main_images_path)
-        static_images_path = path.abspath(static_images_path)
-        static_images_path = path.join(static_images_path, 'images')
-        
-        self.pil_handler = PILHandler (pyntrest_config.IMAGE_THUMB_WIDTH,
-            pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
+        self.static_path = path.abspath(static_path)
         self.main_images_path = main_images_path
-        self.static_images_path = static_images_path
+        self.static_images_path = path.join(self.static_path, 'images')
         self.static_fullsize_path = path.join (self.static_images_path, 'full_size')
         self.static_athumbs_path = path.join (self.static_images_path, 'album_thumbs')
         self.static_ithumbs_path = path.join (self.static_images_path, 'image_thumbs')
+        
+        self.pil_handler = PILHandler (pyntrest_config.IMAGE_THUMB_WIDTH,
+            pyntrest_config.IMAGE_THUMB_HEIGHT, pyntrest_config.UPSCALE_FACTOR)
+        
+        self.upgrade_static_files()
             
     def set_main_images_path (self, main_images_path):
         """Reset main images path to another location. Used from within
@@ -82,10 +89,10 @@ class PyntrestHandler ():
         # Obtain number of sub directories
         number_of_subdirs = 0
         for dirname, _, _ in walk (self.main_images_path):
-            if not str(basename(dirname)).startswith('.'):
+            if not '\.' in str(dirname) and not '/.' in str(dirname):
                 number_of_subdirs += 1
             
-        print 'Found {0} directories...'.format(number_of_subdirs)
+        print 'Found {0} non-hidden directories...'.format(number_of_subdirs)
         # Call recursive method 
         self.on_startup_prepare_folder(self.main_images_path, '/', number_of_subdirs)
         print 'Preparation of Pyntrest done...'
@@ -356,3 +363,55 @@ class PyntrestHandler ():
                         modified=modified, text_content=html_content,
                         divid=divid)
             return albumimage
+
+    def upgrade_static_files(self):
+        """This method allows for updating a selection of static files 
+        with corresponding files residing in a hidden .pyntrest  folder 
+        in your main image folder. This comes in handy when you want  to 
+        update the CSS or favicon without touching the core implementation."""
+                
+        pyn_config_folder = path.join(self.main_images_path, '.pyntrest')
+        
+        # these files can be overridden
+        changeable_files = [
+           path.join('res', 'favicon.png'),
+           path.join('res', 'favicon-apple.png'),
+           path.join('css', 'pyntrest-main.css'),
+           path.join('index.html'),
+        ]
+        
+        for ch_file in changeable_files:
+                        
+            # the changeable file at its final destination 
+            if 'index' in ch_file:
+                exis_file = path.join(TEMPLATE_DIRS[0], 'pyntrest', ch_file)
+            else:
+                exis_file = path.join(self.static_path, ch_file)
+            # the candidate file from the main images folder 
+            cand_file = path.join(pyn_config_folder, ch_file)
+            
+#             print 'Testing file {} at \'{}\'.'.format(ch_file, exis_file)
+
+            if not file_exists(exis_file) and not file_exists(cand_file):
+                # no target file and no custom file --> copy from default 
+                print 'Creating file \'{}\' from default.'.format(exis_file)
+                copyfile(exis_file + '.default', exis_file)
+            elif not file_exists(exis_file) and file_exists(cand_file):
+                # no target file but custom file --> copy from custom
+                print ('Creating file \'{}\' from version at \'{}\'.'
+                       .format(exis_file, cand_file))
+                copyfile(cand_file, exis_file)
+                
+            if not file_exists(cand_file):
+                continue # nothing to compare
+            
+            # get modified / created dates 
+            efile_ts = max( path.getctime(exis_file), path.getmtime(exis_file))
+            cfile_ts = max( path.getctime(cand_file), path.getmtime(cand_file))
+            
+            if cfile_ts >= efile_ts:
+                print (
+                'Updating file \'{}\' with newer version at \'{}\' [{} >> {}].'
+                .format(ch_file, cand_file, efile_ts, cfile_ts))
+                copyfile(cand_file, exis_file)
+        

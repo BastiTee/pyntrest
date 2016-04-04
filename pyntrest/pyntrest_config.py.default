@@ -20,14 +20,6 @@ full-size images as well as thumbnail versions of the content to it.
 Make sure disk space is sufficient. 
 """
 
-MAIN_CSS_FILE = 'pyntrest-main.css'
-"""Default main pyntrest CSS file to manipulate look and feel. This file 
-must be located at <STATIC_PATH>/css/."""
-
-FAVICON_FILE = 'favicon.png'
-"""Default main pyntrest favicon. This file must be located at 
-<STATIC_PATH>/res/."""
-
 WORDING_ALBUM = 'Sub albums'
 """Heading for available sub albums in the web album"""
 
@@ -40,7 +32,7 @@ SHOW_ALBUM_IMAGES_WORDINGS = True
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
 
-SUPPRESS_BREADCRUMB_ON_HOME = True
+SUPPRESS_BREADCRUMB_ON_HOME = False
 """If yes, the breadcrumb header will not be displayed on the home page."""
 
 IMAGE_THUMB_WIDTH = 300

@@ -7,6 +7,16 @@ from os import path, makedirs, listdir, walk
 from time import time
 from markdown2 import Markdown
 
+def file_exists (path):
+    """Tests if a file exists"""
+    
+    try:
+        fobj = open(path)
+        fobj.close()
+        return True
+    except IOError:
+        return False
+    
 def mkdirs (directory):
     """Create directory structure if it does not exist"""
     

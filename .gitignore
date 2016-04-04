@@ -1,3 +1,20 @@
+# ------------------------------------------------------------------------------
+# PROJECT SPECIFICS
+
+db.sqlite3.
+pyntrest/static/pyntrest/images/
+doc/code
+
+pyntrest_config.py
+favicon.png
+favicon-apple.png
+index.html
+pyntrest-main.css
+
+*.zip
+ 
+# ------------------------------------------------------------------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -52,10 +69,4 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# Own additions
-pyntrest_config.py
-db.sqlite3.
-update.sh
-pyntrest/static/pyntrest/images/
-doc/code
 

@@ -11,18 +11,13 @@
 	{% endif %}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Fonts -->
-	<link href='https://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	<!-- CSS -->
-	{% with 'pyntrest/css/'|add:main_css as css_file %}
-	<link rel="stylesheet" type="text/css" href="{% static css_file %}" />
-	{% endwith %}
+	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
 	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
 	<link href="{% static 'pyntrest/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- Icon -->
-   	{% with 'pyntrest/res/'|add:main_favicon as favicon_file %}
-    <link rel="icon" href="{% static favicon_file %}" type="image/png" />
-    {% endwith %}
+    <link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}" type="image/png" />
     <link rel="apple-touch-icon" sizes="57x57" href="{% static 'pyntrest/res/favicon-apple.png' %}">
     <link rel="apple-touch-icon" sizes="114x114" href="{% static 'pyntrest/res/favicon-apple.png' %}">
     <link rel="apple-touch-icon" sizes="72x72" href="{% static 'pyntrest/res/favicon-apple.png' %}">

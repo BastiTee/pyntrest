@@ -13,6 +13,7 @@ from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 from random import choice
 from string import lowercase
+from os.path import basename
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -80,8 +81,9 @@ class PyntrestHandler ():
     
         # Obtain number of sub directories
         number_of_subdirs = 0
-        for _, _, _ in walk (self.main_images_path):
-            number_of_subdirs += 1
+        for dirname, _, _ in walk (self.main_images_path):
+            if not str(basename(dirname)).startswith('.'):
+                number_of_subdirs += 1
             
         print 'Found {0} directories...'.format(number_of_subdirs)
         # Call recursive method 

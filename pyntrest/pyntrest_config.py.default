@@ -15,25 +15,31 @@ On a production server, make sure that this folder is writable to Pyntrest
 and that you also copy the current data from 
 <pyntrest>/pyntrest/static/pyntrest, i.e., the subfolders 'css', 'js' and 
 'res' to that folder.
-
 Pyntrest will create a subfolder 'images' in that folder and will copy all 
 full-size images as well as thumbnail versions of the content to it. 
 Make sure disk space is sufficient. 
 """
+
 MAIN_CSS_FILE = 'pyntrest-main.css'
 """Default main pyntrest CSS file to manipulate look and feel. This file 
 must be located at <STATIC_PATH>/css/."""
+
 FAVICON_FILE = 'favicon.png'
 """Default main pyntrest favicon. This file must be located at 
 <STATIC_PATH>/res/."""
+
 WORDING_ALBUM = 'Sub albums'
 """Heading for available sub albums in the web album"""
+
 WORDING_IMAGES = 'Images'
 """Heading for available images in the web album"""
+
 SHOW_ALBUM_IMAGES_WORDINGS = True
 """Show headings for available images and sub albums at all?"""
+
 WORDING_HOME = 'Home'
 """Bread crumb title for root web album"""
+
 SUPPRESS_BREADCRUMB_ON_HOME = True
 """If yes, the breadcrumb header will not be displayed on the home page."""
 
@@ -41,18 +47,22 @@ IMAGE_THUMB_WIDTH = 300
 """Maximum width of album and image thumbnails. Attention: If you change 
 this later, make sure to delete the content of <STATIC_PATH>/images/ so that 
 the thumbnails will be newly created with your new thumb size."""
+
 IMAGE_THUMB_HEIGHT = 150
 """Maximum height of album thumbnails. Attention: If you change this later, 
 make sure to delete the content of <STATIC_PATH>/images/ so that the 
 thumbnails will be newly created with your new thumb size."""
+
 UPSCALE_FACTOR = 1.75
 """If set to 1.0, image thumbs will be rescaled to the exact size as used
 in the web photo album. Depending on the source images this might not look
 that neat. Increase the upscale factor to make sure images are left a bit
 bigger. An upscale factor of 1.5 would mean that if you want your album
 thumbnail to be 400x100px the full image will be rescaled to 600x200"""
+
 HIGHLIGHT_NEW_IMAGES = True
 """If true, new images will be highlighted in Pyntrest"""
+
 MAX_AGE_OF_NEW_IMAGES_H = 48
 """Images with a time stamp newer or equal to the current time minus the given 
 number of hours will be considered as new and therefore highlighted"""

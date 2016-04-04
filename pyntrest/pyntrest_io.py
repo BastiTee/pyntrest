@@ -44,8 +44,9 @@ def get_immediate_subdirectories(file_path):
         raise TypeError('file_path not provided.')
     
     directories = []
-    for name in listdir(file_path):    
-        if path.isdir(path.join(file_path, name)):
+    for name in listdir(file_path):
+        if (path.isdir(path.join(file_path, name)) 
+            and not str(name).startswith('.')):
             directories.append(name)
     directories.sort()
     return directories

@@ -144,15 +144,19 @@ class PyntrestHandler ():
         # setup images
         images = []
         for image_name in listdir(local_albumpath_abs):
+            subimage = self.process_subimage(image_name, 
+                                    local_albumpath_rel, local_albumpath_abs)
+            if subimage is None:
+                continue
             if (album_cover is None or hide_cover is False):
-                self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
+                images.append(subimage)
             else:
                 if album_cover == image_name:
                     #print 'Album cover \'{0}\' set for hiding!'.format(album_cover)
                     pass # ignore
                 else:
-                    self.process_subimage(images, image_name, local_albumpath_rel, local_albumpath_abs)
-            
+                    images.append(subimage)
+        
         # update image descriptions
         image_descriptions = read_optional_image_metadata(local_albumpath_abs, META_INI_FILE_PATTERN)
         for image in images:
@@ -297,7 +301,7 @@ class PyntrestHandler ():
         # append subalbum to context
         subalbums.append(subalbum)
     
-    def process_subimage (self, images, image_name, local_albumpath_rel, local_albumpath_abs):
+    def process_subimage (self, image_name, local_albumpath_rel, local_albumpath_abs):
         """Uses the given sub-image path and creates a AlbumImage model for it, 
         including the creation of all necessary thumbnails and the check for
         whether the file is a Youtube video hook. Finally it appends the AlbumImage
@@ -334,7 +338,7 @@ class PyntrestHandler ():
             albumimage = AlbumImage(type='img', location=path.join(local_albumpath_rel,
                         image_name), title=image_name, width=width, height=height,
                         modified=modified, geocoord=geocoord)
-            images.append(albumimage)  
+            return albumimage  
         
         #######################################################################
               
@@ -348,7 +352,7 @@ class PyntrestHandler ():
                         width=pyntrest_config.IMAGE_THUMB_WIDTH,
                         height=thumb_height, youtubeid=youtube_id,
                         modified=modified)
-            images.append(albumimage)
+            return albumimage
 
         #######################################################################
         
@@ -365,4 +369,4 @@ class PyntrestHandler ():
                         height=pyntrest_config.IMAGE_THUMB_HEIGHT/2, 
                         modified=modified, text_content=html_content,
                         divid=divid)
-            images.append(albumimage)
+            return albumimage

@@ -15,7 +15,6 @@ from random import choice
 from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
-from pyntrest.pyntrest_config import STATIC_PATH
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -44,8 +43,8 @@ class PyntrestHandler ():
     def __init__(self, main_images_path, static_path):
         """Constructor"""
         
-        print 'TEMPLATE_DIRS={}'.format(TEMPLATE_DIRS)
-        print 'STATIC_PATH={}'.format(STATIC_PATH)
+#         print 'TEMPLATE_DIRS={}'.format(TEMPLATE_DIRS)
+#         print 'STATIC_PATH={}'.format(STATIC_PATH)
         
         if main_images_path is None:
             raise TypeError ('main_images_path not set.')

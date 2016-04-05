@@ -1,22 +1,45 @@
 """Test suite for module views"""
-
-from os import path
-from pyntrest.pyntrest_core import PyntrestHandler
-from django.http.response import HttpResponseRedirect, HttpResponse, Http404
-from pyntrest.views import ViewHandler
-from django.http import HttpRequest
-from shutil import rmtree
+from os import path, makedirs
+from shutil import rmtree, copyfile
+from tempfile import mkdtemp
 import unittest
+
+from django.http import HttpRequest
+from django.http.response import HttpResponseRedirect, HttpResponse
+
+from pyntrest.pyntrest_core import PyntrestHandler
+from pyntrest.views import ViewHandler
+
 
 class ViewsTestSuite(unittest.TestCase):
     
     mip = path.join(path.abspath(path.dirname(__file__)), 'testdata')
     sip = path.abspath(path.dirname(__file__))
     
+    def generate_test_dirs (self):
+        base_static = path.join(
+                    path.dirname(path.dirname(__file__)), 
+                    'pyntrest', 'static','pyntrest')
+        static_images_dir = mkdtemp()
+        print 'Temp dir created at {}'.format(static_images_dir)
+        for subdir in [ 'res', 'css', 'fonts', 'js']:
+            makedirs(path.join(static_images_dir, subdir ))
+        for resfile in [ 
+                        path.join('res', 'favicon.png.default'),
+                        path.join('res', 'favicon-apple.png.default'),
+                        path.join('css', 'pyntrest-main.css.default'),
+                        'index.html.default',
+                        ]:
+            copyfile(path.join(base_static, resfile),
+                 path.join(static_images_dir, resfile))
+        self.addCleanup(rmtree, static_images_dir, True)
+        return  static_images_dir
+    
     def test_get (self):
         
         views_h = ViewHandler ()
-        pyntrest_handler = PyntrestHandler(self.mip, self.sip)
+        static_images_dir = self.generate_test_dirs()
+        pyntrest_handler = PyntrestHandler(self.mip, static_images_dir)
         self.addCleanup(rmtree, path.join(self.sip, 'images'), True)
         views_h.set_pyntrest_handler(pyntrest_handler)
         
@@ -38,10 +61,7 @@ class ViewsTestSuite(unittest.TestCase):
         
         request = HttpRequest()
         request.path = '/notexistingalbum'
-        #response = type(views_h.get(request))
-        #self.assertIs(HttpResponseRedirect, response)
-        #self.assertEquals(302, response.status_code)        
-        
+
         request = HttpRequest()
         request.path = '/'
         response = type(views_h.get(request))

@@ -208,9 +208,9 @@ class PyntrestHandler ():
             
         # show header?
         show_breadcrumb = True
+        first_page = len(breadcrumbs) == 1
         try:
-            if ( len(breadcrumbs) == 1 and 
-                 pyntrest_config.SUPPRESS_BREADCRUMB_ON_HOME):
+            if first_page and pyntrest_config.SUPPRESS_BREADCRUMB_ON_HOME:
                 show_breadcrumb = False
         except AttributeError:
             pass # just show it.
@@ -218,6 +218,7 @@ class PyntrestHandler ():
         context = { 'page_title': page_title, 'col_width': pyntrest_config.IMAGE_THUMB_WIDTH, 'col_height' : 
                    pyntrest_config.IMAGE_THUMB_HEIGHT, 'images': images,
                    'show_breadcrum': False,
+                   'first_page': first_page,
                    'subalbums': subalbums, 'album_title' : album_title,
                    'album_description' : album_description,
                    'lang_images' : pyntrest_config.WORDING_IMAGES, 'lang_albums' : pyntrest_config.WORDING_ALBUM,

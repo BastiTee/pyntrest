@@ -27,13 +27,13 @@ A limited number of options are available to enrich the basic image albums. All 
 
 * You can provide a text file providing album and image descriptions and some configuration options
 * YouTube videos can be embedded as well
-* Each folder can serve additional blog-like content either as intro before the content or in between images. Blog content can be provided in Mardown or HTML (or combined)
+* Each folder can serve additional blog-like content either as intro before your album/images or between images. Blog content can be provided as Markdown or HTML (or combined)
 
-See sections below for details how to configure.
+See the configuration section below for details on how to configure.
 
 ### Limitations
 
-PYntrest is focussed on simple web photo albums. It is neither a blog CMS, nor does it support social features or some kind of a plug-in architecture. If you just want to share some photos with your family and friends on your own server, then Pyntrest is for you. If you want more, consider checking out other awesome flat-file CMS like [Grav](https://getgrav.org/) or [Automad](http://automad.org/). 
+Pyntrest is focussed on simple web photo albums. It is neither a blog CMS, nor does it support social features or some kind of a plug-in architecture. If you just want to share some photos with your family and friends on your own server, then Pyntrest is for you. If you want more, consider checking out other awesome flat-file CMS like [Grav](https://getgrav.org/) or [Automad](http://automad.org/). 
 
 ## How to start
 
@@ -52,11 +52,11 @@ Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_
 
 For folder or file management, i.e., the actual content management, you can use whatever you want to use (Dropbox, Drive, FTP, etc.) I use Dropbox to synchronize a folder on my webspace with my mobile device. If the image arrives at the webspace's folder, Pyntrest automatically detects the picture and it's instantly available on the corresponding web photo album. The same applies to new subalbums, optional album info files or youtube hooks.
 
-## Option details  
+## Options  
 
 ### Album/image information
 
-To enable album/image information you need to create a `__info__.txt` file in your image (sub-) folder. It is used to provide more information such as title, description, a cover image and details for individual photos or videos (see  [`<pyntrest>/sample_images`](https://github.com/BastiTee/pyntrest/tree/master/sample_images) for some examples). The following options can be set.
+To enable album/image information you need to create a [`__info__.txt`](https://github.com/BastiTee/pyntrest/blob/master/sample_images/__info__.txt) file in your image (sub-) folder. It is used to provide information such as title, description, a cover image and details for individual photos or videos. The following options can be set.
 
 **AlbumInfo Section**
 
@@ -101,7 +101,7 @@ Example: [`im-0041-%6dk-5HN4fvg%__youtube__.txt`](https://github.com/BastiTee/py
 
 ### Album introductions
 
-To add an album introduction you need to create a file named `__intro__.txt` in your image (sub-) folder. This file can contain Markdown and/or HTML and will be rendered to a webpage. Assuming you have the Pyntrest sample application running, you can see an example at [http://localhost:8000/blog-example](http://localhost:8000/blog-example) / [__intro.txt__](https://github.com/BastiTee/pyntrest/blob/master/sample_images/blog-example/__intro__.txt)
+To add an album introduction you need to create a file named [`__intro__.txt`](https://github.com/BastiTee/pyntrest/blob/master/sample_images/blog-example/__intro__.txt) in your image (sub-) folder. This file can contain Markdown and/or HTML and will be rendered to a webpage. Assuming you have the Pyntrest sample application running, you can see an example at [http://localhost:8000/blog-example](http://localhost:8000/blog-example)
 
 ### In-between blogs
 

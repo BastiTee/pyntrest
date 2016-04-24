@@ -140,4 +140,4 @@ Pyntrest relies on a number of awesome open source projects:
 
 Furthermore I've incorporated numerous images for testing purposes. All those images are licensed under [CC0 1.0 Universal (CC0 1.0) ](http://creativecommons.org/publicdomain/zero/1.0/) and were fetched at http://unsplash.com/
 
-Pyntrest is licensed under [Apache Licence v2](http://www.apache.org/licenses/LICENSE-2.0.html).
+Pyntrest is licensed under [GPLv3](http://www.gnu.org/licenses/gpl.html).

@@ -1,0 +1,4 @@
+[AlbumInfo]
+Title=Cambodia (Blog example) 
+Description=
+CoverImage=im-063.jpg

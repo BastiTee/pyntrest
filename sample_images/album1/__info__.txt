@@ -1,4 +1,3 @@
-# In the album info section you can provide detailed information about your image
 [AlbumInfo]
 Title=Sorted reverse
 Description=This album is sorted by filename reversed. 

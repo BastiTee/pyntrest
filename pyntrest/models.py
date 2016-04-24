@@ -54,4 +54,6 @@ class WebPath(models.Model):
     """A relative, described web path"""
     
     title = models.CharField(max_length=200)
+    """Main page title of the path"""
     path = models.CharField(max_length=200)
+    """The relative web path"""

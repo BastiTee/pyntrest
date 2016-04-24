@@ -18,14 +18,14 @@ from pyntrest_project.settings import TEMPLATE_DIRS
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
-META_INI_FILE_PATTERN = 'info.ini'
+META_INI_FILE_PATTERN = '__info__.txt'
 """Name of the optional album information files"""
-YOUTUBE_INI_FILE_PATTERN = compile('^.*\\.youtube(\\.ini)?$')
-"""Regex pattern to test if a local file is a Youtube hook"""
-TEXT_MD_FILE_PATTERN = compile('^.*\\.(md|txt)$')
-"""Regex pattern to test if a local file is a text file"""
-INTRO_MD_FILE_PATTERN = compile('^.*__intro__\\.txt$')
+INTRO_MD_FILE_PATTERN = '__intro__.txt'
 """Regex pattern to test if a local file is a reserverd intro text file"""
+YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
+"""Regex pattern to test if a local file is a Youtube hook"""
+TEXT_MD_FILE_PATTERN = compile('^.*__blog__.txt$')
+"""Regex pattern to test if a local file is a text file"""
 
 
 class PyntrestHandler ():
@@ -350,7 +350,7 @@ class PyntrestHandler ():
         #######################################################################
         
         elif (TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()) and 
-              not INTRO_MD_FILE_PATTERN.match(local_imagepath_abs.lower())):
+              not INTRO_MD_FILE_PATTERN == local_imagepath_abs.lower()):
             
             html_content, title = get_html_content(local_imagepath_abs)
             

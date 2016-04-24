@@ -43,6 +43,7 @@ class ViewHandler ():
         else:
             if not self.pyntrest_handler:
                 return render(request, 'pyntrest/index.html', None)
+            # check if static files like css have been updated
             self.pyntrest_handler.upgrade_static_files()
             view_context = self.pyntrest_handler.generate_view_context(request.path)
             return render(request, 'pyntrest/index.html', view_context)

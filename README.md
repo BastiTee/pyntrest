@@ -31,6 +31,10 @@ A limited number of options are available to enrich the basic image albums. All 
 
 See sections below for details how to configure.
 
+### Limitations
+
+PYntrest is focussed on simple web photo albums. It is neither a blog CMS, nor does it support social features or some kind of a plug-in architecture. If you just want to share some photos with your family and friends on your own server, then Pyntrest is for you. If you want more, consider checking out other awesome flat-file CMS like [Grav](https://getgrav.org/) or [Automad](http://automad.org/). 
+
 ## How to start
 
 Basic instructions are as follows:

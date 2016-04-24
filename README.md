@@ -42,7 +42,7 @@ Basic instructions are as follows:
 * Run `python manage.py runserver` (on image folders with lots of images this will take a while since Pyntrest performs a startup scan of your folder and creates all the necessary thumbnails)
 * Open [http://localhost:8000](http://localhost:8000) in a browser and enjoy
 
-The web photo album has been automatically generated from the local folder `<pyntrest>/sample_images`. Of course you can also use your own images and brandings. For that please refer to `<pyntrest>/pyntrest/pyntrest_config.py` and change the settings as you desire.
+The web photo album has been automatically generated from the local folder [`<pyntrest>/sample_images`](https://github.com/BastiTee/pyntrest/tree/master/sample_images). Of course you can also use your own images and brandings. For that please refer to [`<pyntrest>/pyntrest/pyntrest_config.py`](https://github.com/BastiTee/pyntrest/blob/master/pyntrest/pyntrest_config.py.default) and change the settings as you desire.
 
 Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_wsgi. Hence it is possible to use it in combination with production servers.
 
@@ -52,8 +52,7 @@ For folder or file management, i.e., the actual content management, you can use 
 
 ### Album/image information
 
-To enable album/image information you need to create a `__info__.txt` file in your image (sub-) folder. It is used to provide more information such as title, description, a cover image and details for individual photos or videos
-(see  `<pyntrest>/sample_images` for some examples). The following options can be set.
+To enable album/image information you need to create a `__info__.txt` file in your image (sub-) folder. It is used to provide more information such as title, description, a cover image and details for individual photos or videos (see  [`<pyntrest>/sample_images`](https://github.com/BastiTee/pyntrest/tree/master/sample_images) for some examples). The following options can be set.
 
 **AlbumInfo Section**
 
@@ -94,15 +93,15 @@ To add a YouTube hook you need to create a file with a name
 * having the desired YouTube id enclosed with the `%` symbol
 * ending with `__youtube__.txt`
 
-Examples are `im-0041-%6dk-5HN4fvg%__youtube__.txt` or `im-008-1%9ZfN87gSjvI%__youtube__.txt`.
+Example: [`im-0041-%6dk-5HN4fvg%__youtube__.txt`](https://github.com/BastiTee/pyntrest/blob/master/sample_images/im-0041-%256dk-5HN4fvg%25__youtube__.txt).
 
 ### Album introductions
 
-To add an album introduction you need to create a file named `__intro__.txt` in your image (sub-) folder. This file can contain Markdown and/or HTML and will be rendered to a webpage. Assuming you have the Pyntrest sample application running, you can see an example at [http://localhost:8000/blog-example](http://localhost:8000/blog-example).
+To add an album introduction you need to create a file named `__intro__.txt` in your image (sub-) folder. This file can contain Markdown and/or HTML and will be rendered to a webpage. Assuming you have the Pyntrest sample application running, you can see an example at [http://localhost:8000/blog-example](http://localhost:8000/blog-example) / [__intro.txt__](https://github.com/BastiTee/pyntrest/blob/master/sample_images/blog-example/__intro__.txt)
 
 ### In-between blogs
 
-You can also add blogs in between images. For this you need to create a file with a name that ends with `__blog__.txt`. Like album introductions this file can contain Markdown and/or HTML and will be rendered to a webpage. The first line of the file will be used as blog title. Assuming you have the Pyntrest sample application running, you can see two examples in the root folder [http://localhost:8000/](http://localhost:8000/), i.e., "The power of markdown" and "What is Python?".
+You can also add blogs in between images. For this you need to create a file with a name that ends with `__blog__.txt`. Like album introductions this file can contain Markdown and/or HTML and will be rendered to a webpage. The first line of the file will be used as blog title. Assuming you have the Pyntrest sample application running, you can see two examples in the root folder [http://localhost:8000/](http://localhost:8000/), i.e., ["The power of markdown"](https://github.com/BastiTee/pyntrest/blob/master/sample_images/im-005__blog__.txt) and ["What is Python?"](https://github.com/BastiTee/pyntrest/blob/master/sample_images/im-009__blog__.txt).
 
 ## Troubleshooting
 

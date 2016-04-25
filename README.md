@@ -1,6 +1,7 @@
 ![Pyntrest-Logo](doc/images/logo.png)
 > Automated web photo albums for convenience lovers
 
+[![GitHub release](https://img.shields.io/github/release/BastiTee/pyntrest.svg?maxAge=2592000)]()
 [![Build Status](https://travis-ci.org/BastiTee/pyntrest.png)](https://travis-ci.org/BastiTee/pyntrest)
 
 ## What is Pyntrest?

@@ -15,6 +15,7 @@ from random import choice
 from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
+from pyntrest_rss import rss_init
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images""" 
@@ -94,6 +95,7 @@ class PyntrestHandler ():
         print 'Found {0} non-hidden directories...'.format(number_of_subdirs)
         # Call recursive method 
         self.on_startup_prepare_folder(self.main_images_path, '/', number_of_subdirs)
+        rss_init(self.main_images_path, IMAGE_FILE_PATTERN)
         print 'Preparation of Pyntrest done...'
     
     def on_startup_prepare_folder (self, current_album_path_abs, request_path, number_of_subdirs):

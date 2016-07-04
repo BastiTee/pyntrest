@@ -7,7 +7,8 @@ EXTERNAL_BASE_URL = None
 caller. This is optional when using WSGI-routes or Rewrites etc."""
 
 YOUR_IMAGE_FOLDER = 'sample_images'
-"""Set this absolute path to your local image folder. This folder will be scanned by Pyntrest."""
+"""Set this absolute path to your local image folder. 
+This folder will be scanned by Pyntrest."""
 
 STATIC_PATH = path.join(path.dirname(__file__), 'static', 'pyntrest')
 """Set this to the absolute path from where you want to server static files. 
@@ -65,3 +66,19 @@ RSS_ENABLED = False
 RSS_REFRESH_INTERVAL_SEC = 5
 """Refresh interval for RSS feed in seconds (ignored if 
 RSS_ENABLED is false)"""
+
+IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
+"""Regex pattern to test whether local files are images""" 
+
+META_INI_FILE_PATTERN = '__info__.txt'
+"""Name of the optional album information files"""
+
+INTRO_MD_FILE_PATTERN = '__intro__.txt'
+"""Regex pattern to test if a local file is a reserverd intro text file"""
+
+YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
+"""Regex pattern to test if a local file is a Youtube hook"""
+
+TEXT_MD_FILE_PATTERN = compile('^.*__blog__.txt$')
+"""Regex pattern to test if a local file is a text file"""
+

@@ -3,9 +3,10 @@ a local folder or file"""
 
 from os import listdir, path, walk
 from shutil import copyfile
-from re import sub, compile
+from re import sub
 import pyntrest_config
-from pyntrest_io import (read_optional_album_metadata, mkdirs, read_youtube_ini_file,
+from pyntrest_io import (read_optional_album_metadata, mkdirs, 
+    read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
     is_modified, get_html_content, file_exists)
@@ -16,18 +17,6 @@ from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
 from pyntrest_rss import rss_init
-
-IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
-"""Regex pattern to test whether local files are images""" 
-META_INI_FILE_PATTERN = '__info__.txt'
-"""Name of the optional album information files"""
-INTRO_MD_FILE_PATTERN = '__intro__.txt'
-"""Regex pattern to test if a local file is a reserverd intro text file"""
-YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
-"""Regex pattern to test if a local file is a Youtube hook"""
-TEXT_MD_FILE_PATTERN = compile('^.*__blog__.txt$')
-"""Regex pattern to test if a local file is a text file"""
-
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
@@ -95,7 +84,7 @@ class PyntrestHandler ():
         print 'Found {0} non-hidden directories...'.format(number_of_subdirs)
         # Call recursive method 
         self.on_startup_prepare_folder(self.main_images_path, '/', number_of_subdirs)
-        rss_init(self.main_images_path, IMAGE_FILE_PATTERN)
+        rss_init()
         print 'Preparation of Pyntrest done...'
     
     def on_startup_prepare_folder (self, current_album_path_abs, request_path, number_of_subdirs):
@@ -138,7 +127,8 @@ class PyntrestHandler ():
         mkdirs(path.join (self.static_ithumbs_path, local_albumpath_rel))
         
         (album_title, album_description, album_cover, reversed_sorting, 
-         hide_cover, mods_on_top) = read_optional_album_metadata ( local_albumpath_abs, META_INI_FILE_PATTERN)    
+         hide_cover, mods_on_top) = read_optional_album_metadata ( 
+            local_albumpath_abs, pyntrest_config.META_INI_FILE_PATTERN)    
     
         # setup sub albums
         subalbums = [] 
@@ -168,7 +158,8 @@ class PyntrestHandler ():
                     images.append(subimage)
         
         # update image descriptions
-        image_descriptions = read_optional_image_metadata(local_albumpath_abs, META_INI_FILE_PATTERN)
+        image_descriptions = read_optional_image_metadata(
+                    local_albumpath_abs, pyntrest_config.META_INI_FILE_PATTERN)
         for image in images:
             basename = path.basename(image.location).lower()
             try:
@@ -191,8 +182,9 @@ class PyntrestHandler ():
             local_albumpath_abs = path.join(local_albumpath_abs, breadcrumb_path)
             path_string = path_string + '/' + breadcrumb_path
             path_string = sub ('[/]+' , '/', path_string)
-            album_title, album_description, _, _, _, _ = read_optional_album_metadata (local_albumpath_abs,
-                                                                        META_INI_FILE_PATTERN)        
+            album_title, album_description, _, _, _, _ = (
+                read_optional_album_metadata (local_albumpath_abs,
+                    pyntrest_config.META_INI_FILE_PATTERN))        
             url_path = path_string
             if pyntrest_config.EXTERNAL_BASE_URL is not None:
                 url_path  = pyntrest_config.EXTERNAL_BASE_URL + url_path 
@@ -238,10 +230,14 @@ class PyntrestHandler ():
         to the provided sub-album list."""
               
         local_subalbumpath_abs = path.join(local_albumpath_abs, subalbum_name)
-        modified, lastmodified = is_modified( local_subalbumpath_abs, False, pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H
-                                              , pyntrest_config.HIGHLIGHT_NEW_IMAGES, IMAGE_FILE_PATTERN)
-        meta_title, meta_description, meta_cover, _, _, _ = read_optional_album_metadata (local_subalbumpath_abs,
-                                                                           META_INI_FILE_PATTERN)    
+        modified, lastmodified = is_modified( 
+            local_subalbumpath_abs, False, 
+            pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H, 
+            pyntrest_config.HIGHLIGHT_NEW_IMAGES, 
+            pyntrest_config.IMAGE_FILE_PATTERN)
+        meta_title, meta_description, meta_cover, _, _, _ = (
+            read_optional_album_metadata (local_subalbumpath_abs,
+                            pyntrest_config.META_INI_FILE_PATTERN))    
         
         local_subalbumcover_abs = None
         
@@ -258,8 +254,10 @@ class PyntrestHandler ():
         if not local_subalbumcover_abs:
             # ... get first in folder 
             for cover_candidate in listdir(local_subalbumpath_abs):
-                if IMAGE_FILE_PATTERN.match(cover_candidate.lower()):
-                    local_subalbumcover_abs = path.join(local_subalbumpath_abs,
+                if pyntrest_config.IMAGE_FILE_PATTERN.match(
+                    cover_candidate.lower()):
+                    local_subalbumcover_abs = path.join(
+                    local_subalbumpath_abs,
                     cover_candidate)
                     break
         
@@ -308,7 +306,8 @@ class PyntrestHandler ():
         
         #######################################################################
         
-        if IMAGE_FILE_PATTERN.match(local_imagepath_abs.lower()):
+        if pyntrest_config.IMAGE_FILE_PATTERN.match(
+                                        local_imagepath_abs.lower()):
             
             static_fullsize_path_abs = path.join (
                     self.static_fullsize_path, local_albumpath_rel, image_name)
@@ -337,7 +336,8 @@ class PyntrestHandler ():
         
         #######################################################################
               
-        elif YOUTUBE_INI_FILE_PATTERN.match(local_imagepath_abs):
+        elif pyntrest_config.YOUTUBE_INI_FILE_PATTERN.match(
+                        local_imagepath_abs):
             
             youtube_id = read_youtube_ini_file (local_imagepath_abs)
             # .75 is the fixed Youtube thumbnail width to height ratio
@@ -351,8 +351,10 @@ class PyntrestHandler ():
 
         #######################################################################
         
-        elif (TEXT_MD_FILE_PATTERN.match(local_imagepath_abs.lower()) and 
-              not INTRO_MD_FILE_PATTERN == local_imagepath_abs.lower()):
+        elif (pyntrest_config.TEXT_MD_FILE_PATTERN.match(
+                                local_imagepath_abs.lower()) and 
+              not (pyntrest_config.INTRO_MD_FILE_PATTERN == 
+                   local_imagepath_abs.lower())):
             
             html_content, title = get_html_content(local_imagepath_abs)
             

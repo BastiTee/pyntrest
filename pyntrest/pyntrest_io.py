@@ -150,7 +150,7 @@ def read_optional_album_metadata (album_path, filename ):
             modtop = config.get('AlbumInfo', 'ModifiedAlbumsOnTop')
             if modtop == 'True':
                 modified_albums_on_top = True
-        
+
     return (album_title, album_description, album_cover, album_sorted_rev,
             album_hide_cover, modified_albums_on_top)
 

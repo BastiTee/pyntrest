@@ -191,6 +191,9 @@
 
 	<div class="footer">
 		<a target="_blank" href="https://github.com/BastiTee/pyntrest">Powered by Pyntrest</a>
+		{% if rssactive %}
+		| <a target="_blank" href="feed.xml">RSS</a>
+		{% endif %}
 	</div>
 	
     <script type="text/javascript">

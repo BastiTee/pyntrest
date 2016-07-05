@@ -219,7 +219,8 @@ class PyntrestHandler ():
                    'breadcrumbs' : breadcrumbs,
                    'show_breadcrumb': show_breadcrumb,
                    'show_headings' : pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS,
-                   'intro_content' : intro_content}
+                   'intro_content' : intro_content,
+                   'rssactive' : pyntrest_config.RSS_ENABLED}
         
         return context
     

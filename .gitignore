@@ -15,7 +15,9 @@ pyntrest-main.css
 *.tar
 
 *.sublime*
- 
+
+pyntrest_config_*.py
+
 # ------------------------------------------------------------------------------
 
 # Byte-compiled / optimized / DLL files

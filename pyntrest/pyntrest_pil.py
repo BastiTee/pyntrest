@@ -131,7 +131,11 @@ class PILHandler ():
             return
 
         # if no orientation or standard orientation, just copy
-        if not exif[orientation] or exif[orientation] == 1:
+        try:
+            if not exif[orientation] or exif[orientation] == 1:
+                copyfile(source_image, target_image)
+                return
+        except KeyError:
             copyfile(source_image, target_image)
             return
 

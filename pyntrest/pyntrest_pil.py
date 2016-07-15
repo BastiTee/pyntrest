@@ -43,7 +43,8 @@ class PILHandler ():
         rescaled_height = int(float(new_height) * upscale_factor)
         return new_width, new_height, rescaled_width, rescaled_height
 
-    def create_album_thumbnail_if_not_present (self, source_image, thumb_image):
+    def create_album_thumbnail_if_not_present (
+        self, source_image, thumb_image):
         """If the target file does not exist, reads the source file and resizes
         and crops it with the given width and height"""
 
@@ -60,8 +61,9 @@ class PILHandler ():
 
             image = Image.open(source_image)
             width, height = image.size
-            _, _, res_w, res_h = self.rescale_image_dimensions_to_desired_width(
-                      width, height, self.default_width, self.upscale_factor)
+            _, _, res_w, res_h = (
+                self.rescale_image_dimensions_to_desired_width(
+                      width, height, self.default_width, self.upscale_factor))
             image = image.resize((res_w, res_h), Image.ANTIALIAS)
             template_height = int(
                             float(self.default_height) * self.upscale_factor)
@@ -79,9 +81,10 @@ class PILHandler ():
         return self.default_width, self.default_height
 
 
-    def create_image_thumbnail_if_not_present (self, source_image, thumb_image):
-        """Reads the image width and height from the given image and, if it does
-        not exist, resizes the file to the given target file keeping the
+    def create_image_thumbnail_if_not_present (
+        self, source_image, thumb_image):
+        """Reads the image width and height from the given image and, if it
+        does not exist, resizes the file to the given target file keeping the
         original aspect ratio"""
 
         if not source_image:

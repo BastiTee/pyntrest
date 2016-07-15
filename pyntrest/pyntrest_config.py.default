@@ -4,22 +4,22 @@ from os import path
 from re import compile
 
 EXTERNAL_BASE_URL = None
-"""Set this to the root web path of your Pyntrest album as seen from the 
+"""Set this to the root web path of your Pyntrest album as seen from the
 caller. This is optional when using WSGI-routes or Rewrites etc."""
 
 YOUR_IMAGE_FOLDER = 'sample_images'
-"""Set this absolute path to your local image folder. 
+"""Set this absolute path to your local image folder.
 This folder will be scanned by Pyntrest."""
 
 STATIC_PATH = path.join(path.dirname(__file__), 'static', 'pyntrest')
-"""Set this to the absolute path from where you want to server static files. 
-On a production server, make sure that this folder is writable to Pyntrest 
-and that you also copy the current data from 
-<pyntrest>/pyntrest/static/pyntrest, i.e., the subfolders 'css', 'js' and 
+"""Set this to the absolute path from where you want to server static files.
+On a production server, make sure that this folder is writable to Pyntrest
+and that you also copy the current data from
+<pyntrest>/pyntrest/static/pyntrest, i.e., the subfolders 'css', 'js' and
 'res' to that folder.
-Pyntrest will create a subfolder 'images' in that folder and will copy all 
-full-size images as well as thumbnail versions of the content to it. 
-Make sure disk space is sufficient. 
+Pyntrest will create a subfolder 'images' in that folder and will copy all
+full-size images as well as thumbnail versions of the content to it.
+Make sure disk space is sufficient.
 """
 
 WORDING_ALBUM = 'Sub albums'
@@ -38,13 +38,13 @@ SUPPRESS_BREADCRUMB_ON_HOME = False
 """If yes, the breadcrumb header will not be displayed on the home page."""
 
 IMAGE_THUMB_WIDTH = 300
-"""Maximum width of album and image thumbnails. Attention: If you change 
-this later, make sure to delete the content of <STATIC_PATH>/images/ so that 
+"""Maximum width of album and image thumbnails. Attention: If you change
+this later, make sure to delete the content of <STATIC_PATH>/images/ so that
 the thumbnails will be newly created with your new thumb size."""
 
 IMAGE_THUMB_HEIGHT = 150
-"""Maximum height of album thumbnails. Attention: If you change this later, 
-make sure to delete the content of <STATIC_PATH>/images/ so that the 
+"""Maximum height of album thumbnails. Attention: If you change this later,
+make sure to delete the content of <STATIC_PATH>/images/ so that the
 thumbnails will be newly created with your new thumb size."""
 
 UPSCALE_FACTOR = 1.75
@@ -58,11 +58,11 @@ HIGHLIGHT_NEW_IMAGES = True
 """If true, new images will be highlighted in Pyntrest"""
 
 MAX_AGE_OF_NEW_IMAGES_H = 48
-"""Images with a time stamp newer or equal to the current time minus the given 
+"""Images with a time stamp newer or equal to the current time minus the given
 number of hours will be considered as new and therefore highlighted"""
 
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
-"""Regex pattern to test whether local files are images""" 
+"""Regex pattern to test whether local files are images"""
 
 META_INI_FILE_PATTERN = '__info__.txt'
 """Name of the optional album information files"""
@@ -80,11 +80,11 @@ RSS_ENABLED = True
 """If true, auto-generation of RSS feed will be activated"""
 
 RSS_REFRESH_INTERVAL_SEC = 60
-"""Refresh interval for RSS feed in seconds (ignored if RSS_ENABLED is false)"""
+"""Refresh for RSS feed in seconds (ignored if RSS_ENABLED is false)"""
 
 RSS_CHUNK_WIDTH_MINS = 30
 """New files that have the same creation timestamp within the chunk width
-in minutes will be considered as one new post. E.g., if you add 10 new 
+in minutes will be considered as one new post. E.g., if you add 10 new
 images at once, you won't have ten individual RSS entries."""
 
 RSS_WORDING_NEW_IMAGES_SINGLE = u'New image published'
@@ -93,7 +93,7 @@ your Pyntrest folder."""
 
 RSS_WORDING_NEW_IMAGES_MULTI = u'{} new images published'
 """Pattern to indicate in RSS feed that multiple images had been added to
-your Pyntrest folder. The pattern will be used to replace with actual number."""
+your Pyntrest folder. Will be used to replace with actual number."""
 
 RSS_WORDING_NEW_BLOG_SINGLE = u'New blog published'
 """Pattern to indicate in RSS feed that a single blog has been added to
@@ -101,17 +101,17 @@ your Pyntrest folder."""
 
 RSS_WORDING_NEW_BLOG_MULTI = u'{} new blogs published'
 """Pattern to indicate in RSS feed that multiple blogs had been added to
-your Pyntrest folder. The pattern will be used to replace with actual number."""
+your Pyntrest folder. Will be used to replace with actual number."""
 
 RSS_WORDING_NEW_YOUTUBE_SINGLE = u'New YouTube video published'
-"""Pattern to indicate in RSS feed that a single youtube video 
+"""Pattern to indicate in RSS feed that a single youtube video
 has been added to your Pyntrest folder."""
 
 RSS_WORDING_NEW_YOUTUBE_MULTI = u'{} new YouTube videos published'
-"""Pattern to indicate in RSS feed that multiple youtube videos had been 
-added to your Pyntrest folder. The pattern will be used to replace with actual 
+"""Pattern to indicate in RSS feed that multiple youtube videos had been
+added to your Pyntrest folder. The pattern will be used to replace with actual
 number."""
 
 RSS_WORDING_NEW_ALBUM = u'New album created: {}'
-"""Pattern to indicate in RSS feed that a new album has been created. The 
+"""Pattern to indicate in RSS feed that a new album has been created. The
 pattern will be used to replace with actual folder name."""

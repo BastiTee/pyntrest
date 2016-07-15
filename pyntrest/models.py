@@ -4,12 +4,12 @@ from django.db import models
 
 class AlbumImage(models.Model):
     """A single image inside an album"""
-    
-    type = models.CharField(max_length=10) 
-    """Image type. Either img (Images), you (YouTube hooks) or txt (Text)""" 
-    location =  models.FilePathField() 
-    """Path to local static image""" 
-    modified = models.BooleanField() 
+
+    type = models.CharField(max_length=10)
+    """Image type. Either img (Images), you (YouTube hooks) or txt (Text)"""
+    location =  models.FilePathField()
+    """Path to local static image"""
+    modified = models.BooleanField()
     """Last modification timestamp as epoch"""
     title = models.CharField(max_length=200)
     """Image title"""
@@ -30,13 +30,13 @@ class AlbumImage(models.Model):
 
 class Album(models.Model):
     """A web photo album"""
-    
+
     title = models.CharField(max_length=200)
     """Album title"""
     description = models.CharField(max_length=500)
     """Album short description"""
     path = models.FilePathField()
-    """Path to local album""" 
+    """Path to local album"""
     cover = models.FilePathField()
     """Album cover"""
     width = models.IntegerField()
@@ -46,13 +46,13 @@ class Album(models.Model):
     reversed = models.BooleanField()
     """True, if images are sorted reversed by name"""
     modified = models.BooleanField()
-    """True, if images in sub album were modified in the configured timeframe"""
+    """True, if images in subalbum were modified in the configured timeframe"""
     last_modified = models.IntegerField()
     """Timestamp of latest modification"""
 
 class WebPath(models.Model):
     """A relative, described web path"""
-    
+
     title = models.CharField(max_length=200)
     """Main page title of the path"""
     path = models.CharField(max_length=200)

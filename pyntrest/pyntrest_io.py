@@ -74,8 +74,8 @@ def cleanup_url_path (url_path):
 
 def convert_url_path_to_local_filesystem_path (root_filesystem_path,
                                                  url_path):
-    """Creates a file system sub-folder path from the given URL path and appends
-    it to the given root filesystem path"""
+    """Creates a file system sub-folder path from the given URL path and
+    appends it to the given root filesystem path"""
 
     if not root_filesystem_path:
         root_filesystem_path = ''
@@ -213,7 +213,8 @@ def read_youtube_ini_file ( youtube_file_name ):
     # if not just return empty handed
     return ''
 
-def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_file_pattern=compile('^.*$') ):
+def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False,
+    image_file_pattern=compile('^.*$') ):
     """Check if a file was created between now and now minus the given
     max age in hours. Return false if this feature is not configured."""
 
@@ -226,17 +227,21 @@ def is_modified ( abs_path, is_file, max_age=48, feature_enabled=False, image_fi
 
     # on files just check the file ..
     if is_file:
-        if path.getctime(abs_path) >= oldest_epoch or path.getmtime(abs_path) >= oldest_epoch:
+        if (path.getctime(abs_path) >= oldest_epoch or
+            path.getmtime(abs_path) >= oldest_epoch):
             is_modified = True
         last_change = max(path.getctime(abs_path), path.getmtime(abs_path))
-    # on folders find all images file and check those for changes ( if we would just inspect
-    # the folder we'll get updates, e.g., simply because the folder was touched.
+    # on folders find all images file and check those for changes (
+    # if we would just inspect the folder we'll get updates, e.g., simply
+    # because the folder was touched.
     else:
         files = findfiles( abs_path, image_file_pattern, doprint=False)
         for subfile in files:
-            if path.getctime(subfile) >= oldest_epoch or path.getmtime(subfile) >= oldest_epoch:
+            if (path.getctime(subfile) >= oldest_epoch or
+                path.getmtime(subfile) >= oldest_epoch):
                 is_modified = True
-            last_change = max(last_change, path.getctime(abs_path), path.getmtime(abs_path))
+            last_change = max(
+                last_change, path.getctime(abs_path), path.getmtime(abs_path))
 
     return is_modified, last_change
 

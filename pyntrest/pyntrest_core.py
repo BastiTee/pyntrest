@@ -265,7 +265,7 @@ class PyntrestHandler ():
         if meta_cover:
             # Check for existence..
             cover_candidate = path.join(local_subalbumpath_abs, meta_cover)
-            if path.exists(cover_candidate):
+            if path.exists(cover_candidate.lower()):
                 local_subalbumcover_abs = cover_candidate
 
         # if no album cover was set manually or if it did not exist...

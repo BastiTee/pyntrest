@@ -128,7 +128,7 @@ class PILHandler ():
             if ExifTags.TAGS[orientation]=='Orientation' : break
         try:
             exif=dict(image._getexif().items())
-        except AttributeError:
+        except (AttributeError, IndexError):
             # if no exif is present, just copy
             copyfile(source_image, target_image)
             return

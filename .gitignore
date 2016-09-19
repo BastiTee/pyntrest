@@ -17,7 +17,7 @@ pyntrest-main.css
 *.sublime*
 
 pyntrest_config_*.py
-start.sh
+pyntrest.sh
 nohup.*
 
 

@@ -33,9 +33,6 @@ class PyntrestHandler ():
     def __init__(self, main_images_path, static_path):
         """Constructor"""
 
-#         print 'TEMPLATE_DIRS={}'.format(TEMPLATE_DIRS)
-#         print 'STATIC_PATH={}'.format(STATIC_PATH)
-
         if main_images_path is None:
             raise TypeError ('main_images_path not set.')
         if static_path is None:
@@ -136,7 +133,7 @@ class PyntrestHandler ():
         (album_title, album_description, album_cover, reversed_sorting,
          hide_cover, mods_on_top) = read_optional_album_metadata (
             local_albumpath_abs, pyntrest_config.META_INI_FILE_PATTERN)
-
+	
         # setup sub albums
         subalbums = []
         for subalbum_name in get_immediate_subdirectories(local_albumpath_abs):
@@ -173,7 +170,6 @@ class PyntrestHandler ():
             basename = path.basename(image.location).lower()
             try:
                 image_description = image_descriptions[basename]
-                #print basename
                 image.description = image_description
             except KeyError:
                 pass # Ignore
@@ -265,7 +261,8 @@ class PyntrestHandler ():
         if meta_cover:
             # Check for existence..
             cover_candidate = path.join(local_subalbumpath_abs, meta_cover)
-            if path.exists(cover_candidate.lower()):
+            # on windows we also allow uncased matches (or .. lower()) 
+            if path.exists(cover_candidate) or path.exists(cover_candidate.lower()): 
                 local_subalbumcover_abs = cover_candidate
 
         # if no album cover was set manually or if it did not exist...

@@ -431,6 +431,8 @@ class PyntrestHandler ():
                        .format(exis_file, cand_file))
                 copyfile(cand_file, exis_file)
 
+            print 'staticfile candidate = {}'.format(cand_file)
+
             if not file_exists(cand_file):
                 continue # nothing to compare
 
@@ -443,4 +445,7 @@ class PyntrestHandler ():
                 'Updating file \'{}\' with newer version at \'{}\' [{} >> {}].'
                 .format(ch_file, cand_file, efile_ts, cfile_ts))
                 copyfile(cand_file, exis_file)
+            else:
+                print 'Not updating file \'{}\'. Up to date.'.format(cand_file)
+
 

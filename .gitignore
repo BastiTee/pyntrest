@@ -1,6 +1,7 @@
 # ------------------------------------------------------------------------------
 # PROJECT SPECIFICS
 
+*.pid
 db.sqlite3.
 pyntrest/static/pyntrest/images/
 doc/code
@@ -17,7 +18,7 @@ pyntrest-main.css
 *.sublime*
 
 pyntrest_config_*.py
-pyntrest.sh
+pyntrest-init.d
 nohup.*
 
 

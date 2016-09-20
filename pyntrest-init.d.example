@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Daemon process (usually path to your python installation)
+DAEMON=/usr/bin/python
+# Target hostname
+DAEMON_HOST=localhost
+# Target port
+DAEMON_PORT=8000
+# Set to root folder of pyntrest
+DAEMON_CWD="."
+# User that runs pyntrest
+DAEMON_USER="www-data"
+
+#######################################################
+# NO CHANGES BELOW THIS POINT NECESSARY IN MOST CASES #
+#######################################################
+
+DAEMON_OPTS="manage.py runserver ${DAEMON_HOST}:${DAEMON_PORT}"
+PIDFILE="/var/run/$( basename $0 ).pid"
+
+start_daemon () {
+    start-stop-daemon --start --background --pidfile "$PIDFILE" --make-pidfile \
+    --chdir $DAEMON_CWD --chuid $DAEMON_USER --exec $DAEMON -- $DAEMON_OPTS
+}
+
+stop_daemon () {
+    start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile "$PIDFILE" \
+    --remove-pidfile
+}
+
+case "$1" in
+  start)
+        echo "Target pidfile: $PIDFILE"
+        [ -e $PIDFILE ] && { echo "Pidfile present."; exit 1; }
+        echo "Starting daemon: $NAME"
+        start_daemon
+        ;;
+  stop)
+        echo "Stopping daemon: $NAME"
+        stop_daemon
+        ;;
+  restart)
+        echo "Restarting daemon: $NAME"
+        stop_daemon        
+        start_daemon 
+        ;;
+  *)
+	echo "Usage: "$1" {start|stop|restart}"
+	exit 1
+esac
+
+exit 0

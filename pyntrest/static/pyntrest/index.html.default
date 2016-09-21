@@ -11,7 +11,7 @@
 	{% endif %}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
 	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
@@ -124,10 +124,10 @@
 		                
 	                {% elif image.type == 'you' %}
 	                    
- 						<a class="fancybox" title="{{ image.description}}" rel="group" href="http://www.youtube.com/watch?v={{ image.youtubeid }}">
+ 						<a class="fancybox" title="{{ image.description}}" rel="group" href="https://www.youtube.com/watch?v={{ image.youtubeid }}">
 	                        {% with 'pyntrest/images/image_thumbs/'|add:image.location as image_thumb %}
 	                        <img class="lazyload" src="" 
-	                        data-src="http://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
+	                        data-src="https://img.youtube.com/vi/{{ image.youtubeid }}/hqdefault.jpg" 
 	                        width="{{ image.width }}" height="{{ image.height }}" alt="">
 	                        {% endwith %}
    					    </a>

@@ -8,6 +8,8 @@
 
 Pyntrest is a flat-file image CMS written in Python that automatically generates a fully fledged web photo album from a local folder without the necessity to do boring stuff like setting up databases, content management systems or creating thumbnails. Pyntrest is for convenience lovers like me.
 
+[![Demo Online](https://img.shields.io/badge/watch-demo-green.svg)](https://pyntrest.basti.space/)
+
 ![Overview](doc/images/latest-screenshot-1.jpg)
 ![Image overlay](doc/images/latest-screenshot-2.jpg)
 

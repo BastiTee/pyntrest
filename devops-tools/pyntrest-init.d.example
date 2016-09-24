@@ -21,7 +21,7 @@ DAEMON_HOST=localhost
 # Target port
 DAEMON_PORT=8000
 # Set to root folder of pyntrest
-DAEMON_CWD="."
+DAEMON_CWD="/home/user/pyntrest"
 # User that runs pyntrest
 DAEMON_USER="www-data"
 

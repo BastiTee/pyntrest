@@ -1,13 +1,24 @@
 #!/bin/bash
+
 out_zip="pyntrest_deploy-HEAD.tar"
-rm -f $out_zip
+spath=$( readlink -f $( dirname $0 ))
+echo $spath
 
 echo "Cleaning workspace first ... "
 echo 
-./workspace_reset.sh
+${spath}/workspace_reset.sh
 
 echo "Packing content ... "
-tar -cvf $out_zip pyntrest/ pyntrest_project/ LICENSE manage.py \
-README.md requirements.txt --exclude pyntrest/pyntrest_config.py
+
+tar -cvf $out_zip \
+devops-tools/*.example \
+pyntrest/ \
+pyntrest_project/ \
+pyntrest_tests/ \
+LICENSE \
+manage.py \
+README.md \
+requirements.txt \
+--exclude pyntrest/pyntrest_config.py
 
 echo "Packing successful ..." 

@@ -275,15 +275,18 @@ class PyntrestHandler ():
                     local_subalbumpath_abs,
                     cover_candidate)
                     break
-
+                    
+        subalbum_webpath = path.join(local_albumpath_rel, subalbum_name)
+        subalbum_webpath = '/' + sub('\\\\', '/', subalbum_webpath)
+                    
         # If still no album cover was found then this is an empty album hence
         # we need to let the template use a default image
         if not local_subalbumcover_abs:
 
             # setup template context
             subalbum = Album(title=meta_title, description=meta_description,
-                      path=path.join(local_albumpath_rel,
-                      subalbum_name), width=pyntrest_config.IMAGE_THUMB_WIDTH,
+                      path=subalbum_webpath, 
+                      width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None,
                       modified=modified, last_modified=lastmodified)
 
@@ -298,12 +301,11 @@ class PyntrestHandler ():
             mkdirs(local_thumbnail_folder_abs)
             self.pil_handler.create_album_thumbnail_if_not_present(
                 local_subalbumcover_abs, target_file)
-
+        
             # setup template context
             subalbum = Album(   title=meta_title,
                                 description=meta_description,
-                                path=path.join(
-                                    local_albumpath_rel, subalbum_name),
+                                path=subalbum_webpath,
                                 width=pyntrest_config.IMAGE_THUMB_WIDTH,
                                 height=pyntrest_config.IMAGE_THUMB_HEIGHT,
                                 cover=thumbnail_webpath,

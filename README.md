@@ -50,7 +50,7 @@ Basic instructions are as follows:
 
 The web photo album has been automatically generated from the local folder [`<pyntrest>/sample_images`](https://github.com/BastiTee/pyntrest/tree/master/sample_images). Of course you can also use your own images and brandings. For that please refer to [`<pyntrest>/pyntrest/pyntrest_config.py`](https://github.com/BastiTee/pyntrest/blob/master/pyntrest/pyntrest_config.py.default) and change the settings as you desire.
 
-Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_wsgi. Hence it is possible to use it in combination with production servers.
+Pyntrest is fully compatible with wsgi servers like unicorn or Apache using mod_wsgi. Hence it is possible to use it in combination with production servers. Have a look into [`devops-tools`](https://github.com/BastiTee/pyntrest/tree/master/devops-tools) to find `.htaccess` and `init.d` script examples.
 
 For folder or file management, i.e., the actual content management, you can use whatever you want to use (Dropbox, Drive, FTP, etc.) I use Dropbox to synchronize a folder on my webspace with my mobile device. If the image arrives at the webspace's folder, Pyntrest automatically detects the picture and it's instantly available on the corresponding web photo album. The same applies to new subalbums, optional album info files or youtube hooks.
 

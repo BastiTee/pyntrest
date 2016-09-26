@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 
-from os import environ, path
+from os import environ, path, chdir
 import sys
 import shutil
+
+# change to manage.py's folder
+abspath = path.abspath(__file__)
+dname = path.dirname(abspath)
+chdir(dname)
     
 def import_modules_with_check (module_names):
     """Checks if a given set of modules exists. Returns a boolean that

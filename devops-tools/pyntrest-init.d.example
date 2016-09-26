@@ -14,38 +14,36 @@
 # Short-Description: Pyntrest flat-file image CMS
 ### END INIT INFO
 
-# Daemon process (usually path to your python installation)
-DAEMON=/usr/bin/python
+# UNIQUE NAME
+NAME="pyntrest"
+# Daemon process (path to python installation)
+DAEMON="/usr/bin/python"
+# Absolute path to pyntrest/Django manage script
+DAEMON_MANAGER="/home/user/pyntrest/manage.py"
 # Target hostname
 DAEMON_HOST=localhost
 # Target port
-DAEMON_PORT=8000
-# Set to root folder of pyntrest
-DAEMON_CWD="/home/user/pyntrest"
-# User that runs pyntrest
-DAEMON_USER="www-data"
+DAEMON_PORT=40645
 
 #######################################################
 # NO CHANGES BELOW THIS POINT NECESSARY IN MOST CASES #
 #######################################################
 
-DAEMON_OPTS="manage.py runserver ${DAEMON_HOST}:${DAEMON_PORT}"
-PIDFILE="/var/run/$( basename $0 ).pid"
+DAEMON_OPTS="runserver ${DAEMON_HOST}:${DAEMON_PORT}"
+LOG_FILE="/var/log/${NAME}.log"
 
 start_daemon () {
-    start-stop-daemon --start --background --pidfile "$PIDFILE" --make-pidfile \
-    --chdir $DAEMON_CWD --chuid $DAEMON_USER --exec $DAEMON -- $DAEMON_OPTS
+nohup $DAEMON $DAEMON_MANAGER $DAEMON_OPTS >$LOG_FILE 2>&1 </dev/null &
 }
 
 stop_daemon () {
-    start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile "$PIDFILE" \
-    --remove-pidfile
+ps -ef | grep $DAEMON_MANAGER | grep -v grep | awk '{print $2}' |\
+while read pid; do echo "Stopping pid: $pid"; kill -9 $pid 2> /dev/null; done
+
 }
 
 case "$1" in
   start)
-        echo "Target pidfile: $PIDFILE"
-        [ -e $PIDFILE ] && { echo "Pidfile present."; exit 1; }
         echo "Starting daemon: $NAME"
         start_daemon
         ;;

@@ -16,7 +16,7 @@ from random import choice
 from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
-from pyntrest_rss import rss_init
+from pyntrest import pyntrest_bookify
 
 class PyntrestHandler ():
     """Instances of this class handle the main processing of local albums
@@ -84,7 +84,6 @@ class PyntrestHandler ():
         # Call recursive method
         self.on_startup_prepare_folder(
             self.main_images_path, '/', number_of_subdirs)
-        rss_init()
         print 'Preparation of Pyntrest done...'
 
     def on_startup_prepare_folder (self, current_album_path_abs,
@@ -118,6 +117,10 @@ class PyntrestHandler ():
         else:
             return False
 
+    def generate_view_context_bookify(self):
+        """Forwarding the view context request to the_bookify subinstance"""
+        return pyntrest_bookify.generate_view_context(self)
+    
     def generate_view_context(self, request_path):
         """The core "magic" method that reads the requested album filesystem
         path related to the virtual album path from the request and obtains all
@@ -133,7 +136,7 @@ class PyntrestHandler ():
         (album_title, album_description, album_cover, reversed_sorting,
          hide_cover, mods_on_top) = read_optional_album_metadata (
             local_albumpath_abs, pyntrest_config.META_INI_FILE_PATTERN)
-	
+
         # setup sub albums
         subalbums = []
         for subalbum_name in get_immediate_subdirectories(local_albumpath_abs):
@@ -231,8 +234,7 @@ class PyntrestHandler ():
                     'show_breadcrumb': show_breadcrumb,
                     'show_headings' :
                         pyntrest_config.SHOW_ALBUM_IMAGES_WORDINGS,
-                   'intro_content' : intro_content,
-                   'rssactive' : pyntrest_config.RSS_ENABLED}
+                   'intro_content' : intro_content}
 
         return context
 
@@ -411,6 +413,7 @@ class PyntrestHandler ():
            path.join('res', 'favicon-apple.png'),
            path.join('css', 'pyntrest-main.css'),
            path.join('index.html'),
+           path.join('bookify.html'),
         ]
 
         for ch_file in changeable_files:
@@ -433,7 +436,7 @@ class PyntrestHandler ():
                        .format(exis_file, cand_file))
                 copyfile(cand_file, exis_file)
 
-            print 'staticfile candidate = {}'.format(cand_file)
+            #print 'staticfile candidate = {}'.format(cand_file)
 
             if not file_exists(cand_file):
                 continue # nothing to compare
@@ -448,6 +451,7 @@ class PyntrestHandler ():
                 .format(ch_file, cand_file, efile_ts, cfile_ts))
                 copyfile(cand_file, exis_file)
             else:
-                print 'Not updating file \'{}\'. Up to date.'.format(cand_file)
+                pass
+                #print 'Not updating file \'{}\'. Up to date.'.format(cand_file)
 
 

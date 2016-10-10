@@ -64,10 +64,10 @@ number of hours will be considered as new and therefore highlighted"""
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images"""
 
-META_INI_FILE_PATTERN = '__info__.txt'
+META_INI_FILE_PATTERN = '^.*__info__.txt$'
 """Name of the optional album information files"""
 
-INTRO_MD_FILE_PATTERN = '__intro__.txt'
+INTRO_MD_FILE_PATTERN = '^.*__intro__.txt$'
 """Regex pattern to test if a local file is a reserverd intro text file"""
 
 YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
@@ -76,42 +76,5 @@ YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
 TEXT_MD_FILE_PATTERN = compile('^.*__blog__.txt$')
 """Regex pattern to test if a local file is a text file"""
 
-RSS_ENABLED = True
-"""If true, auto-generation of RSS feed will be activated"""
-
-RSS_REFRESH_INTERVAL_SEC = 60
-"""Refresh for RSS feed in seconds (ignored if RSS_ENABLED is false)"""
-
-RSS_CHUNK_WIDTH_MINS = 30
-"""New files that have the same creation timestamp within the chunk width
-in minutes will be considered as one new post. E.g., if you add 10 new
-images at once, you won't have ten individual RSS entries."""
-
-RSS_WORDING_NEW_IMAGES_SINGLE = u'New image published'
-"""Pattern to indicate in RSS feed that a single image has been added to
-your Pyntrest folder."""
-
-RSS_WORDING_NEW_IMAGES_MULTI = u'{} new images published'
-"""Pattern to indicate in RSS feed that multiple images had been added to
-your Pyntrest folder. Will be used to replace with actual number."""
-
-RSS_WORDING_NEW_BLOG_SINGLE = u'New blog published'
-"""Pattern to indicate in RSS feed that a single blog has been added to
-your Pyntrest folder."""
-
-RSS_WORDING_NEW_BLOG_MULTI = u'{} new blogs published'
-"""Pattern to indicate in RSS feed that multiple blogs had been added to
-your Pyntrest folder. Will be used to replace with actual number."""
-
-RSS_WORDING_NEW_YOUTUBE_SINGLE = u'New YouTube video published'
-"""Pattern to indicate in RSS feed that a single youtube video
-has been added to your Pyntrest folder."""
-
-RSS_WORDING_NEW_YOUTUBE_MULTI = u'{} new YouTube videos published'
-"""Pattern to indicate in RSS feed that multiple youtube videos had been
-added to your Pyntrest folder. The pattern will be used to replace with actual
-number."""
-
-RSS_WORDING_NEW_ALBUM = u'New album created: {}'
-"""Pattern to indicate in RSS feed that a new album has been created. The
-pattern will be used to replace with actual folder name."""
+BOOKIFY_PATH = None
+"""Path to bookify hook (Experimental)."""

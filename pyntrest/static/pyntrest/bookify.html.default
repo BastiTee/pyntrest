@@ -1,0 +1,35 @@
+{% load url from future %} 
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	{% if page_title == album_title %}
+	<title>{{ page_title}}</title>
+	{% else %}
+	<title>{{page_title}}&#160;&#8226;&#160;{{ album_title }}</title>	
+	{% endif %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-main.css' %}" />
+	<link href="{% static 'pyntrest/css/jquery.fancybox.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'pyntrest/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icon -->
+    <link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}" type="image/png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+	<!-- Javascript -->
+	<script src="{% static 'pyntrest/js/jquery-1.11.1.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/masonry-3.1.5.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/jquery.lazy-0.1.18.min.js' %}"></script>
+	<script src="{% static 'pyntrest/js/jquery.fancybox-2.min.js' %}"></script>
+    <script src="{% static 'pyntrest/js/jquery.fancybox-media-2.js' %}"></script>
+</head>
+<body>
+    yo
+</body>
+</html>

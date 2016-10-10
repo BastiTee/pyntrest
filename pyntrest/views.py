@@ -36,7 +36,7 @@ class ViewHandler ():
             
         if BOOKIFY_PATH:
             clean_bookify_path = cleanup_url_path('/' + BOOKIFY_PATH + '/')
-            print 'Testing path \'{}\' against bookify root path \'{}\''.format(request.path, clean_bookify_path)
+            #print 'Testing path \'{}\' against bookify root path \'{}\''.format(request.path, clean_bookify_path)
             if request.path == clean_bookify_path:
                 view_context = self.pyntrest_handler.generate_view_context_bookify()
                 return render(request, 'pyntrest/bookify.html', view_context)

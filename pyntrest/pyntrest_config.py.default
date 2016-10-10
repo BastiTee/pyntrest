@@ -64,10 +64,10 @@ number of hours will be considered as new and therefore highlighted"""
 IMAGE_FILE_PATTERN = compile('^.*\\.(png|jp[e]?g|gif)$')
 """Regex pattern to test whether local files are images"""
 
-META_INI_FILE_PATTERN = '^.*__info__.txt$'
+META_INI_FILE_PATTERN = compile('^.*__info__.txt$')
 """Name of the optional album information files"""
 
-INTRO_MD_FILE_PATTERN = '^.*__intro__.txt$'
+INTRO_MD_FILE_PATTERN = compile('^.*__intro__.txt$')
 """Regex pattern to test if a local file is a reserverd intro text file"""
 
 YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
@@ -76,5 +76,5 @@ YOUTUBE_INI_FILE_PATTERN = compile('^.*__youtube__.txt$')
 TEXT_MD_FILE_PATTERN = compile('^.*__blog__.txt$')
 """Regex pattern to test if a local file is a text file"""
 
-BOOKIFY_PATH = None
+BOOKIFY_PATH = 'bookify'
 """Path to bookify hook (Experimental)."""

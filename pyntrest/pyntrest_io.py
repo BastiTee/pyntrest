@@ -62,6 +62,21 @@ def get_immediate_subdirectories(file_path):
     directories.sort()
     return directories
 
+def get_immediate_subfiles(file_path):
+    """Return the sub-files of a given file path, but
+    only the first level."""
+
+    if not file_path:
+        raise TypeError('file_path not provided.')
+
+    files = []
+    for name in listdir(file_path):
+        if (not path.isdir(path.join(file_path, name))
+            and not str(name).startswith('.')):
+            files.append(name)
+    files.sort()
+    return files
+
 def cleanup_url_path (url_path):
     """Removes redundant or unwanted symbols from the provided URL path"""
 
@@ -107,7 +122,7 @@ def get_absolute_breadcrumb_filesystem_paths (url_path):
     else:
         return [''] + subpaths
 
-def read_optional_album_metadata (album_path, filename ):
+def read_optional_album_metadata (album_path, pattern ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain
     optional album information from a section named 'AlbumInfo'"""
 
@@ -116,11 +131,16 @@ def read_optional_album_metadata (album_path, filename ):
     album_path = path.abspath(album_path)
     if not path.exists(album_path):
         raise TypeError('album_path does not exist!')
-    if not filename:
+    if not pattern:
         raise TypeError('filename not provided!')
 
-    info_ini_file = path.join(album_path, filename)
-
+    subfiles = get_immediate_subfiles(album_path)
+    info_ini_file = None
+    for subfile in subfiles:
+        matching = match(pattern, subfile.lower())
+        if matching != None:
+            info_ini_file = path.join(album_path, subfile)
+            
     # set default values
     album_title = path.basename(album_path)
     album_description = ''
@@ -155,7 +175,7 @@ def read_optional_album_metadata (album_path, filename ):
     return (album_title, album_description, album_cover, album_sorted_rev,
             album_hide_cover, modified_albums_on_top)
 
-def read_optional_image_metadata (album_path, filename ):
+def read_optional_image_metadata (album_path, pattern ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain
     optional image information from a section named 'ImageInfo'"""
 
@@ -164,11 +184,16 @@ def read_optional_image_metadata (album_path, filename ):
     album_path = path.abspath(album_path)
     if not path.exists(album_path):
         raise TypeError('album_path does not exist!')
-    if not filename:
+    if not pattern:
         raise TypeError('filename not provided!')
 
-    info_ini_file = path.join(album_path, filename)
-
+    subfiles = get_immediate_subfiles(album_path)
+    info_ini_file = None
+    for subfile in subfiles:
+        matching = match(pattern, subfile.lower())
+        if matching != None:
+            info_ini_file = path.join(album_path, subfile)
+            
     # set default values
     image_infos = {}
 

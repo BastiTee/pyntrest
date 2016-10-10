@@ -3,13 +3,13 @@ a local folder or file"""
 
 from os import listdir, path, walk
 from shutil import copyfile
-from re import sub
+from re import sub, match
 import pyntrest_config
 from pyntrest_io import (read_optional_album_metadata, mkdirs,
     read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
-    is_modified, get_html_content, file_exists)
+    is_modified, get_html_content, file_exists, get_immediate_subfiles)
 from pyntrest_pil import PILHandler
 from models import AlbumImage, Album, WebPath
 from random import choice
@@ -205,8 +205,15 @@ class PyntrestHandler ():
         breadcrumbs[0].title = pyntrest_config.WORDING_HOME
 
         # check for intro text
-        intro_file = path.join(local_albumpath_abs, '__intro__.txt')
         intro_content = None
+        intro_file = None
+        subfiles = get_immediate_subfiles(local_albumpath_abs)
+        for subfile in subfiles:
+            matching = match(pyntrest_config.INTRO_MD_FILE_PATTERN, 
+                             subfile.lower())
+            if matching != None:
+                intro_file = path.join(local_albumpath_abs, subfile)
+            
         if path.isfile(intro_file):
             intro_content, _ = get_html_content(intro_file)
 
@@ -384,8 +391,8 @@ class PyntrestHandler ():
 
         elif (pyntrest_config.TEXT_MD_FILE_PATTERN.match(
                                 local_imagepath_abs.lower()) and
-              not (pyntrest_config.INTRO_MD_FILE_PATTERN ==
-                   local_imagepath_abs.lower())):
+              not (pyntrest_config.INTRO_MD_FILE_PATTERN.match(
+                                local_imagepath_abs.lower()))):
 
             html_content, title = get_html_content(local_imagepath_abs)
 

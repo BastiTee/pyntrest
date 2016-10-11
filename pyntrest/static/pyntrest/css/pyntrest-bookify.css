@@ -109,17 +109,19 @@ a {
 }
 
 #toc {
- 
+    text-align: left;
 }
 
 #toc ul {
     margin: 0;
     padding: 0;
     list-style: none;
+    text-align: left;
 }
 
 #toc li {
     padding: 0;
+    text-align: left;
 }
 
 #toc a {

@@ -3,21 +3,48 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>{{ page_title}}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="{% static 'pyntrest/css/pyntrest-bookify.css' %}" />
-    <!-- Icon -->
-    <link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}" type="image/png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'pyntrest/res/favicon-apple.png' %}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'pyntrest/res/favicon-apple.png' %}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'pyntrest/res/favicon-apple.png' %}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'pyntrest/res/favicon-apple.png' %}">
+<meta charset="utf-8">
+<title>{{ page_title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Domine"
+	rel="stylesheet">
+<!-- CSS -->
+<link rel="stylesheet" type="text/css"
+	href="{% static 'pyntrest/css/pyntrest-bookify.css' %}" />
+<!-- Icon -->
+<link rel="icon" href="{% static 'pyntrest/res/favicon.png' %}"
+	type="image/png" />
+<link rel="apple-touch-icon" sizes="57x57"
+	href="{% static 'pyntrest/res/favicon-apple.png' %}">
+<link rel="apple-touch-icon" sizes="114x114"
+	href="{% static 'pyntrest/res/favicon-apple.png' %}">
+<link rel="apple-touch-icon" sizes="72x72"
+	href="{% static 'pyntrest/res/favicon-apple.png' %}">
+<link rel="apple-touch-icon" sizes="144x144"
+	href="{% static 'pyntrest/res/favicon-apple.png' %}">
+<!-- Javascript -->
+<script src="{% static 'pyntrest/js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'pyntrest/js/toc-0.3.2.min.js' %}"></script>
 </head>
 <body>
-<div id="bookify" >
-{% autoescape off %}{{ full_html }}{% endautoescape %}
-</div>
+	<div id="content">
+	<h1>{{ page_title}}</h1>
+	<h2>{{ toc_label }}</h2>
+	<div id="toc"></div>
+	<div id="bookify">
+	{% autoescape off %}{{ full_html }}{%endautoescape %}
+	</div>
+	</div>
+	<script type="text/javascript">
+			(function($) {
+				$('#toc').toc({
+					'selectors' : 'h1,h2,h3,h4,h5,h6,h7,h8,h9', 
+					'container' : '#bookify',
+					'smoothScrolling' : true, 
+					'prefix' : 'toc'
+				});
+			})(jQuery);
+		</script>
 </body>
 </html>

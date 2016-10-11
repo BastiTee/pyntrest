@@ -47,7 +47,7 @@ def findfiles (absolute_path, filter_regex=None, doprint=False):
                     print absolute_path
     return filelist
 
-def get_immediate_subdirectories(file_path):
+def get_immediate_subdirectories(file_path, reverse_order=False):
     """Return the sub-directories of a given file path, but
     only the first level."""
 
@@ -59,7 +59,8 @@ def get_immediate_subdirectories(file_path):
         if (path.isdir(path.join(file_path, name))
             and not str(name).startswith('.')):
             directories.append(name)
-    directories.sort()
+    directories.sort(cmp=None, key=None, reverse=reverse_order)
+    
     return directories
 
 def get_immediate_subfiles(file_path):
@@ -148,6 +149,7 @@ def read_optional_album_metadata (album_path, pattern ):
     album_sorted_rev = False
     album_hide_cover = False
     modified_albums_on_top = False
+    ignore_in_book = False
 
     # try to read file
     if path.exists(info_ini_file):
@@ -171,9 +173,13 @@ def read_optional_album_metadata (album_path, pattern ):
             modtop = config.get('AlbumInfo', 'ModifiedAlbumsOnTop')
             if modtop == 'True':
                 modified_albums_on_top = True
-
+        if config.has_option('AlbumInfo', 'IgnoreInBook'):
+            igbook = config.get('AlbumInfo', 'IgnoreInBook')
+            if igbook == 'True':
+                ignore_in_book = True
+                
     return (album_title, album_description, album_cover, album_sorted_rev,
-            album_hide_cover, modified_albums_on_top)
+            album_hide_cover, modified_albums_on_top, ignore_in_book)
 
 def read_optional_image_metadata (album_path, pattern ):
     """Checks if a given folder contains an INFO_FILE_NAME and tries to obtain

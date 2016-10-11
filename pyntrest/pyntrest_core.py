@@ -134,7 +134,7 @@ class PyntrestHandler ():
         mkdirs(path.join (self.static_ithumbs_path, local_albumpath_rel))
 
         (album_title, album_description, album_cover, reversed_sorting,
-         hide_cover, mods_on_top) = read_optional_album_metadata (
+         hide_cover, mods_on_top, _) = read_optional_album_metadata (
             local_albumpath_abs, pyntrest_config.META_INI_FILE_PATTERN)
 
         # setup sub albums
@@ -192,7 +192,7 @@ class PyntrestHandler ():
                 breadcrumb_path)
             path_string = path_string + '/' + breadcrumb_path
             path_string = sub ('[/]+' , '/', path_string)
-            album_title, album_description, _, _, _, _ = (
+            album_title, album_description, _, _, _, _, _= (
                 read_optional_album_metadata (local_albumpath_abs,
                     pyntrest_config.META_INI_FILE_PATTERN))
             url_path = path_string
@@ -258,7 +258,7 @@ class PyntrestHandler ():
             pyntrest_config.MAX_AGE_OF_NEW_IMAGES_H,
             pyntrest_config.HIGHLIGHT_NEW_IMAGES,
             pyntrest_config.IMAGE_FILE_PATTERN)
-        meta_title, meta_description, meta_cover, _, _, _ = (
+        meta_title, meta_description, meta_cover, _, _, _, _ = (
             read_optional_album_metadata (local_subalbumpath_abs,
                             pyntrest_config.META_INI_FILE_PATTERN))
 

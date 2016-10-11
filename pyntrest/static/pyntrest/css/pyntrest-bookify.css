@@ -79,19 +79,20 @@ textarea {
    
 html {
 	/* Basic font settings */ 
+	font-family: 'Domine', serif;
     color: #000;
 }
 
-
-h1, h2 {
+h1, h2, h3, h4, h5, h6, h7, h8, h9 {
 	/* No spaces around headings */
     font-weight: normal;
     margin: 0px;
     padding: 0px;
+    text-align: left;
 }
 
-h2 {
-    padding-top: 10px;
+h1 {
+    margin: 20px 0px 20px 0px;
 }
 
 a {
@@ -99,17 +100,45 @@ a {
     color: #000;
 }
 
-.content {
+#content {
 	/* Wrapper around all images and albums */
-    width: 90%;
+	text-align: justify;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
-iframe {
-	display: none !important;
-    visibility: hidden;
+#toc {
+ 
 }
+
+#toc ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#toc li {
+    padding: 0;
+}
+
+#toc a {
+    text-decoration: none;
+}
+
+#toc .toc-h1 {
+	margin-top: 5px;
+    font-weight: bold;
+}
+
+#toc .toc-h2 {
+    padding-left: 20px;
+}
+
+#toc .toc-h3 {
+    padding-left: 40px;
+}
+
 
 /* ==========================================================================
    Helper classes

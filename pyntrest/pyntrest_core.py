@@ -214,7 +214,7 @@ class PyntrestHandler ():
             if matching != None:
                 intro_file = path.join(local_albumpath_abs, subfile)
 
-        if path.isfile(intro_file):
+        if intro_file and path.isfile(intro_file):
             intro_content, _ = get_html_content(intro_file)
 
         # show header?

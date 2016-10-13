@@ -152,7 +152,7 @@ def read_optional_album_metadata (album_path, pattern ):
     ignore_in_book = False
 
     # try to read file
-    if path.exists(info_ini_file):
+    if info_ini_file and path.exists(info_ini_file):
         config = ConfigParser()
         config.readfp(open(info_ini_file, 'r', 'utf8'))
         if config.has_option('AlbumInfo', 'Title'):
@@ -204,7 +204,7 @@ def read_optional_image_metadata (album_path, pattern ):
     image_infos = {}
 
     # try to read file
-    if path.exists(info_ini_file):
+    if info_ini_file and path.exists(info_ini_file):
         config = ConfigParser()
         config.readfp(open(info_ini_file, 'r', 'utf8'))
         if config.has_section('ImageInfo'):
@@ -214,7 +214,6 @@ def read_optional_image_metadata (album_path, pattern ):
                 info = config.get('ImageInfo', option).strip()
                 image_infos[option.lower()] = info
 
-    #print image_infos
     return image_infos
 
 def read_youtube_ini_file ( youtube_file_name ):

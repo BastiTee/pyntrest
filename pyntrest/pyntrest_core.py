@@ -120,7 +120,7 @@ class PyntrestHandler ():
     def generate_view_context_bookify(self):
         """Forwarding the view context request to the_bookify subinstance"""
         return pyntrest_bookify.generate_view_context(self)
-    
+
     def generate_view_context(self, request_path):
         """The core "magic" method that reads the requested album filesystem
         path related to the virtual album path from the request and obtains all
@@ -209,11 +209,11 @@ class PyntrestHandler ():
         intro_file = None
         subfiles = get_immediate_subfiles(local_albumpath_abs)
         for subfile in subfiles:
-            matching = match(pyntrest_config.INTRO_MD_FILE_PATTERN, 
+            matching = match(pyntrest_config.INTRO_MD_FILE_PATTERN,
                              subfile.lower())
             if matching != None:
                 intro_file = path.join(local_albumpath_abs, subfile)
-            
+
         if path.isfile(intro_file):
             intro_content, _ = get_html_content(intro_file)
 
@@ -270,8 +270,8 @@ class PyntrestHandler ():
         if meta_cover:
             # Check for existence..
             cover_candidate = path.join(local_subalbumpath_abs, meta_cover)
-            # on windows we also allow uncased matches (or .. lower()) 
-            if path.exists(cover_candidate) or path.exists(cover_candidate.lower()): 
+            # on windows we also allow uncased matches (or .. lower())
+            if path.exists(cover_candidate) or path.exists(cover_candidate.lower()):
                 local_subalbumcover_abs = cover_candidate
 
         # if no album cover was set manually or if it did not exist...
@@ -284,17 +284,17 @@ class PyntrestHandler ():
                     local_subalbumpath_abs,
                     cover_candidate)
                     break
-                    
+
         subalbum_webpath = path.join(local_albumpath_rel, subalbum_name)
         subalbum_webpath = '/' + sub('\\\\', '/', subalbum_webpath)
-                    
+
         # If still no album cover was found then this is an empty album hence
         # we need to let the template use a default image
         if not local_subalbumcover_abs:
 
             # setup template context
             subalbum = Album(title=meta_title, description=meta_description,
-                      path=subalbum_webpath, 
+                      path=subalbum_webpath,
                       width=pyntrest_config.IMAGE_THUMB_WIDTH,
                       height=pyntrest_config.IMAGE_THUMB_HEIGHT, cover=None,
                       modified=modified, last_modified=lastmodified)
@@ -310,7 +310,7 @@ class PyntrestHandler ():
             mkdirs(local_thumbnail_folder_abs)
             self.pil_handler.create_album_thumbnail_if_not_present(
                 local_subalbumcover_abs, target_file)
-        
+
             # setup template context
             subalbum = Album(   title=meta_title,
                                 description=meta_description,
@@ -460,5 +460,3 @@ class PyntrestHandler ():
             else:
                 pass
                 #print 'Not updating file \'{}\'. Up to date.'.format(cand_file)
-
-

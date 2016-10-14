@@ -13,7 +13,6 @@ from pyntrest.pyntrest_io import (read_optional_album_metadata, mkdirs,
 from pyntrest.pyntrest_pil import PILHandler
 from pyntrest.models import AlbumImage, Album, WebPath
 from random import choice
-#from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
 from pyntrest import pyntrest_bookify
@@ -396,7 +395,7 @@ class PyntrestHandler ():
 
             html_content, title = get_html_content(local_imagepath_abs)
 
-            divid="".join(choice(lowercase) for _ in range(16))
+            divid="".join(choice('abcdefghijklmnopqrstuvwxyz') for _ in range(16))
 
             albumimage = AlbumImage(type='txt', location=path.join(
                         local_albumpath_rel, image_name), title=title,

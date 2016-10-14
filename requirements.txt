@@ -1,5 +1,5 @@
 # https://blogs.msdn.microsoft.com/pythonengineering/2016/04/11/unable-to-find-vcvarsall-bat/
 markdown2==2.3.1
 beautifulsoup4==4.5.1
-Django==1.10.2
+Django==1.8.15
 Pillow==3.4.1

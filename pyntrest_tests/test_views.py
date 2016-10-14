@@ -10,7 +10,6 @@ from django.http.response import HttpResponseRedirect, HttpResponse
 from pyntrest.pyntrest_core import PyntrestHandler
 from pyntrest.views import ViewHandler
 
-
 class ViewsTestSuite(unittest.TestCase):
 
     mip = path.join(path.abspath(path.dirname(__file__)), 'testdata')

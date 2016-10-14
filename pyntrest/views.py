@@ -1,7 +1,7 @@
 """Django default module for view generation"""
 
 from django.shortcuts import redirect, render
-from pyntrest_io import cleanup_url_path
+from pyntrest.pyntrest_io import cleanup_url_path
 from pyntrest.pyntrest_core import PyntrestHandler
 from pyntrest.pyntrest_config import YOUR_IMAGE_FOLDER, STATIC_PATH,\
     EXTERNAL_BASE_URL,BOOKIFY_PATH
@@ -33,7 +33,7 @@ class ViewHandler ():
 
         if not request.path.endswith('/'):
             request.path = request.path + '/'
-            
+
         if BOOKIFY_PATH:
             clean_bookify_path = cleanup_url_path('/' + BOOKIFY_PATH + '/')
             #print 'Testing path \'{}\' against bookify root path \'{}\''.format(request.path, clean_bookify_path)

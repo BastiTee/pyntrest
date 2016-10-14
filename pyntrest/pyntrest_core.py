@@ -4,16 +4,16 @@ a local folder or file"""
 from os import listdir, path, walk
 from shutil import copyfile
 from re import sub, match
-import pyntrest_config
-from pyntrest_io import (read_optional_album_metadata, mkdirs,
+from pyntrest import pyntrest_config
+from pyntrest.pyntrest_io import (read_optional_album_metadata, mkdirs,
     read_youtube_ini_file,
     get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
     is_modified, get_html_content, file_exists, get_immediate_subfiles)
-from pyntrest_pil import PILHandler
-from models import AlbumImage, Album, WebPath
+from pyntrest.pyntrest_pil import PILHandler
+from pyntrest.models import AlbumImage, Album, WebPath
 from random import choice
-from string import lowercase
+#from string import lowercase
 from os.path import basename
 from pyntrest_project.settings import TEMPLATE_DIRS
 from pyntrest import pyntrest_bookify
@@ -64,7 +64,7 @@ class PyntrestHandler ():
         thumbnails and copying all the images into the folder that
         serves static content"""
 
-        print 'Preparing Pyntrest...'
+        print ('Preparing Pyntrest...')
 
         global current_subdir  # declare global counter
         current_subdir = 1
@@ -80,11 +80,11 @@ class PyntrestHandler ():
             if not '\.' in str(dirname) and not '/.' in str(dirname):
                 number_of_subdirs += 1
 
-        print 'Found {0} non-hidden directories...'.format(number_of_subdirs)
+        print ('Found {0} non-hidden directories...'.format(number_of_subdirs))
         # Call recursive method
         self.on_startup_prepare_folder(
             self.main_images_path, '/', number_of_subdirs)
-        print 'Preparation of Pyntrest done...'
+        print ('Preparation of Pyntrest done...')
 
     def on_startup_prepare_folder (self, current_album_path_abs,
         request_path, number_of_subdirs):
@@ -435,7 +435,7 @@ class PyntrestHandler ():
 
             if not file_exists(exis_file) and not file_exists(cand_file):
                 # no target file and no custom file --> copy from default
-                print 'Creating file \'{}\' from default.'.format(exis_file)
+                print ('Creating file \'{}\' from default.'.format(exis_file))
                 copyfile(exis_file + '.default', exis_file)
             elif not file_exists(exis_file) and file_exists(cand_file):
                 # no target file but custom file --> copy from custom

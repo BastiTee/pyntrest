@@ -283,7 +283,7 @@ def get_html_content (local_file_path):
     if not path.exists(local_file_path):
         raise TypeError('local_file_path does not exist!')
 
-    with open(local_file_path, 'r') as markdown_file:
+    with open(local_file_path, mode='r', encoding='utf-8') as markdown_file:
         file_content=markdown_file.read()
         markdown_file.close()
 

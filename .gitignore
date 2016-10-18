@@ -2,7 +2,7 @@
 # PROJECT SPECIFICS
 
 *.pid
-db.sqlite3.
+db.sqlite3.*
 pyntrest/static/pyntrest/images/
 doc/code
 

@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/BastiTee/pyntrest.svg?maxAge=2592000)](https://github.com/BastiTee/pyntrest/releases/tag/1.0.0)
 [![Build Status](https://travis-ci.org/BastiTee/pyntrest.png)](https://travis-ci.org/BastiTee/pyntrest)
 ![Python 2 support](https://img.shields.io/badge/python2-stable-green.svg)
-![Python 3 support](https://img.shields.io/badge/python3-wip-yellow.svg)
+![Python 3 support](https://img.shields.io/badge/python3-stable-green.svg)
 
 ## What is Pyntrest?
 
@@ -43,7 +43,7 @@ Pyntrest is focussed on simple web photo albums. It is neither a blog CMS, nor d
 
 Basic instructions are as follows:
 
-* Install Python 2.7.x (Python 3.* support is untested)
+* Install Python 2.7.x or later (Python 3+ is also supported)
 * Clone or download Pyntrest
 * Go to Pyntrest's root folder and install dependencies by running `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed, Attention: On unix you also need to have `gcc` and `python-devel` packages installed in order to compile `pillow`)
 * _Recommended_: Run `python manage.py test` to test the installation (see next chapter for possible solutions on errors)

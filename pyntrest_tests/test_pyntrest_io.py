@@ -146,6 +146,7 @@ class IoTestSuite(unittest.TestCase):
         self.assertFalse(d)
         self.assertFalse(e)
         self.assertFalse(f)
+        del content[-1]
         content.append('ReverseImages=True')
         dirname = self.create_temp_file_with_content(content, ini_filename)
         a, b, c, d, e, f, _ = pyntrest_io.read_optional_album_metadata(dirname, ini_filename )
@@ -157,6 +158,7 @@ class IoTestSuite(unittest.TestCase):
         a, b, c, d, e, f, _ = pyntrest_io.read_optional_album_metadata(dirname, ini_filename )
         self.assertFalse(e)
         self.assertFalse(f)
+        del content[-1]
         content.append('HideCover=True')
         dirname = self.create_temp_file_with_content(content, ini_filename)
         a, b, c, d, e, f, _ = pyntrest_io.read_optional_album_metadata(dirname, ini_filename )
@@ -166,6 +168,7 @@ class IoTestSuite(unittest.TestCase):
         dirname = self.create_temp_file_with_content(content, ini_filename)
         a, b, c, d, e, f, _ = pyntrest_io.read_optional_album_metadata(dirname, ini_filename )
         self.assertFalse(f)
+        del content[-1]
         content.append('ModifiedAlbumsOnTop=True')
         dirname = self.create_temp_file_with_content(content, ini_filename)
         a, b, c, d, e, f, _ = pyntrest_io.read_optional_album_metadata(dirname, ini_filename )

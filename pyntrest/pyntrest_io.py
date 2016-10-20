@@ -1,7 +1,7 @@
 """Pyntrest module providing I/O helper methods involved during the processing
 of album requests."""
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from re import sub, compile, match, search
 from os import path, makedirs, listdir, walk
 from time import time
@@ -40,11 +40,11 @@ def findfiles (absolute_path, filter_regex=None, doprint=False):
                 if matching != None:
                     filelist.append(absolute_path)
                     if (doprint):
-                        print absolute_path
+                        print (absolute_path)
             else:
                 filelist.append(absolute_path)
                 if (doprint):
-                    print absolute_path
+                    print (absolute_path)
     return filelist
 
 def get_immediate_subdirectories(file_path, reverse_order=False):
@@ -59,8 +59,8 @@ def get_immediate_subdirectories(file_path, reverse_order=False):
         if (path.isdir(path.join(file_path, name))
             and not str(name).startswith('.')):
             directories.append(name)
-    directories.sort(cmp=None, key=None, reverse=reverse_order)
-    
+    directories.sort(key=None, reverse=reverse_order)
+
     return directories
 
 def get_immediate_subfiles(file_path):
@@ -141,7 +141,7 @@ def read_optional_album_metadata (album_path, pattern ):
         matching = match(pattern, subfile.lower())
         if matching != None:
             info_ini_file = path.join(album_path, subfile)
-            
+
     # set default values
     album_title = path.basename(album_path)
     album_description = ''
@@ -177,7 +177,7 @@ def read_optional_album_metadata (album_path, pattern ):
             igbook = config.get('AlbumInfo', 'IgnoreInBook')
             if igbook == 'True':
                 ignore_in_book = True
-                
+
     return (album_title, album_description, album_cover, album_sorted_rev,
             album_hide_cover, modified_albums_on_top, ignore_in_book)
 
@@ -199,7 +199,7 @@ def read_optional_image_metadata (album_path, pattern ):
         matching = match(pattern, subfile.lower())
         if matching != None:
             info_ini_file = path.join(album_path, subfile)
-            
+
     # set default values
     image_infos = {}
 
@@ -283,7 +283,7 @@ def get_html_content (local_file_path):
     if not path.exists(local_file_path):
         raise TypeError('local_file_path does not exist!')
 
-    with open(local_file_path, 'r') as markdown_file:
+    with open(local_file_path, mode='r', encoding='utf-8') as markdown_file:
         file_content=markdown_file.read()
         markdown_file.close()
 

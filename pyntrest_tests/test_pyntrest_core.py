@@ -14,7 +14,7 @@ class CoreTestSuite(unittest.TestCase):
                     path.dirname(path.dirname(__file__)),
                     'pyntrest', 'static','pyntrest')
         static_images_dir = mkdtemp()
-        print 'Temp dir created at {}'.format(static_images_dir)
+        print ('Temp dir created at {}'.format(static_images_dir))
         for subdir in [ 'res', 'css', 'fonts', 'js']:
             makedirs(path.join(static_images_dir, subdir ))
         for resfile in [

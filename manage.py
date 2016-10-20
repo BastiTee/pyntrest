@@ -9,26 +9,13 @@ abspath = path.abspath(__file__)
 dname = path.dirname(abspath)
 chdir(dname)
 
-def import_modules_with_check (module_names):
-    """Checks if a given set of modules exists. Returns a boolean that
-    indicates the import success and a list of failed module names"""
-
-    success = True
-    failed_modules = []
-    for module_name in module_names:
-        try:
-            map(__import__, [module_name])
-        except ImportError:
-            success = False
-            failed_modules.append(module_name)
-
-    return success, failed_modules
-
 if __name__ == "__main__":
+
+    from bptbx import b_iotools
 
     environ.setdefault("DJANGO_SETTINGS_MODULE", "pyntrest_project.settings")
 
-    import_success, failed_modules = import_modules_with_check(
+    import_success, failed_modules = b_iotools.import_modules_with_check(
                                                  [ 'PIL', 'django.http',
                                                  'markdown2', 'bs4' ])
     if not import_success:

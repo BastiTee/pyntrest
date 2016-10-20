@@ -1,12 +1,13 @@
 """Pyntrest module providing I/O helper methods involved during the processing
 of album requests."""
 
-from configparser import ConfigParser
 from re import sub, compile, match, search
 from os import path, makedirs, listdir, walk
 from time import time
 from codecs import open
 from markdown2 import Markdown
+from bptbx import b_legacy
+configparser = b_legacy.b_configparser()
 
 def file_exists (path):
     """Tests if a file exists"""
@@ -153,7 +154,7 @@ def read_optional_album_metadata (album_path, pattern ):
 
     # try to read file
     if info_ini_file and path.exists(info_ini_file):
-        config = ConfigParser()
+        config = configparser()
         config.readfp(open(info_ini_file, 'r', 'utf8'))
         if config.has_option('AlbumInfo', 'Title'):
             album_title = config.get('AlbumInfo', 'Title')
@@ -205,7 +206,7 @@ def read_optional_image_metadata (album_path, pattern ):
 
     # try to read file
     if info_ini_file and path.exists(info_ini_file):
-        config = ConfigParser()
+        config = configparser()
         config.readfp(open(info_ini_file, 'r', 'utf8'))
         if config.has_section('ImageInfo'):
             options = config.options('ImageInfo')
@@ -234,7 +235,7 @@ def read_youtube_ini_file ( youtube_file_name ):
             return youtube_id
 
     # second try: check file for config section with youtube id
-    config = ConfigParser()
+    config = configparser()
     config.readfp(open(youtube_file_path, 'r', 'utf8'))
     if config.has_option('VideoInfo', 'YoutubeId'):
         youtube_id = config.get('VideoInfo', 'YoutubeId')

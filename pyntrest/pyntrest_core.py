@@ -5,11 +5,12 @@ from os import listdir, path, walk
 from shutil import copyfile
 from re import sub, match
 from pyntrest import pyntrest_config
-from pyntrest.pyntrest_io import (read_optional_album_metadata, mkdirs,
-    read_youtube_ini_file,
-    get_immediate_subdirectories, convert_url_path_to_local_filesystem_path,
+from pyntrest.pyntrest_io import (read_optional_album_metadata,
+    read_youtube_ini_file, convert_url_path_to_local_filesystem_path,
     get_absolute_breadcrumb_filesystem_paths, read_optional_image_metadata,
-    is_modified, get_html_content, file_exists, get_immediate_subfiles)
+    is_modified, get_html_content)
+from bptbx.b_iotools import (mkdirs, file_exists, get_immediate_subfiles,
+get_immediate_subdirectories)
 from pyntrest.pyntrest_pil import PILHandler
 from pyntrest.models import AlbumImage, Album, WebPath
 from random import choice

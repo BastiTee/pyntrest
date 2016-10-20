@@ -7,77 +7,9 @@ from time import time
 from codecs import open
 from markdown2 import Markdown
 from bptbx import b_legacy
+from bptbx.b_iotools import (get_immediate_subfiles,
+get_immediate_subdirectories, file_exists, findfiles)
 configparser = b_legacy.b_configparser()
-
-def file_exists (path):
-    """Tests if a file exists"""
-
-    try:
-        fobj = open(path)
-        fobj.close()
-        return True
-    except IOError:
-        return False
-
-def mkdirs (directory):
-    """Create directory structure if it does not exist"""
-
-    if not directory:
-        raise TypeError('directory not provided.')
-
-    directory_abs = path.abspath(directory)
-    if not path.exists(directory_abs):
-        makedirs(directory_abs)
-
-def findfiles (absolute_path, filter_regex=None, doprint=False):
-    """Lists all files in given directory path recursively."""
-
-    filelist = []
-    for dirname, _, filenames in walk(absolute_path):
-        for filename in filenames:
-            absolute_path = path.join(dirname, filename)
-            if filter_regex != None:
-                matching = match(filter_regex, absolute_path.lower())
-                if matching != None:
-                    filelist.append(absolute_path)
-                    if (doprint):
-                        print (absolute_path)
-            else:
-                filelist.append(absolute_path)
-                if (doprint):
-                    print (absolute_path)
-    return filelist
-
-def get_immediate_subdirectories(file_path, reverse_order=False):
-    """Return the sub-directories of a given file path, but
-    only the first level."""
-
-    if not file_path:
-        raise TypeError('file_path not provided.')
-
-    directories = []
-    for name in listdir(file_path):
-        if (path.isdir(path.join(file_path, name))
-            and not str(name).startswith('.')):
-            directories.append(name)
-    directories.sort(key=None, reverse=reverse_order)
-
-    return directories
-
-def get_immediate_subfiles(file_path):
-    """Return the sub-files of a given file path, but
-    only the first level."""
-
-    if not file_path:
-        raise TypeError('file_path not provided.')
-
-    files = []
-    for name in listdir(file_path):
-        if (not path.isdir(path.join(file_path, name))
-            and not str(name).startswith('.')):
-            files.append(name)
-    files.sort()
-    return files
 
 def cleanup_url_path (url_path):
     """Removes redundant or unwanted symbols from the provided URL path"""

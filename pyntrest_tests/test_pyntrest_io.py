@@ -19,42 +19,6 @@ class IoTestSuite(unittest.TestCase):
         ofile.close()
         return temp_dir
 
-    def test_mkdirs(self):
-
-        self.assertRaises(TypeError, pyntrest_io.mkdirs)
-        self.assertRaises(TypeError, pyntrest_io.mkdirs, None)
-        self.assertRaises(TypeError, pyntrest_io.mkdirs, '')
-        temp_dir = mkdtemp()
-        self.addCleanup(rmtree, temp_dir, True)
-        pyntrest_io.mkdirs(temp_dir)
-        temp_subdir = path.join(temp_dir, 'test')
-        self.assertFalse(path.exists(temp_subdir))
-        pyntrest_io.mkdirs(temp_subdir)
-        self.assertTrue(path.exists(temp_subdir))
-        temp_subsubsubdir = path.join(temp_dir, 'test2', 'test3', 'test4')
-        self.assertFalse(path.exists(temp_subsubsubdir))
-        pyntrest_io.mkdirs(temp_subsubsubdir)
-        self.assertTrue(path.exists(temp_subsubsubdir))
-
-    def test_findfiles(self):
-        pass # TODO
-
-    def test_get_immediate_subdirectories(self):
-        self.assertRaises(TypeError, pyntrest_io.get_immediate_subdirectories)
-        self.assertRaises(TypeError, pyntrest_io.get_immediate_subdirectories, None)
-        self.assertRaises(TypeError, pyntrest_io.get_immediate_subdirectories, '')
-        self.assertRaises(OSError, pyntrest_io.get_immediate_subdirectories, 'asdasf:321kds')
-        temp_dir = mkdtemp()
-        self.addCleanup(rmtree, temp_dir, True)
-        self.assertEqual(0, len(pyntrest_io.get_immediate_subdirectories(temp_dir)))
-        pyntrest_io.mkdirs(path.join(temp_dir, 'sub1'))
-        pyntrest_io.mkdirs(path.join(temp_dir, 'sub2'))
-        pyntrest_io.mkdirs(path.join(temp_dir, 'sub3'))
-        self.assertEqual(3, len(pyntrest_io.get_immediate_subdirectories(temp_dir)))
-        self.assertEqual('sub1', pyntrest_io.get_immediate_subdirectories(temp_dir)[0])
-        self.assertEqual('sub2', pyntrest_io.get_immediate_subdirectories(temp_dir)[1])
-        self.assertEqual('sub3', pyntrest_io.get_immediate_subdirectories(temp_dir)[2])
-
     def test_cleanup_url_path (self):
 
         self.assertRaises(TypeError, pyntrest_io.cleanup_url_path)
@@ -235,16 +199,11 @@ class IoTestSuite(unittest.TestCase):
         filepath = path.join(dirname, ini_file)
         self.assertEqual('rPmGtZAUxNs', pyntrest_io.read_youtube_ini_file(filepath))
 
-    def test_is_modified(self):
-        pass # TODO
-
     def test_get_html_content(self):
 
         self.assertRaises(TypeError, pyntrest_io.get_html_content)
         self.assertRaises(TypeError, pyntrest_io.get_html_content, '')
         self.assertRaises(TypeError, pyntrest_io.get_html_content, 'nirvana.txt')
-
-        # TODO
 
 if __name__ == '__main__':
     unittest.main()

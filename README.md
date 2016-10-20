@@ -1,7 +1,7 @@
 ![Pyntrest-Logo](doc/images/logo.png)
 > Automated web photo albums for convenience lovers
 
-[![GitHub release](https://img.shields.io/github/release/BastiTee/pyntrest.svg?maxAge=2592000)](https://github.com/BastiTee/pyntrest/releases/tag/1.0.0)
+[![GitHub release](https://img.shields.io/github/release/BastiTee/pyntrest.svg)](https://github.com/BastiTee/pyntrest/releases/latest)
 [![Build Status](https://travis-ci.org/BastiTee/pyntrest.png)](https://travis-ci.org/BastiTee/pyntrest)
 ![Python 2 support](https://img.shields.io/badge/python2-stable-green.svg)
 ![Python 3 support](https://img.shields.io/badge/python3-stable-green.svg)

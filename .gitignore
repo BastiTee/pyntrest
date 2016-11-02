@@ -6,7 +6,8 @@ db.sqlite3.*
 pyntrest/static/pyntrest/images/
 doc/code
 
-pyntrest_config.py
+pyntrest_config.*
+!pyntrest_config.py.default
 favicon.png
 favicon-apple.png
 index.html

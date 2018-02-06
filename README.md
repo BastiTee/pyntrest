@@ -45,7 +45,7 @@ Basic instructions are as follows:
 
 * Install Python 2.7.x or later (Python 3+ is also supported)
 * Clone or download Pyntrest
-* Go to Pyntrest's root folder and install dependencies by running `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed, Attention: On unix you also need to have `gcc` and `python-devel` packages installed in order to compile `pillow`)
+* Go to Pyntrest's root folder and install dependencies by running `pip install -r requirements.txt` (assuming you have [pip](https://pypi.python.org/pypi/pip) installed, Attention: On linux you also need to have `gcc`, `python-devel` and `libjpeg-dev` packages installed in order to compile `pillow`)
 * _Recommended_: Run `python manage.py test` to test the installation (see next chapter for possible solutions on errors)
 * Run `python manage.py runserver` (on image folders with lots of images this will take a while since Pyntrest performs a startup scan of your folder and creates all the necessary thumbnails)
 * Open [http://localhost:8000](http://localhost:8000) in a browser and enjoy
